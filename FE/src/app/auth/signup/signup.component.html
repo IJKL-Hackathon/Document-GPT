@@ -1,0 +1,61 @@
+
+<div class=" container pt-10   ">
+    <div>
+
+        
+        <form [formGroup]="myform" (ngSubmit)="submitForm()">
+            <p class="text-center lg:text-xl">Wellcom to Chat IJLK</p>
+            <h1 class="text-center mt-5">Sign In</h1>
+            
+            <div class="flex justify-center flex-col items-center space-y-2">
+                <div class="lg:mb-5  space-y-5">
+                    <div class="lg:space-x-4 ">
+                        <label for="fullname" class="px-4">Fullname</label>
+                        <input formControlName="fullname" id="fullname" class="input w-full" type="text" placeholder="Fullname">
+                        <div *ngIf="myform.get('fullname')?.invalid && myform.get('fullname')?.touched">
+                            <div *ngIf="myform.get('fullname')?.errors?.['required']" class="alert">
+                                Fullname is required
+                            </div>
+                          
+                        </div>
+                    </div>
+                    <div class="lg:space-x-4 ">
+                        <label for="email" class="px-4">Email</label>
+                        <input formControlName="email" id="email" class="input w-full" type="email" placeholder="Email">
+                        <div *ngIf="myform.get('email')?.invalid && myform.get('email')?.touched">
+                            <div *ngIf="myform.get('email')?.errors?.['required']" class="alert">
+                                Email is required
+                            </div>
+                            <div *ngIf="myform.get('email')?.errors?.['email']" class="alert">
+                                Please enter a valid email address
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:space-x-4">
+                        <label for="password" class="px-4">Password</label>
+                        <input formControlName="password" id="password" class="input w-full" type="password" placeholder="Password">
+                        <div *ngIf="myform.get('password')?.invalid && myform.get('password')?.touched">
+                            <div *ngIf="myform.get('password')?.errors?.['required']" class="alert">
+                                Password is required
+                            </div>
+                            <div *ngIf="myform.get('password')?.errors?.['minlength']" class="alert">
+                                Should be at least 5 characters
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center space-y-5 ">
+                 
+
+                        <p class="mt-10">Already have an account? <span class="font-bold cursor-pointer hover:scale-110"><a (click)="changeIslogin()">Login</a> </span></p>
+               
+                        
+                    </div>
+                    <button type="submit" class="btn w-full mb-10">Sign In</button>
+                
+            </div>
+        
+        </form>
+    </div>
+   
+</div>

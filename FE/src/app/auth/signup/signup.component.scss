@@ -1,0 +1,42 @@
+.input{
+    border: 1px solid #ebebeb;
+    font-size: 16px;
+    margin-top: 5px;
+    padding: 7px 20px;
+
+    outline: none;
+}
+form h1{
+    font-weight: bold;
+}
+.toggle-container{
+    transition: all 0.6s ease-in-out;
+    border-radius: 150px 0 0 150px;
+
+    
+}
+.toggle{
+    background-color: rgb(14 165 233);
+    height: 100%;
+    color: white;
+}
+i:hover{
+    scale: 1.2;
+}
+.btn{
+    background-color: rgb(10, 110, 156);
+    padding: 10px 20px;
+    color: white;
+    border-radius: 10px;
+}
+.btn:hover{
+    background-color: rgb(220 38 38);
+    scale: 110%;
+}
+.alert {
+    background-color: #f8d7da;
+    color: 58151C;
+    padding: .5rem;
+    border: 1px solid #f1aeb5;
+    border-radius: .25rem;
+  }
