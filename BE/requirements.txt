@@ -1,3 +1,4 @@
 uvicorn
 fastapi
-flask
+langchain_openai
+langchain
