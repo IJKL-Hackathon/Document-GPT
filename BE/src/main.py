@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 import os
-
 load_dotenv()
+
 import models
 
 from flask import Flask
