@@ -18,10 +18,10 @@ export class AppComponent {
 
     if(localStorage.getItem("jwt"))
     {
-      this.userService.getUserProflie();
+      this.userService.getUserProfile();
     }
     this.store.pipe(select((store)=>store.auth)).subscribe((user)=>{
-      this.userService.getUserProflie();
+      this.userService.getUserProfile();
   
       console.log("log user appmodule:" ,user);
       console.log("userprofile appmodule:" ,user.userProfile);

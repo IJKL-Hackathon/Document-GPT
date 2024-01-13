@@ -9,36 +9,32 @@ import { getUserProfileFailure, getUserProfileSuccess, logoutSucess } from "./us
     providedIn: 'root',
 })
 
-export class UserService{
-    private apiUrl=BASR_URL_API+'/profile';
-    private header:HttpHeaders;
-    constructor(private http: HttpClient, private store:Store){
-        this.header=new HttpHeaders().set("Authorization", `Bearer ${localStorage.getItem("jwt")}`)
+export class UserService {
+    private apiUrl = BASR_URL_API + '/profile';
+    private header: HttpHeaders;
+  
+    constructor(private http: HttpClient, private store: Store) {
+      this.header = new HttpHeaders().set("Authorization", `Bearer ${localStorage.getItem("jwt")}`);
     }
-
-    getUserProflie(){
- 
-       return this.http.post(`${this.apiUrl}/profile`,{},{headers:this.header}).pipe(
-        map((user:any) =>{
-            console.log("get userProfile Success",user);
-           
-            return getUserProfileSuccess({userProfile:user});
-        }   
-        ),
-        catchError((error)=>
-         {
-             return of(
-                 getUserProfileFailure(
-                     error.response && error.respone.data.message ? error.respone.data.message : error.message
-                 )
-             )
-         }
-        )
-       ).subscribe((action)=>this.store.dispatch(action));
+  
+    getUserProfile() {
+      return this.http.get(`${this.apiUrl}`, { headers: this.header }).pipe(
+        map((user: any) => {
+          console.log("get userProfile Success", user);
+          return getUserProfileSuccess({ userProfile: user });
+        }),
+        catchError((error) => {
+          return of(
+            getUserProfileFailure(
+              error.response && error.response.data.message ? error.response.data.message : error.message
+            )
+          );
+        })
+      ).subscribe((action) => this.store.dispatch(action));
     }
-
-    logout(){
-        localStorage.removeItem("jwt");
-        this.store.dispatch(logoutSucess());
-      }
-}
+  
+    logout() {
+      localStorage.removeItem("jwt");
+      this.store.dispatch(logoutSucess());
+    }
+  }

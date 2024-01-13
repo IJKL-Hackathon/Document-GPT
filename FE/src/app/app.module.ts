@@ -22,6 +22,7 @@ import { StoreModule } from '@ngrx/store';
 import { AuthReducer } from './state/auth/auth.reducer';
 import { HttpClientModule } from '@angular/common/http';
 import { UserReducer } from './state/user/user.reducer';
+import { FileReducer } from './state/file/file.reducer';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { UserReducer } from './state/user/user.reducer';
     MatButtonModule,
     RouterModule,
     MatDialogModule,
-    StoreModule.forRoot({auth:AuthReducer,user:UserReducer},{}),
+    StoreModule.forRoot({auth:AuthReducer,user:UserReducer,file:FileReducer},{}),
     HttpClientModule
     
   ],
