@@ -1,4 +1,4 @@
 uvicorn
-fastapi
 langchain_openai
 langchain
+flask
