@@ -13,9 +13,9 @@ import { searchFilesFailure, searchFilesSuccess, uploadFileFailure, uploadFileSu
 })
 export class FileService {
   private apiUrl = BASR_URL_API; 
-  private header: HttpHeaders;
+  // private header: HttpHeaders;
   constructor(private http: HttpClient, private store: Store) {
-    this.header = new HttpHeaders().set("Authorization", `Bearer ${localStorage.getItem("jwt")}`);
+    // this.header = new HttpHeaders().set("Authorization", `Bearer ${localStorage.getItem("jwt")}`);
   }
 
   uploadFile(userid:any,fileupload:any) {
@@ -23,7 +23,8 @@ export class FileService {
     userid:userid,
     fileupload:fileupload
   }
-    return this.http.post(`${this.apiUrl}/upload'`, dataFile,{ headers: this.header }).pipe(
+  const headers = new HttpHeaders().set("Authorization", `Bearer ${localStorage.getItem("jwt")}`);
+    return this.http.post(`${this.apiUrl}/upload'`, dataFile,{ headers }).pipe(
       map((response) => {
         // Dispatch success action
         console.log("file successfully uploaded" , response);
@@ -42,10 +43,11 @@ export class FileService {
     ).subscribe((action)=>this.store.dispatch(action));
 }
 getFile(userId:string) {
+  const headers = new HttpHeaders().set("Authorization", `Bearer ${localStorage.getItem("jwt")}`);
   let params = new HttpParams ()
       .set('userId', userId)
 
-  return this.http.get(`${this.apiUrl}/getfile'`,{ headers: this.header,params} ).pipe(
+  return this.http.get(`${this.apiUrl}/getfile'`,{ headers,params} ).pipe(
     map((response) => {
       // Dispatch success action
       console.log("file successfully get" , response);
@@ -64,11 +66,11 @@ getFile(userId:string) {
   ).subscribe((action)=>this.store.dispatch(action));
 }
 searchFiles(query:string,userId:string) {
-  
+  const headers = new HttpHeaders().set("Authorization", `Bearer ${localStorage.getItem("jwt")}`);
   let params = new HttpParams()
       .set('query',query)
       .set('userId',userId)
-  return this.http.get(`${this.apiUrl}/searchfile`,{ headers: this.header,params}).pipe(
+  return this.http.get(`${this.apiUrl}/searchfile`,{ headers,params}).pipe(
     map((response) => {
       // Dispatch success action
       console.log("file successfully search" , response);
@@ -87,5 +89,11 @@ searchFiles(query:string,userId:string) {
   ).subscribe((action)=>this.store.dispatch(action));
 }
 
-
+  private fileId:string='';
+  saveFileId(Id:string){
+    return this.fileId=Id;
+  }
+  getFileId(){
+    return this.fileId;
+  }
 }

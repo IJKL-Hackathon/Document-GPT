@@ -3,6 +3,7 @@
 
     <div class="message received">
       <span class="sender">Chat IJKL:</span>
+      <p>{{answer}}</p>
       <p >Chí Phèo" là một tác phẩm văn học kinh điển của Việt Nam, mở ra một hành trình sâu sắc vào lòng con người và xã hội. Cuộc đời của Chí Phèo được mô tả như một bức tranh bi tráng với những đau thương, sự hiểu biết về tình người, và những bài học về lòng nhân ái.
 
         Chí Phèo, mặc dù là người nông dân giản dị, lại là người có tâm hồn sâu sắc và tư duy nhạy bén. Tác giả tạo ra một hình tượng của sự trong sáng, lòng chân thành và tình yêu thương, nhưng Chí Phèo lại phải đối mặt với sự đen tối của xã hội. Cuộc sống của anh là một chuỗi bi kịch, từ tình bạn đến tình yêu, và từ lòng tin đến sự phản bội.
@@ -13,28 +14,24 @@
     </div>
   </ng-container>
   <ng-container *ngIf=" param=='qa'">
-    <div class="message received">
-      <span class="sender">Chat IJKL:</span>
-      <p >Hello! How can I help you today?</p>
+    <div *ngFor="let message of messages" [class]="message.className">
+      <span class="sender">{{ message.sender }}:</span>
+      <p>{{ message.content }}</p>
     </div>
-
-    <div class="message sent">
-      <span class="sender">You:</span>
-      <p>Hi, I have a question about...</p>
+    
+    <div class="new-message bottom-32 flex w-full">
+      <input class="searched-message" type="text" placeholder="Type your message..." [(ngModel)]="userInput" (keyup.enter)="sendMessage()">
+      <button (click)="sendMessage()">Send</button>
     </div>
-
+    
     <!-- Add more messages as needed -->
 
-    <div class="message received">
-      <span class="sender">ChatGPT:</span>
-      <p>Sure, I'd be happy to help. What's your question?</p>
-    </div>
-
+    
     <!-- Add an input box for typing a new message -->
-    <div class="new-message absolute bottom-2 flex w-full  ">
-      <input class="searched-message"  type="text" placeholder="Type your message...">
+    <!-- <div class="new-message  bottom-32 flex w-full  ">
+      <input class="searched-message " [(ngModel)]="userInput" type="text" placeholder="Type your message...">
       <button>Send</button>
-    </div>
+    </div> -->
   </ng-container>
     
 
@@ -91,3 +88,4 @@
     <p class="flex items-center justify-center h-full text-xl">Login and select the file to use</p>
   </ng-container>
   </div>
+  <app-feature (answer)="receiveDataFromFeature($event)"></app-feature>

@@ -10,15 +10,16 @@ import { getUserProfileFailure, getUserProfileSuccess, logoutSucess } from "./us
 })
 
 export class UserService {
-    private apiUrl = BASR_URL_API + '/profile';
-    private header: HttpHeaders;
+    private apiUrl = BASR_URL_API + '/api/users/profile';
+    // private header: HttpHeaders;
   
     constructor(private http: HttpClient, private store: Store) {
-      this.header = new HttpHeaders().set("Authorization", `Bearer ${localStorage.getItem("jwt")}`);
+      // this.header = new HttpHeaders().set("Authorization", `Bearer ${localStorage.getItem("jwt")}`);
     }
   
     getUserProfile() {
-      return this.http.get(`${this.apiUrl}`, { headers: this.header }).pipe(
+      const headers = new HttpHeaders().set("Authorization", `Bearer ${localStorage.getItem("jwt")}`);
+      return this.http.get(`${this.apiUrl}`, { headers }).pipe(
         map((user: any) => {
           console.log("get userProfile Success", user);
           return getUserProfileSuccess({ userProfile: user });

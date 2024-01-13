@@ -22,7 +22,7 @@ export class SignupComponent {
       if(this.myform.valid){
         this.authService.register(this.myform.value);
         console.log(this.myform.value);
-        
+        //  this.changeIslogin();
       }
     }
 }

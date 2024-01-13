@@ -23,6 +23,7 @@ import { AuthReducer } from './state/auth/auth.reducer';
 import { HttpClientModule } from '@angular/common/http';
 import { UserReducer } from './state/user/user.reducer';
 import { FileReducer } from './state/file/file.reducer';
+import { FeaturService } from './service/feature.service';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,7 @@ import { FileReducer } from './state/file/file.reducer';
     HttpClientModule
     
   ],
-  providers: [],
+  providers: [FeaturService],
   bootstrap: [AppComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
