@@ -10,9 +10,10 @@ app = FastAPI()
 async def root():
     return {"message": "Hello World"}
 
-if __name__ == '__main__':
-	uvicorn.run(
-        app, 
-        port=int(os.getenv("PORT")), 
-        host="0.0.0.0"
-    )
+
+# if __name__ == '__main__':
+# 	uvicorn.run(
+#         app, 
+#         port=int(os.getenv("PORT")), 
+#         host="0.0.0.0"
+#     )
