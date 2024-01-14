@@ -1,7 +1,7 @@
 // upload.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import * as FormData from 'form-data';
@@ -118,4 +118,17 @@ export class FileService {
   getFileId() {
     return this.fileId;
   }
+
+  // getFileId(): Observable<string[]> {
+  //   return this.fileId.asObservable();
+  // }
+  selectedFileIds: string[] = [];
+  updateSelectedFileIds(id: string, isChecked: boolean) {
+    if (isChecked) {
+      this.selectedFileIds.push(id);
+    } else {
+      this.selectedFileIds = this.selectedFileIds.filter((fileId) => fileId !== id);
+    }
+  }
+  
 }

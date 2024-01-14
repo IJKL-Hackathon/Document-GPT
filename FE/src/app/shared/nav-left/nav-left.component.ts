@@ -1,11 +1,12 @@
 import { Component, ElementRef, EventEmitter, HostListener, Output } from '@angular/core';
-import { res } from 'src/Data/res_file';
+
 import { MatDialog } from '@angular/material/dialog'
 import { AuthComponent } from 'src/app/auth/auth.component';
 import { UserService } from 'src/app/state/user/user.service';
 import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/models/AppState';
 import { FileService } from 'src/app/state/file/file.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-nav-left',
   templateUrl: './nav-left.component.html',
@@ -18,11 +19,11 @@ export class NavLeftComponent {
   UserProfile: any;
   fileTitle: string = '';
   searchQuery: string = '';
-  
-
+  selectedFileIds: string[] = [];
+  selectAllChecked: boolean = false;
 
   constructor(private diaolog: MatDialog, private userService: UserService, private store: Store<AppState>,
-    private fileService: FileService,private elRef: ElementRef) {
+    private fileService: FileService,private elRef: ElementRef,private router: Router) {
   }
   ngOnInit() {
     // this.res_file = res;
@@ -45,6 +46,9 @@ export class NavLeftComponent {
       // console.log("userprofile:" ,user.userProfile);
     });
 
+    this.res_file.forEach((data:any) => {
+      data.isSelected = false;
+    });
 
   }
   onFileSelected(event: any) {
@@ -82,24 +86,52 @@ export class NavLeftComponent {
   logout() {
     this.userService.logout();
     this.isMenuOpen=false
+    this.res_file=[];
+    this.router.navigate(['/']);
   }
   onCheckboxChange(event: any, id: any) {
     if (event.target.checked) {
       // this.fileIdSelected=id;
       this.fileService.saveFileId(id);
+      this.fileService.updateSelectedFileIds(id, event.target.checked);
       console.log('Checkbox checked with id:', this.fileService.getFileId());
     } else {
       console.log('Checkbox unchecked with id:', id);
     }
   }
+  
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
-    // Check if the clicked element is outside the button and menu container
     if (!this.elRef.nativeElement.contains(event.target)) {
       this.isMenuOpen = false;
     }
   }
+
+  get getFileId(): string {
+    return this.fileService.getFileId();
+  }
+
+  // selectAll() {
+    
+  //   this.selectAllChecked = !this.selectAllChecked;
+  //   if(this.selectAllChecked){
+  //     this.selectedFileIds = this.res_file.map((data:any) => data.id);
+  //     this.res_file.forEach((data:any) => {
+  //       data.isSelected = true;
+  //     });
+  //     this.fileService.saveFileId(this.selectedFileIds)
+  //   }else{
+  //     this.selectedFileIds = [];
+  //     this.res_file.forEach((data:any) => {
+  //       data.isSelected = false;
+  //     });
+  //     this.fileService.saveFileId(this.selectedFileIds)
+  //   }
+  //   console.log(this.selectedFileIds);
+    
+  // }
+
 
   
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { BASR_URL_API } from 'src/config/api';
 
 @Injectable({
@@ -19,7 +19,7 @@ export class FeaturService {
     });
   }
 
-  getSummary(option:string,fileId:any, userId:string): Observable<any> {
+  getSummary(fileId:any, userId:string): Observable<any> {
     let params = {
       fileId: fileId,
       userId: userId
@@ -28,7 +28,7 @@ export class FeaturService {
     return this.http.post<any>(`${this.apiUrl}/summarize`, params);
   }
 
-  getQA(option:string,fileId:any, userId:string,query:string): Observable<any> {
+  getQA(fileId:any, userId:string,query:string): Observable<any> {
     let params = {
       fileId: fileId,
       userId: userId,
@@ -38,12 +38,30 @@ export class FeaturService {
     return this.http.post<any>(`${this.apiUrl}/qa`, params);
   }
 
-  getQuizizz(option:string,fileId:any, userId:string): Observable<any> {
+  getQuizizz(fileId:any, userId:string): Observable<any> {
     let params = {
       fileId: fileId,
       userId: userId
     }
 
     return this.http.post<any>(`${this.apiUrl}/quizz`, params);
+  }
+  private storedData: any;
+
+  getStoredSumData(): any {
+    return this.storedData;
+  }
+
+  setStoreSumData(data: any): void {
+    this.storedData = data;
+  }
+
+  private sumDataSubject = new BehaviorSubject<any>(null);
+  setData(data: any) {
+    this.sumDataSubject.next(data);
+  }
+
+  getData() {
+    return this.sumDataSubject.asObservable();
   }
 }

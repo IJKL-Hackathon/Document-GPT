@@ -7,6 +7,7 @@ import { Store, select } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { FileService } from 'src/app/state/file/file.service';
 import { FeaturService } from 'src/app/service/feature.service';
+
 @Component({
   selector: 'app-feature',
   templateUrl: './feature.component.html',
@@ -50,10 +51,17 @@ export class FeatureComponent {
       // console.log("option:",router);
       switch (option) {
         case 'sum':
-          this.featureService.getSummary(option,fileId,this.UserProfile.id).subscribe(
+          this.featureService.getSummary(fileId,this.UserProfile.id).subscribe(
             (response) => {
               this.answerData = response["answer"];
-              this.sendAnswer(response["answer"]);
+              this.featureService.setStoreSumData(response["answer"]);
+            console.log(this.featureService.getData());
+            
+                this.featureService.setData(response["answer"]);
+
+              // console.log("data:",this.featureService.getStoredSumData());
+              
+              // this.sendAnswer(response["answer"]);
               console.log('Summary Response:', response["answer"]);
             },
             (error) => {
@@ -63,23 +71,17 @@ export class FeatureComponent {
           );
           break;
         case 'qa':
-          // this.featureService.getQA(option,fileId,this.UserProfile.id,this.query).subscribe(
-          //   (response) => {
-          //     this.answerData = response["answer"];
-          //     this.sendAnswer(response["answer"]);
-          //     console.log('QA Response:', response);
-          //   },
-          //   (error) => {
-          //     // Xử lý lỗi khi gọi API
-          //     console.error('API Error:', error);
-          //   }
-          // );
+    
           break;
         case 'quizizz':
-          this.featureService.getQuizizz(option,fileId,this.UserProfile.id).subscribe(
+          this.featureService.getQuizizz(fileId,this.UserProfile.id).subscribe(
             (response) => {
-              this.answerData = response["question"];
-              this.sendAnswer(response["question"]);
+              console.log(this.featureService.getData());
+            
+              this.featureService.setData(response["questions"]);
+              // this.answerData = response["questions"];
+              // this.sendAnswer(response["questions"]);
+              // this.answer.emit(response["questions"]);
               console.log('Quizizz Response:', response);
             },
             (error) => {
@@ -97,7 +99,8 @@ export class FeatureComponent {
   }
 
   sendAnswer(answerData:any){
-     
+    // console.log(answerData);
+    
     this.answer.emit(answerData);
   }
 }
