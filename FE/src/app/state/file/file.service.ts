@@ -53,7 +53,6 @@ export class FileService {
           );
         })
       )
-      .subscribe((action) => this.store.dispatch(action));
   }
   getFile(userId: string) {
     const headers = new HttpHeaders().set(
