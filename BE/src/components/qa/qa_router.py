@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from .qa import CHATBOT
+from .qa import module
 
 router = Blueprint("qa", __name__)
 
@@ -7,10 +7,4 @@ USER_CHATBOT = {}
 
 @router.route("/qa", methods = ["POST"])
 def qa():
-    
-    user_id = request.json["user_id"]
-    
-    if user_id not in USER_CHATBOT:
-        USER_CHATBOT[user_id] = CHATBOT(user_id, request.json["file_ids"])
-    
-    return jsonify({"answer": USER_CHATBOT[user_id].qa(request.json)})
+    return jsonify({"answer": module.qa(request.json)})
