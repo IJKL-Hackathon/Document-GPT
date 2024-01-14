@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { BASR_URL_API } from 'src/config/api';
 
 @Injectable({
@@ -20,42 +20,48 @@ export class FeaturService {
   }
 
   getSummary(fileId:any, userId:string): Observable<any> {
-    let params = new HttpParams ()
-      .set('fileId',fileId)
-      .set('userId',userId)
- 
-    const headers = this.getHeaders();
-    return this.http.get<any>(`${this.apiUrl}/summarize`, { headers,params });
+    let params = {
+      fileId: fileId,
+      userId: userId
+    }
+      
+    return this.http.post<any>(`${this.apiUrl}/summarize`, params);
   }
 
-  getQA(option:string,fileId:any, userId:string,query:string): Observable<any> {
-    let params = new HttpParams ()
-      .set('option', option)
-      .set('fileId',fileId)
-      .set('userId',userId)
-      .set('query',query)
+  getQA(fileId:any, userId:string,query:string): Observable<any> {
+    let params = {
+      fileId: fileId,
+      userId: userId,
+      query: query
+    }
     
-    const headers = this.getHeaders();
-    return this.http.get<any>(`${this.apiUrl}/qa`, { headers,params });
+    return this.http.post<any>(`${this.apiUrl}/qa`, params);
   }
-  createQA(fileId:any, userId:string): Observable<any> {
-    let params = new HttpParams ()
-      .set('fileId',fileId)
-      .set('userId',userId)
-    
-    const headers = this.getHeaders();
-    return this.http.get<any>(`${this.apiUrl}/qa`, { headers,params });
-  }
-  deleteQA(): Observable<any> {
-    const headers = this.getHeaders();
-    return this.http.get<any>(`${this.apiUrl}/qa`, { headers });
-  }
+
   getQuizizz(fileId:any, userId:string): Observable<any> {
-    let params = new HttpParams ()
-      .set('fileId',fileId)
-      .set('userId',userId)
+    let params = {
+      fileId: fileId,
+      userId: userId
+    }
 
-    const headers = this.getHeaders();
-    return this.http.get<any>(`${this.apiUrl}/quizz`, { headers,params });
+    return this.http.post<any>(`${this.apiUrl}/quizz`, params);
+  }
+  private storedData: any;
+
+  getStoredSumData(): any {
+    return this.storedData;
+  }
+
+  setStoreSumData(data: any): void {
+    this.storedData = data;
+  }
+
+  private sumDataSubject = new BehaviorSubject<any>(null);
+  setData(data: any) {
+    this.sumDataSubject.next(data);
+  }
+
+  getData() {
+    return this.sumDataSubject.asObservable();
   }
 }

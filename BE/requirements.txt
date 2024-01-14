@@ -1,4 +1,7 @@
+langchain==0.0.335
+openai==1.7.2
+azure-search-documents==11.4.0b8
 uvicorn
-fastapi
 langchain_openai
-langchain
+flask
+tiktoken

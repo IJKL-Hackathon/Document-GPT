@@ -1,11 +1,12 @@
 import { Component, ElementRef, EventEmitter, HostListener, Output } from '@angular/core';
-import { myObject, posts, res } from 'src/Data/res_file';
+
 import { MatDialog } from '@angular/material/dialog'
 import { AuthComponent } from 'src/app/auth/auth.component';
 import { UserService } from 'src/app/state/user/user.service';
 import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/models/AppState';
 import { FileService } from 'src/app/state/file/file.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-nav-left',
   templateUrl: './nav-left.component.html',
@@ -22,19 +23,20 @@ export class NavLeftComponent {
   selectAllChecked: boolean = false;
 
   constructor(private diaolog: MatDialog, private userService: UserService, private store: Store<AppState>,
-    private fileService: FileService,private elRef: ElementRef) {
-
+    private fileService: FileService,private elRef: ElementRef,private router: Router) {
   }
   ngOnInit() {
-    this.res_file = myObject;
-    console.log(this.res_file);
-
+    // this.res_file = res;
+    
     if (localStorage.getItem("jwt")) {
       this.userService.getUserProfile();
     }
     this.store.pipe(select((store) => store.user)).subscribe((user) => {
       this.UserProfile = user.userProfile;
-      // this.res_file = this.fileService.getFile(this.UserProfile.id);
+      this.fileService.getFile(this.UserProfile.id).subscribe((res) => {
+        this.res_file = res;
+      });
+      console.log(this.res_file);
       // console.log("user-nav",user);
       
       if (this.UserProfile) {
@@ -59,10 +61,11 @@ export class NavLeftComponent {
       // console.log('File selected:', this.selectedFile);
 
     } else if (this.UserProfile && this.selectedFile) {
-      console.log(this.selectedFile);
-      
-      
+      // console.log(this.UserProfile, this.selectedFile);
       this.res_file_upload = this.fileService.uploadFile(this.UserProfile.id, this.selectedFile);
+      this.fileService.getFile(this.UserProfile.id).subscribe((res) => {
+        this.res_file = res;
+      });
     }
 
   }
@@ -83,27 +86,18 @@ export class NavLeftComponent {
   logout() {
     this.userService.logout();
     this.isMenuOpen=false
+    this.res_file=[];
+    this.router.navigate(['/']);
   }
   onCheckboxChange(event: any, id: any) {
     if (event.target.checked) {
-      // Checkbox is checked
-      this.selectedFileIds.push(id);
-      console.log("Selected File IDs:", this.selectedFileIds);
-  
-      // Save the updated file IDs
-      this.fileService.saveFileId(this.selectedFileIds);
+      // this.fileIdSelected=id;
+      this.fileService.saveFileId(id);
+      this.fileService.updateSelectedFileIds(id, event.target.checked);
+      console.log('Checkbox checked with id:', this.fileService.getFileId());
     } else {
-      // Checkbox is unchecked
-      // this.fileService.removeFileId(id);
-      this.selectedFileIds = this.selectedFileIds.filter(fileId => fileId !== id);
-      this.fileService.saveFileId(this.selectedFileIds);
-      console.log("Removed File ID:", id);
+      console.log('Checkbox unchecked with id:', id);
     }
-  
-    // Retrieve the updated file IDs by subscribing to the observable
-    this.fileService.getFileId().subscribe(updatedFileIds => {
-      console.log('File IDs:', updatedFileIds);
-    });
   }
   
 
@@ -114,25 +108,29 @@ export class NavLeftComponent {
     }
   }
 
-  selectAll() {
-    
-    this.selectAllChecked = !this.selectAllChecked;
-    if(this.selectAllChecked){
-      this.selectedFileIds = this.res_file.map((data:any) => data.id);
-      this.res_file.forEach((data:any) => {
-        data.isSelected = true;
-      });
-      this.fileService.saveFileId(this.selectedFileIds)
-    }else{
-      this.selectedFileIds = [];
-      this.res_file.forEach((data:any) => {
-        data.isSelected = false;
-      });
-      this.fileService.saveFileId(this.selectedFileIds)
-    }
-    console.log(this.selectedFileIds);
-    
+  get getFileId(): string {
+    return this.fileService.getFileId();
   }
+
+  // selectAll() {
+    
+  //   this.selectAllChecked = !this.selectAllChecked;
+  //   if(this.selectAllChecked){
+  //     this.selectedFileIds = this.res_file.map((data:any) => data.id);
+  //     this.res_file.forEach((data:any) => {
+  //       data.isSelected = true;
+  //     });
+  //     this.fileService.saveFileId(this.selectedFileIds)
+  //   }else{
+  //     this.selectedFileIds = [];
+  //     this.res_file.forEach((data:any) => {
+  //       data.isSelected = false;
+  //     });
+  //     this.fileService.saveFileId(this.selectedFileIds)
+  //   }
+  //   console.log(this.selectedFileIds);
+    
+  // }
 
 
   

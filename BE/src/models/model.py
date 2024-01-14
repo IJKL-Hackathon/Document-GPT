@@ -1,30 +1,34 @@
 import os
-from dotenv import load_dotenv
-load_dotenv()
-
-from langchain_openai import AzureOpenAI
-
-from langchain.callbacks import get_openai_callback
+# from langchain_openai import AzureOpenAI
 from langchain_openai import AzureChatOpenAI
-from langchain.schema import HumanMessage
-from langchain_core.output_parsers import StrOutputParser
+from langchain_openai import AzureOpenAIEmbeddings
+# from langchain.llms.openai import AzureOpenAI
+from langchain.chat_models import AzureChatOpenAI as AzureChat
 
-llm = AzureOpenAI(
+llm_model = AzureChat(
     deployment_name=os.getenv("GPT_DEPLOY"),
-    model_name=os.getenv("GPT_MODEL"),
+    model=os.getenv("GPT_MODEL"),
+    temperature=0
 )
 
-print(llm)
+# llm_model = AzureOpenAI(
+#     deployment_name=os.getenv("GPT_DEPLOY"),
+#     model_name=os.getenv("GPT_MODEL"),
+#     temperature=0
+# )
 
-model = AzureChatOpenAI(
+chat_model = AzureChatOpenAI(
     deployment_name=os.getenv("GPT_DEPLOY"),
     model_name=os.getenv("GPT_MODEL"),
+    temperature=0
 )
 
-print(model)
-output_parser = StrOutputParser()
-chain = model | output_parser
+print("Created " + os.getenv("GPT_MODEL") + " successfully.")
 
-result = chain.invoke("Translate this sentence from English to Vietnamese. I love programming")
-print(result)
+embeddings = AzureOpenAIEmbeddings(
+    deployment=os.getenv("ADA_DEPLOY"), 
+    model=os.getenv("ADA_MODEL"),
+    chunk_size=1
+)
 
+print("Created " + os.getenv("ADA_MODEL") + " successfully.")

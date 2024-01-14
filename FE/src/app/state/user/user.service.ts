@@ -10,7 +10,7 @@ import { getUserProfileFailure, getUserProfileSuccess, logoutSucess } from "./us
 })
 
 export class UserService {
-    private apiUrl = BASR_URL_API + '/api/users/profile';
+    private apiUrl = BASR_URL_API + '/users/profile';
     // private header: HttpHeaders;
   
     constructor(private http: HttpClient, private store: Store) {

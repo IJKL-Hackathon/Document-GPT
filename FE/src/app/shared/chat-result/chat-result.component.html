@@ -1,34 +1,28 @@
 <div class="chat-container relative">
   <ng-container *ngIf=" param=='sum'">
 
-    <div class="message received">
+    <div  class="message received">
       <span class="sender">Chat IJKL:</span>
-      <p>{{answers}}</p>
-      <p >Chí Phèo" là một tác phẩm văn học kinh điển của Việt Nam, mở ra một hành trình sâu sắc vào lòng con người và xã hội. Cuộc đời của Chí Phèo được mô tả như một bức tranh bi tráng với những đau thương, sự hiểu biết về tình người, và những bài học về lòng nhân ái.
-
-        Chí Phèo, mặc dù là người nông dân giản dị, lại là người có tâm hồn sâu sắc và tư duy nhạy bén. Tác giả tạo ra một hình tượng của sự trong sáng, lòng chân thành và tình yêu thương, nhưng Chí Phèo lại phải đối mặt với sự đen tối của xã hội. Cuộc sống của anh là một chuỗi bi kịch, từ tình bạn đến tình yêu, và từ lòng tin đến sự phản bội.
-        
-        Những mối quan hệ trong tác phẩm đều là những chiều sâu của xã hội, thể hiện sự phân biệt đối xử và địa vị xã hội. Tình bạn của Chí Phèo với thầy Tuấn là một biểu tượng cho sự đồng lòng và tình người, trong khi tình yêu giữa Chí Phèo và Mắt Kính lại là một sự đối đầu với định kiến và định kiến xã hội.
-        
-        Cuộc sống của Chí Phèo không chỉ là câu chuyện riêng tư mà còn là một bức tranh lớn về xã hội Việt Nam thời kỳ đó. Tác phẩm phản ánh sự bất công, khó khăn, và những giá trị nhân văn mà người Việt Nam luôn tự hào. "Chí Phèo" không chỉ là một câu chuyện, mà là một bức tranh đặc sắc về con người và xã hội</p>
+      <ng-container *ngIf="answers; else sumDataSection">
+        <p>{{answers}}</p>
+      </ng-container>
+      <ng-template #sumDataSection>
+        <p>{{sumData}}</p>
+      </ng-template>
+    
     </div>
   </ng-container>
   <ng-container *ngIf=" param=='qa'">
-    <ng-container *ngIf="fileSelected.lenght>0; else dontSelected">
-
-      <div *ngFor="let message of messages" [class]="message.className">
-        <span class="sender">{{ message.sender }}:</span>
-        <p>{{ message.content }}</p>
-      </div>
-      
-      <div class="new-message bottom-32 flex w-full">
-        <input class="searched-message" type="text" placeholder="Type your message..." [(ngModel)]="userInput" (keyup.enter)="sendMessage()">
-        <button (click)="sendMessage()">Send</button>
-      </div>
-    </ng-container>
-    <ng-template #dontSelected>
-      <p>You have not selected the file yet</p>
-    </ng-template>
+    <div *ngFor="let message of messages" [class]="message.className">
+      <span class="sender">{{ message.sender }}:</span>
+      <p>{{ message.content }}</p>
+    </div>
+    
+    <div class="new-message bottom-32 flex w-full">
+      <input class="searched-message" type="text" placeholder="Type your message..." [(ngModel)]="userInput" (keyup.enter)="sendMessage()">
+      <button (click)="sendMessage()">Send</button>
+    </div>
+    
     <!-- Add more messages as needed -->
 
     
@@ -42,55 +36,37 @@
 
   <ng-container *ngIf=" param=='quizizz'">
     <div class="quiz-container">
-      <form id="quiz-form space-x-4">
-        <h2>Câu hỏi 1: Ngôn ngữ lập trình JavaScript được phát triển bởi công ty nào?</h2>
-        <label>
-          <input type="radio" name="answer1" value="a"> a. Microsoft
-        </label>
-        <label>
-          <input type="radio" name="answer1" value="b"> b. Apple
-        </label>
-        <label>
-          <input type="radio" name="answer1" value="c"> c. Google
-        </label>
-        <label>
-          <input type="radio" name="answer1" value="d"> d. Netscape
-        </label>
-  
-        <h2>Câu hỏi 2: HTML là viết tắt của từ gì?</h2>
-        <label>
-          <input type="radio" name="answer2" value="a"> a. HyperText Markup Language
-        </label>
-        <label>
-          <input type="radio" name="answer2" value="b"> b. Hyper Transfer Markup Language
-        </label>
-        <label>
-          <input type="radio" name="answer2" value="c"> c. HyperTech Markup Language
-        </label>
-        <label>
-          <input type="radio" name="answer2" value="d"> d. HyperText Makeup Language
-        </label>
-  
-        <h2>Câu hỏi 3: CSS là viết tắt của từ gì?</h2>
-        <label>
-          <input type="radio" name="answer3" value="a"> a. Counter Style Sheets
-        </label>
-        <label>
-          <input type="radio" name="answer3" value="b"> b. Colorful Style Sheets
-        </label>
-        <label>
-          <input type="radio" name="answer3" value="c"> c. Computer Style Sheets
-        </label>
-        <label>
-          <input type="radio" name="answer3" value="d"> d. Cascading Style Sheets
-        </label>
-  
-        <button type="submit">Submit</button>
-      </form>
+      <!-- Trong file .html của component -->
+<div *ngFor="let question of answers; let questionIndex = index">
+  <p>{{questionIndex + 1}}. {{ question.query }}</p>
+  <ul>
+    <li *ngFor="let choice of question.choices; let i = index">
+      <label>
+        <input type="radio" name="answer{{ questionIndex }}" [value]="i" (change)="updateSelectedAnswer(questionIndex, i)">
+        {{ i + 1 }}. {{ choice }}
+      </label>
+    </li>
+  </ul>
+  <p *ngIf="questionResults[questionIndex] === 'Correct'" class="text-success">Correct!
+     <span>answer : {{question.answer}}. </span>
+     <span>{{question.explanation}}</span>
+    </p>
+  <p *ngIf="questionResults[questionIndex] === 'Incorrect'" class="text-danger">Incorrect!
+    <span>answer:{{question.answer}}. </span> 
+    <span>{{question.explanation}}</span> <br>
+  </p>
+  <hr>
+</div>
+
+<button class="mt-2" (click)="checkAnswers()">Check</button>
+
+
+
     </div>
   </ng-container>
   <ng-container *ngIf=" param==''">
     <p class="flex items-center justify-center h-full text-xl">Login and select the file to use</p>
   </ng-container>
   </div>
+  
   <app-feature (answer)="receiveDataFromFeature($event)"></app-feature>

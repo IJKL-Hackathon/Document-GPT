@@ -17,30 +17,44 @@ export class ChatResultComponent {
   messages: { sender: string, content: string, className: string }[] = [];
   answers: any;
   UserProfile:any;
-  fileSelected: any;
+  sumData:any;
+ 
+ selectedAnswers: number[] = [];
 
-  apiData: any[] = [];
   constructor(private activatedRoute:ActivatedRoute,private featurService:FeaturService,
     private fileService:FileService, private userService:UserService,private store:Store<AppState>
     ){
 
   }
   ngOnInit(){
-    this.fileService.getFileId().subscribe((fileSelected) => {
-      this.fileSelected = fileSelected;
-      // Thực hiện các hành động khác khi fileSelected thay đổi
-    });
+    // this.fileService.getFileId().subscribe((fileSelected) => {
+    //   this.fileSelected = fileSelected;
+    //   // Thực hiện các hành động khác khi fileSelected thay đổi
+    // });
+    // another-component.ts
+      this.featurService.getData().subscribe((sumData) => {
+        this.answers = sumData;
+        console.log(sumData);
+        
+      });
+
+   this.sumData=this.featurService.getStoredSumData();
     this.messages.push({ sender: 'Chat IJKL', content: 'Hello! How can I help you today?', className: 'message received' });
-  console.log(this.param);
-  this.store.pipe(select((store)=>store.user)).subscribe((user)=>{
+    console.log(this.param);
+    this.store.pipe(select((store)=>store.user)).subscribe((user)=>{
     this.UserProfile=user.userProfile;
   
   });
  
 };
 receiveDataFromFeature(data: any) {
+  console.log(data);
+  
   this.answers = data;
 
+ console.log("out put: ",this.answers);
+ 
+  // Thực hiện các hành động khác dựa trên dữ liệu nhận được từ component con
 }
 sendMessage() {
   let fileId=this.fileService.getFileId();
@@ -52,7 +66,7 @@ sendMessage() {
     this.messages.push({ sender: 'You', content: this.userInput, className: 'message sent' });
 
   
-    this.featurService.getQA('qa', fileId, this.UserProfile.id, this.userInput).subscribe(response => {
+    this.featurService.getQA( fileId, this.UserProfile.id, this.userInput).subscribe(response => {
       console.log(response);
      
       this.messages.push({ sender: 'Chat IJKL', content: response.answer, className: 'message received' });
@@ -63,6 +77,46 @@ sendMessage() {
   }
  
   }
+
+checkAnswer:any;
+updateSelectedAnswer(questionIndex: number, choiceIndex: number) {
+  this.selectedAnswers[questionIndex] = choiceIndex;
+}
+
+// checkAnswers() {
+//   for (let i = 0; i < this.answers.length; i++) {
+//     const correctAnswerIndex = this.answers[i].answer;
+//     console.log(this.selectedAnswers);
+    
+//     if (this.selectedAnswers[i] === correctAnswerIndex) {
+//       this.checkAnswer=`Question ${i + 1}: Correct! Explanation: ${this.answers[i].explanation}`
+//       console.log(`Question ${i + 1}: Correct! Explanation: ${this.answers[i].explanation}`);
+//     } else {
+//       // Đáp án sai, xử lý logic tương ứng
+//       this.checkAnswer=`Question ${i + 1}: Incorrect! Explanation: ${this.answers[i].explanation}`
+//       console.log(`Question ${i + 1}: Incorrect! Correct answer: ${correctAnswerIndex + 1}`);
+//     }
+//   }
+// }
+// Trong file .ts của component
+// Trong file .ts của component
+questionResults: string[] = [];
+
+checkAnswers() {
+  this.questionResults = []; // Đặt lại mảng trạng thái
+
+  for (let i = 0; i < this.answers.length; i++) {
+    const correctAnswerIndex = this.answers[i].answer;
+
+    if (this.selectedAnswers[i] === correctAnswerIndex) {
+      this.questionResults[i] = 'Correct';
+    } else {
+      this.questionResults[i] = 'Incorrect';
+    }
+  }
+}
+
+
 }
 
 
