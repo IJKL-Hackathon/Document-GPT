@@ -26,15 +26,15 @@ export class NavLeftComponent {
 
   }
   ngOnInit() {
-    this.res_file = res;
-    console.log(this.res_file);
+    // this.res_file = res;
+    // console.log(this.res_file);
 
     if (localStorage.getItem("jwt")) {
       this.userService.getUserProfile();
     }
     this.store.pipe(select((store) => store.user)).subscribe((user) => {
       this.UserProfile = user.userProfile;
-      // this.res_file = this.fileService.getFile(this.UserProfile.id);
+      this.res_file = this.fileService.getFile(this.UserProfile.id);
       // console.log("user-nav",user);
       
       if (this.UserProfile) {

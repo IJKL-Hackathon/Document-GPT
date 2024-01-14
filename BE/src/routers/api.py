@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from utils.preprocessing import tien_xu_li
 from components import qa, quizz, summarize, upload
+from database import mongodb
 
 api = Blueprint("api", __name__)
 url_prefix = '/api'
@@ -23,3 +24,62 @@ api.register_blueprint(qa.router, url_prefix=url_prefix)
 api.register_blueprint(quizz.router, url_prefix=url_prefix)
 api.register_blueprint(summarize.router, url_prefix=url_prefix)
 api.register_blueprint(upload.router, url_prefix=url_prefix)
+
+import jwt
+
+@api.route("/api/register", methods = ["POST"])
+def register():
+    
+    form = request.get_json()
+    
+    fullname = form["fullname"]
+    email = form["email"]
+    password = form["password"]
+    
+    key = "secret"
+    encoded = jwt.encode({
+            "email": email,
+            "password": password
+        }, key, algorithm="HS256")
+    
+    mongodb.insert_user({
+        "fullname": fullname,
+        "email": email,
+        "password": password,
+        "jwt": encoded
+    })
+    
+    return {"jwt": encoded}
+
+@api.route("/api/users/profile", methods = ["GET"])
+def profile():
+    
+    auth_header = request.headers.get('Authorization')
+    token = auth_header.split(" ")[1]
+    
+    user = mongodb.get_user(token)
+    user["_id"] = str(user["_id"])
+    
+    return user
+
+@api.route("/api/login", methods = ["POST"])
+def login():
+    
+    form = request.get_json()
+    
+    email = form["email"]
+    password = form["password"]
+    
+    key = "secret"
+    encoded = jwt.encode({
+            "email": email,
+            "password": password
+        }, key, algorithm="HS256")
+    
+    user = mongodb.get_user(encoded)
+    
+    if user:
+        return {"jwt": encoded}
+    
+    return 400
+    

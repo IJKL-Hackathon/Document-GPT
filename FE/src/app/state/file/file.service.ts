@@ -47,7 +47,7 @@ getFile(userId:string) {
   let params = new HttpParams ()
       .set('userId', userId)
 
-  return this.http.get(`${this.apiUrl}/getfile'`,{ headers,params} ).pipe(
+  return this.http.get(`${this.apiUrl}/getfile`,{ headers,params} ).pipe(
     map((response) => {
       // Dispatch success action
       console.log("file successfully get" , response);

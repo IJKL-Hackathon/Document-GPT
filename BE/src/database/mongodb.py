@@ -34,16 +34,23 @@ class MONGO_DB:
         
         return collection
     
+    def get_file_by_userID(self, user_id):
+        return self.collection["file"].find({"user_id": user_id})
+    
     def get_file(self, *file_ids):
         cursor = self.collection["file"].find({"_id": {"$in": file_ids}})
         files = list(cursor)
         return files
 
     def insert_file(self, user_id, *files):
-        result = self.collection["file"].insert_many(files)
-        inserted_ids = result.inserted_ids
         
-        self.vs.add_file(user_id, files, inserted_ids)
+        inserted_ids = []
+        for file in files:
+            file["user_id"] = user_id
+            result = self.collection["file"].insert_one(file)
+            inserted_ids.append(result.inserted_ids)
+        
+        # self.vs.add_file(user_id, files, inserted_ids)
         
     def insert_user(self, user):
         self.collection["user"].insert_one(user)
@@ -54,8 +61,8 @@ class MONGO_DB:
     def delete_user(self, user_id):
         self.collection["user"].delete_one({"_id": user_id})
         
-    def get_user(self, email, password):
-        return self.collection["user"].find_one({"email": email, "password": password})
+    def get_user(self, jwt):
+        return self.collection["user"].find_one({"jwt": jwt})
 
 mongodb = MONGO_DB()
 
