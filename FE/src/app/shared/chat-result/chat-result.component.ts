@@ -15,14 +15,21 @@ export class ChatResultComponent {
   @Input() param: string = '';
   userInput: string = '';
   messages: { sender: string, content: string, className: string }[] = [];
-  answer: any;
+  answers: any;
   UserProfile:any;
+  fileSelected: any;
+
+  apiData: any[] = [];
   constructor(private activatedRoute:ActivatedRoute,private featurService:FeaturService,
     private fileService:FileService, private userService:UserService,private store:Store<AppState>
     ){
 
   }
   ngOnInit(){
+    this.fileService.getFileId().subscribe((fileSelected) => {
+      this.fileSelected = fileSelected;
+      // Thực hiện các hành động khác khi fileSelected thay đổi
+    });
     this.messages.push({ sender: 'Chat IJKL', content: 'Hello! How can I help you today?', className: 'message received' });
   console.log(this.param);
   this.store.pipe(select((store)=>store.user)).subscribe((user)=>{
@@ -32,10 +39,8 @@ export class ChatResultComponent {
  
 };
 receiveDataFromFeature(data: any) {
-  this.answer = data;
-  
+  this.answers = data;
 
-  // Thực hiện các hành động khác dựa trên dữ liệu nhận được từ component con
 }
 sendMessage() {
   let fileId=this.fileService.getFileId();

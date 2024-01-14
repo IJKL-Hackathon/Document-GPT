@@ -7,6 +7,7 @@ import { Store, select } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { FileService } from 'src/app/state/file/file.service';
 import { FeaturService } from 'src/app/service/feature.service';
+import { questions } from 'src/Data/res_file';
 @Component({
   selector: 'app-feature',
   templateUrl: './feature.component.html',
@@ -50,7 +51,7 @@ export class FeatureComponent {
       // console.log("option:",router);
       switch (option) {
         case 'sum':
-          this.featureService.getSummary(option,fileId,this.UserProfile.id).subscribe(
+          this.featureService.getSummary(fileId,this.UserProfile.id).subscribe(
             (response) => {
               this.answerData = response;
               this.sendAnswer(response);
@@ -63,23 +64,24 @@ export class FeatureComponent {
           );
           break;
         case 'qa':
-          // this.featureService.getQA(option,fileId,this.UserProfile.id,this.query).subscribe(
-          //   (response) => {
-          //     this.answerData = response;
-          //     this.sendAnswer(response);
-          //     console.log('QA Response:', response);
-          //   },
-          //   (error) => {
-          //     // Xử lý lỗi khi gọi API
-          //     console.error('API Error:', error);
-          //   }
-          // );
+      
+        this.fileService.getFileId().subscribe((fileSelected) => {
+          console.log("a",fileSelected);
+          if (fileSelected.length === 0) {
+            this.answerData = "You have not selected the file yet";
+            this.sendAnswer(this.answerData);
+          } else {
+            // Do something else if needed
+          }
+        });
+        
           break;
         case 'quizizz':
-          this.featureService.getQuizizz(option,fileId,this.UserProfile.id).subscribe(
+          this.featureService.getQuizizz(fileId,this.UserProfile.id).subscribe(
             (response) => {
-              this.answerData = response;
-              this.sendAnswer(response);
+              
+              this.answerData = questions;
+              this.sendAnswer(this.answerData);
               console.log('Quizizz Response:', response);
             },
             (error) => {
@@ -97,7 +99,8 @@ export class FeatureComponent {
   }
 
   sendAnswer(answerData:any){
-     
+    console.log(answerData);
+    
     this.answer.emit(answerData);
   }
 }

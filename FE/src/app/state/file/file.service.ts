@@ -1,7 +1,7 @@
 // upload.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { BASR_URL_API } from 'src/config/api';
@@ -23,6 +23,8 @@ export class FileService {
     userid:userid,
     fileupload:fileupload
   }
+  console.log(fileupload);
+  
   const headers = new HttpHeaders().set("Authorization", `Bearer ${localStorage.getItem("jwt")}`);
     return this.http.post(`${this.apiUrl}/upload'`, dataFile,{ headers }).pipe(
       map((response) => {
@@ -47,7 +49,7 @@ getFile(userId:string) {
   let params = new HttpParams ()
       .set('userId', userId)
 
-  return this.http.get(`${this.apiUrl}/getfile'`,{ headers,params} ).pipe(
+  return this.http.get(`${this.apiUrl}/getfile`,{ headers,params} ).pipe(
     map((response) => {
       // Dispatch success action
       console.log("file successfully get" , response);
@@ -89,11 +91,23 @@ searchFiles(query:string,userId:string) {
   ).subscribe((action)=>this.store.dispatch(action));
 }
 
-  private fileId:string='';
-  saveFileId(Id:string){
-    return this.fileId=Id;
+  // private fileId:string []=[];
+  private fileId = new BehaviorSubject<string[]>([]);
+  saveFileId(fileSelected: string[]) {
+    this.fileId.next(fileSelected);
   }
-  getFileId(){
-    return this.fileId;
+
+  removeFileId(fileToRemove: string) {
+    const currentFileIds = this.fileId.value;
+    
+    const updatedFileIds = currentFileIds.filter(id => id !== fileToRemove);
+
+    
+    this.fileId.next(updatedFileIds);
   }
+
+  getFileId(): Observable<string[]> {
+    return this.fileId.asObservable();
+  }
+  
 }

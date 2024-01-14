@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, HostListener, Output } from '@angular/core';
-import { res } from 'src/Data/res_file';
+import { myObject, posts, res } from 'src/Data/res_file';
 import { MatDialog } from '@angular/material/dialog'
 import { AuthComponent } from 'src/app/auth/auth.component';
 import { UserService } from 'src/app/state/user/user.service';
@@ -18,15 +18,15 @@ export class NavLeftComponent {
   UserProfile: any;
   fileTitle: string = '';
   searchQuery: string = '';
-  
-
+  selectedFileIds: string[] = [];
+  selectAllChecked: boolean = false;
 
   constructor(private diaolog: MatDialog, private userService: UserService, private store: Store<AppState>,
     private fileService: FileService,private elRef: ElementRef) {
 
   }
   ngOnInit() {
-    this.res_file = res;
+    this.res_file = myObject;
     console.log(this.res_file);
 
     if (localStorage.getItem("jwt")) {
@@ -44,6 +44,9 @@ export class NavLeftComponent {
       // console.log("userprofile:" ,user.userProfile);
     });
 
+    this.res_file.forEach((data:any) => {
+      data.isSelected = false;
+    });
 
   }
   onFileSelected(event: any) {
@@ -56,6 +59,9 @@ export class NavLeftComponent {
       // console.log('File selected:', this.selectedFile);
 
     } else if (this.UserProfile && this.selectedFile) {
+      console.log(this.selectedFile);
+      
+      
       this.res_file_upload = this.fileService.uploadFile(this.UserProfile.id, this.selectedFile);
     }
 
@@ -80,21 +86,54 @@ export class NavLeftComponent {
   }
   onCheckboxChange(event: any, id: any) {
     if (event.target.checked) {
-      // this.fileIdSelected=id;
-      this.fileService.saveFileId(id);
-      console.log('Checkbox checked with id:', this.fileService.getFileId());
+      // Checkbox is checked
+      this.selectedFileIds.push(id);
+      console.log("Selected File IDs:", this.selectedFileIds);
+  
+      // Save the updated file IDs
+      this.fileService.saveFileId(this.selectedFileIds);
     } else {
-      console.log('Checkbox unchecked with id:', id);
+      // Checkbox is unchecked
+      // this.fileService.removeFileId(id);
+      this.selectedFileIds = this.selectedFileIds.filter(fileId => fileId !== id);
+      this.fileService.saveFileId(this.selectedFileIds);
+      console.log("Removed File ID:", id);
     }
+  
+    // Retrieve the updated file IDs by subscribing to the observable
+    this.fileService.getFileId().subscribe(updatedFileIds => {
+      console.log('File IDs:', updatedFileIds);
+    });
   }
+  
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
-    // Check if the clicked element is outside the button and menu container
     if (!this.elRef.nativeElement.contains(event.target)) {
       this.isMenuOpen = false;
     }
   }
+
+  selectAll() {
+    
+    this.selectAllChecked = !this.selectAllChecked;
+    if(this.selectAllChecked){
+      this.selectedFileIds = this.res_file.map((data:any) => data.id);
+      this.res_file.forEach((data:any) => {
+        data.isSelected = true;
+      });
+      this.fileService.saveFileId(this.selectedFileIds)
+    }else{
+      this.selectedFileIds = [];
+      this.res_file.forEach((data:any) => {
+        data.isSelected = false;
+      });
+      this.fileService.saveFileId(this.selectedFileIds)
+    }
+    console.log(this.selectedFileIds);
+    
+  }
+
 
   
 }
