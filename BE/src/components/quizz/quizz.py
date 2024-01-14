@@ -15,8 +15,9 @@ Helpful Answer:"""
 
 reduce_template = """The following is set of summaries:
 {docs}
-Take these and distill it into a final, consolidated summary of the main themes
-After that, please create for me 10 multiple choice questions a b c d
+Give me at least 5 multiple choice questions related to the topic above. The questions should be at an mid level. Return your answer entirely in the form of a JSON object. The JSON object should have a key named "questions" which is an array of the questions. Each quiz question should include the choices, the answer, and a brief explanation of why the answer is correct. Don't include anything other than the JSON. The JSON properties of each question should be "query" (which is the question), "choices", "answer", and "explanation". The choices shouldn't have any ordinal value like A, B, C, D or a number like 1, 2, 3, 4. The answer should be the 0-indexed number of the correct choice.
+Each questions, choices, answers must be unique and can not be duplicated in the quiz.
+Make the choices in each question be diversity and less duplicated as posiable.
 Always say answer in Vietnamese
 Helpful Answer:"""
 class QUIZZ:
@@ -48,11 +49,14 @@ class QUIZZ:
             return_intermediate_steps=False,
         )
 
-    def summarize(self, req):
+    def quizz(self, req):
         
-        user_id = req["user_id"]
-        file_ids = req["file_ids"]
+        user_id = req["userId"]
+        file_ids = req["fileId"]
 
+        if not isinstance(file_ids, list):
+            file_ids = [file_ids]
+    
         files = self.mongo.get_file(*file_ids)
         docs = self.vs.create_documents(user_id, files, file_ids)
         return self.map_reduce_chain.run(docs)

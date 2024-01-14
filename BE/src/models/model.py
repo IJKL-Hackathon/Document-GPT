@@ -2,13 +2,20 @@ import os
 # from langchain_openai import AzureOpenAI
 from langchain_openai import AzureChatOpenAI
 from langchain_openai import AzureOpenAIEmbeddings
-from langchain.llms.openai import AzureOpenAI
+# from langchain.llms.openai import AzureOpenAI
+from langchain.chat_models import AzureChatOpenAI as AzureChat
 
-llm_model = AzureOpenAI(
+llm_model = AzureChat(
     deployment_name=os.getenv("GPT_DEPLOY"),
-    model_name=os.getenv("GPT_MODEL"),
+    model=os.getenv("GPT_MODEL"),
     temperature=0
 )
+
+# llm_model = AzureOpenAI(
+#     deployment_name=os.getenv("GPT_DEPLOY"),
+#     model_name=os.getenv("GPT_MODEL"),
+#     temperature=0
+# )
 
 chat_model = AzureChatOpenAI(
     deployment_name=os.getenv("GPT_DEPLOY"),

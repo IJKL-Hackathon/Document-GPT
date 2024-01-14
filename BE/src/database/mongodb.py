@@ -1,6 +1,7 @@
 import os
 import pymongo
 from .vectordb import vectordb
+from bson.objectid import ObjectId
 # Create database if it doesn't exist
 
 class MONGO_DB:
@@ -38,19 +39,20 @@ class MONGO_DB:
         return self.collection["file"].find({"user_id": user_id})
     
     def get_file(self, *file_ids):
-        cursor = self.collection["file"].find({"_id": {"$in": file_ids}})
+        obj_ids = [ObjectId(ids) for ids in file_ids]
+
+        cursor = self.collection["file"].find({"_id": {"$in": obj_ids}})
         files = list(cursor)
         return files
 
-    def insert_file(self, user_id, *files):
+    def insert_file(self, user_id, file):
         
-        inserted_ids = []
-        for file in files:
-            file["user_id"] = user_id
-            result = self.collection["file"].insert_one(file)
-            inserted_ids.append(result.inserted_ids)
+        file["user_id"] = user_id
+        inserted_id = self.collection["file"].insert_one(file).inserted_id
+
+        print(inserted_id)
         
-        # self.vs.add_file(user_id, files, inserted_ids)
+        self.vs.add_file(user_id, file, inserted_id)
         
     def insert_user(self, user):
         self.collection["user"].insert_one(user)

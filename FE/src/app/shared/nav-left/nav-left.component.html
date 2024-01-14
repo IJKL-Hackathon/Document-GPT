@@ -11,8 +11,8 @@
         </ng-container>
         <ng-container *ngFor="let data of res_file,let i = index">
           <ng-container *ngIf="i<=12">
-        <p >{{data.id}}. {{data.title}}
-           <span><input type="checkbox" name="{{data.title}}" [value]="data.id" (change)="onCheckboxChange($event, data.id)"></span>
+            <p >{{data.title}}
+            <span><input type="checkbox" name="{{data.title}}" [value]="data.id" (change)="onCheckboxChange($event, data.id)"></span>
           </p>
         </ng-container>
       </ng-container>

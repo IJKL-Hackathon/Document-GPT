@@ -48,11 +48,17 @@ class SUMMARIZE:
 
     def summarize(self, req):
         
-        user_id = req["user_id"]
-        file_ids = req["file_ids"]
+        user_id = req["userId"]
+        file_ids = req["fileId"]
+        
+        if not isinstance(file_ids, list):
+            file_ids = [file_ids]
 
         files = self.mongo.get_file(*file_ids)
         docs = self.vs.create_documents(user_id, files, file_ids)
+        
+        # print(docs)
+        # return "OK"   
         return self.map_reduce_chain.run(docs)
 
 module = SUMMARIZE()

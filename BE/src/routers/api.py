@@ -16,9 +16,6 @@ def preprocessing():
     
     if "query" in request.json:
         request.json["query"] = tien_xu_li(request.json["query"])
-    elif "file" in request.json:
-        for k, v in request.json["file"].items():
-            request.json["file"][k] = tien_xu_li(v)
 
 api.register_blueprint(qa.router, url_prefix=url_prefix)
 api.register_blueprint(quizz.router, url_prefix=url_prefix)
@@ -58,7 +55,9 @@ def profile():
     token = auth_header.split(" ")[1]
     
     user = mongodb.get_user(token)
-    user["_id"] = str(user["_id"])
+    user["id"] = str(user["_id"])
+    
+    del user["_id"]
     
     return user
 

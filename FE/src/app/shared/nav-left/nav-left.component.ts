@@ -23,18 +23,19 @@ export class NavLeftComponent {
 
   constructor(private diaolog: MatDialog, private userService: UserService, private store: Store<AppState>,
     private fileService: FileService,private elRef: ElementRef) {
-
   }
   ngOnInit() {
     // this.res_file = res;
-    // console.log(this.res_file);
-
+    
     if (localStorage.getItem("jwt")) {
       this.userService.getUserProfile();
     }
     this.store.pipe(select((store) => store.user)).subscribe((user) => {
       this.UserProfile = user.userProfile;
-      this.res_file = this.fileService.getFile(this.UserProfile.id);
+      this.fileService.getFile(this.UserProfile.id).subscribe((res) => {
+        this.res_file = res;
+      });
+      console.log(this.res_file);
       // console.log("user-nav",user);
       
       if (this.UserProfile) {
@@ -56,7 +57,11 @@ export class NavLeftComponent {
       // console.log('File selected:', this.selectedFile);
 
     } else if (this.UserProfile && this.selectedFile) {
+      // console.log(this.UserProfile, this.selectedFile);
       this.res_file_upload = this.fileService.uploadFile(this.UserProfile.id, this.selectedFile);
+      this.fileService.getFile(this.UserProfile.id).subscribe((res) => {
+        this.res_file = res;
+      });
     }
 
   }

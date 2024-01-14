@@ -17,6 +17,7 @@ export class ChatResultComponent {
   messages: { sender: string, content: string, className: string }[] = [];
   answer: any;
   UserProfile:any;
+
   constructor(private activatedRoute:ActivatedRoute,private featurService:FeaturService,
     private fileService:FileService, private userService:UserService,private store:Store<AppState>
     ){
@@ -32,9 +33,7 @@ export class ChatResultComponent {
  
 };
 receiveDataFromFeature(data: any) {
-  this.answer = data;
-  
-
+    this.answer = data;
   // Thực hiện các hành động khác dựa trên dữ liệu nhận được từ component con
 }
 sendMessage() {

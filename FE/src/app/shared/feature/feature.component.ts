@@ -52,9 +52,9 @@ export class FeatureComponent {
         case 'sum':
           this.featureService.getSummary(option,fileId,this.UserProfile.id).subscribe(
             (response) => {
-              this.answerData = response;
-              this.sendAnswer(response);
-              console.log('Summary Response:', response);
+              this.answerData = response["answer"];
+              this.sendAnswer(response["answer"]);
+              console.log('Summary Response:', response["answer"]);
             },
             (error) => {
               // Xử lý lỗi khi gọi API
@@ -65,8 +65,8 @@ export class FeatureComponent {
         case 'qa':
           // this.featureService.getQA(option,fileId,this.UserProfile.id,this.query).subscribe(
           //   (response) => {
-          //     this.answerData = response;
-          //     this.sendAnswer(response);
+          //     this.answerData = response["answer"];
+          //     this.sendAnswer(response["answer"]);
           //     console.log('QA Response:', response);
           //   },
           //   (error) => {
@@ -78,8 +78,8 @@ export class FeatureComponent {
         case 'quizizz':
           this.featureService.getQuizizz(option,fileId,this.UserProfile.id).subscribe(
             (response) => {
-              this.answerData = response;
-              this.sendAnswer(response);
+              this.answerData = response["question"];
+              this.sendAnswer(response["question"]);
               console.log('Quizizz Response:', response);
             },
             (error) => {

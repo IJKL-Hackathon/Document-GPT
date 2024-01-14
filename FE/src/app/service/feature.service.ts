@@ -20,33 +20,30 @@ export class FeaturService {
   }
 
   getSummary(option:string,fileId:any, userId:string): Observable<any> {
-    let params = new HttpParams ()
-      .set('option', option)
-      .set('fileId',fileId)
-      .set('userId',userId)
- 
-    const headers = this.getHeaders();
-    return this.http.get<any>(`${this.apiUrl}/sum`, { headers,params });
+    let params = {
+      fileId: fileId,
+      userId: userId
+    }
+      
+    return this.http.post<any>(`${this.apiUrl}/summarize`, params);
   }
 
   getQA(option:string,fileId:any, userId:string,query:string): Observable<any> {
-    let params = new HttpParams ()
-      .set('option', option)
-      .set('fileId',fileId)
-      .set('userId',userId)
-      .set('query',query)
+    let params = {
+      fileId: fileId,
+      userId: userId,
+      query: query
+    }
     
-    const headers = this.getHeaders();
-    return this.http.get<any>(`${this.apiUrl}/qa`, { headers,params });
+    return this.http.post<any>(`${this.apiUrl}/qa`, params);
   }
 
   getQuizizz(option:string,fileId:any, userId:string): Observable<any> {
-    let params = new HttpParams ()
-      .set('option', option)
-      .set('fileId',fileId)
-      .set('userId',userId)
+    let params = {
+      fileId: fileId,
+      userId: userId
+    }
 
-    const headers = this.getHeaders();
-    return this.http.get<any>(`${this.apiUrl}/quizz`, { headers,params });
+    return this.http.post<any>(`${this.apiUrl}/quizz`, params);
   }
 }

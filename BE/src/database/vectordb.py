@@ -84,23 +84,23 @@ class VECTOR_DB:
     def create_documents(self, user_id, files, file_ids):
         documents = []
         
-        for file, mongo_id in zip(files, file_ids):
-            documents.append(
-                Document(
-                    page_content=file["context"],
+        for file_id, file in zip(file_ids, files):
+            document = Document(
+                    page_content=file["content"],
                     metadata = {
                         "source": user_id,
                         "title": file["title"],
-                        "mongo_id": mongo_id
+                        "mongo_id": str(file_id)
                     }
                 )
-            )
+            
+            documents.append(document)
         
         docs = self.text_splitter.split_documents(documents)
         return docs
     
-    def add_file(self, user_id, files, file_ids):
-        docs = self.create_documents(user_id, files, file_ids)
+    def add_file(self, user_id, file, file_id):
+        docs = self.create_documents(user_id, [file], [file_id])
         self.vs.add_documents(documents=docs)
     
     def create_filter(self, user_id, file_ids = []):
@@ -135,7 +135,7 @@ class VECTOR_DB:
     
     def create_rag_chain(self, user_id):
         return (
-            {"context": self.get_retriever(user_id) | self.format_docs, "question": RunnablePassthrough()}
+            {"content": self.get_retriever(user_id) | self.format_docs, "question": RunnablePassthrough()}
             | self.prompt
             | chat_model
             | StrOutputParser()

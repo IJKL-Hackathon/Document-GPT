@@ -11,7 +11,13 @@ class UPLOAD:
 
     def getFile(self, req):
         userId = req["userId"]
-        files = self.mongo.get_file_by_userID(userId)
+        cursor = self.mongo.get_file_by_userID(userId)
+        files = list(cursor)
+        
+        for file in files:
+            file["id"] = str(file["_id"])
+            del file["_id"]
+            
         return files
 
 module = UPLOAD()
