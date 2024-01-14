@@ -1,4 +1,6 @@
+langchain==0.0.276
+azure-search-documents==11.4.0b8
 uvicorn
 langchain_openai
-langchain
 flask
+tiktoken

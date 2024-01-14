@@ -3,6 +3,7 @@ import os
 load_dotenv()
 
 import models
+from database import vectordb, mongodb
 
 from flask import Flask
 from flask_cors import CORS
