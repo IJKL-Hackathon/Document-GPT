@@ -1,87 +1,90 @@
 <!-- auth.component.html -->
+<div class="outer-container">
+  <div class="wrapper inner-container">
+    <div class="container pt-10">
+      <div class="login-container">
+        <form *ngIf="isLoginFormVisible" [formGroup]="loginForm" (ngSubmit)="submitLoginForm()">
+          <p class="text-header text-center lg:text-xl">Welcome to Chat IJLK</p>
+          <h1 class="text-center mt-10">Login</h1>
+          <div class="flex justify-center flex-col items-center space-y-2">
+            <div class="lg:mb-5  space-y-5">
+              <div class="lg:space-x-4 lg:block hidden">
+                <label for="loginEmail" class="px-4">Email</label>
+                <input formControlName="loginEmail" id="loginEmail" class="input w-full" type="email" placeholder="Email">
+                <div *ngIf="loginForm.get('loginEmail')?.invalid && loginForm.get('loginEmail')?.touched">
+                  <div *ngIf="loginForm.get('loginEmail')?.errors?.['required']" class="alert">
+                    Email is required
+                  </div>
+                  <div *ngIf="loginForm.get('loginEmail')?.errors?.['email']" class="alert">
+                    Please enter a valid email address
+                  </div>
+                </div>
+              </div>
+              <div class="lg:space-x-4">
+                <label for="loginPassword" class="px-4">Password</label>
+                <input formControlName="loginPassword" id="loginPassword" class="input w-full" type="password" placeholder="Password">
+                <div *ngIf="loginForm.get('loginPassword')?.invalid && loginForm.get('loginPassword')?.touched">
+                  <div *ngIf="loginForm.get('loginPassword')?.errors?.['required']" class="alert">
+                    Password is required
+                  </div>
+                  <div *ngIf="loginForm.get('loginPassword')?.errors?.['minlength']" class="alert">
+                    Should be at least 5 characters
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-center space-y-2">
+              <p class="lg:mt-1">Don't have an account? <span class="font-bold cursor-pointer hover:scale-110"><a (click)="changeLogin()">Sign Up</a></span></p>
+            </div>
+          </div>
+          <button type="submit" class="btn w-full">Login</button>
+        </form>
 
-<div class="container pt-10">
-  <div class="login-container">
-    <form *ngIf="isLoginFormVisible" [formGroup]="loginForm" (ngSubmit)="submitLoginForm()">
-      <p class="text-center lg:text-xl">Welcome to Chat IJLK</p>
-      <h1 class="text-center mt-10">Login</h1>
-      <div class="flex justify-center flex-col items-center space-y-2">
-        <div class="lg:mb-5  space-y-5">
-          <div class="lg:space-x-4 lg:block hidden">
-            <label for="loginEmail" class="px-4">Email</label>
-            <input formControlName="loginEmail" id="loginEmail" class="input w-full" type="email" placeholder="Email">
-            <div *ngIf="loginForm.get('loginEmail')?.invalid && loginForm.get('loginEmail')?.touched">
-              <div *ngIf="loginForm.get('loginEmail')?.errors?.['required']" class="alert">
-                Email is required
+        <form *ngIf="!isLoginFormVisible" [formGroup]="signupForm" (ngSubmit)="submitSignupForm()">
+          <p class="text-header text-center lg:text-xl">Welcome to Chat IJLK</p>
+          <h1 class="text-center mt-5">Sign Up</h1>
+          <div class="flex justify-center flex-col items-center space-y-2">
+            <div class="lg:mb-5  space-y-5">
+              <div class="lg:space-x-4">
+                <label for="signupFullname" class="px-4">Full Name</label>
+                <input formControlName="signupFullname" id="signupFullname" class="input w-full" type="text" placeholder="Fullname">
+                <div *ngIf="signupForm.get('signupFullname')?.invalid && signupForm.get('signupFullname')?.touched">
+                  <div *ngIf="signupForm.get('signupFullname')?.errors?.['required']" class="alert">
+                    Fullname is required
+                  </div>
+                </div>
               </div>
-              <div *ngIf="loginForm.get('loginEmail')?.errors?.['email']" class="alert">
-                Please enter a valid email address
+              <div class="lg:space-x-4">
+                <label for="signupEmail" class="px-4">Email</label>
+                <input formControlName="signupEmail" id="signupEmail" class="input w-full" type="email" placeholder="Email">
+                <div *ngIf="signupForm.get('signupEmail')?.invalid && signupForm.get('signupEmail')?.touched">
+                  <div *ngIf="signupForm.get('signupEmail')?.errors?.['required']" class="alert">
+                    Email is required
+                  </div>
+                  <div *ngIf="signupForm.get('signupEmail')?.errors?.['email']" class="alert">
+                    Please enter a valid email address
+                  </div>
+                </div>
+              </div>
+              <div class="lg:space-x-4">
+                <label for="signupPassword" class="px-4">Password</label>
+                <input formControlName="signupPassword" id="signupPassword" class="input w-full" type="password" placeholder="Password">
+                <div *ngIf="signupForm.get('signupPassword')?.invalid && signupForm.get('signupPassword')?.touched">
+                  <div *ngIf="signupForm.get('signupPassword')?.errors?.['required']" class="alert">
+                    Password is required
+                  </div>
+                  <div *ngIf="signupForm.get('signupPassword')?.errors?.['minlength']" class="alert">
+                    Should be at least 5 characters
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="lg:space-x-4">
-            <label for="loginPassword" class="px-4">Password</label>
-            <input formControlName="loginPassword" id="loginPassword" class="input w-full" type="password" placeholder="Password">
-            <div *ngIf="loginForm.get('loginPassword')?.invalid && loginForm.get('loginPassword')?.touched">
-              <div *ngIf="loginForm.get('loginPassword')?.errors?.['required']" class="alert">
-                Password is required
-              </div>
-              <div *ngIf="loginForm.get('loginPassword')?.errors?.['minlength']" class="alert">
-                Should be at least 5 characters
-              </div>
+            <div class="text-center space-y-5">
+              <p class="mt-10">Already have an account? <span class="font-bold cursor-pointer hover:scale-110"><a (click)="changeLogin()">Login</a> </span></p>
             </div>
+            <button type="submit" class="btn w-full mb-10">Sign Up</button>
           </div>
-        </div>
-        <div class="text-center space-y-2">
-          <p class="lg:mt-1">Don't have an account? <span class="font-bold cursor-pointer hover:scale-110"><a (click)="changeLogin()">Sign Up</a></span></p>
-        </div>
+        </form>
       </div>
-      <button type="submit" class="btn w-full">Login</button>
-    </form>
-
-    <form *ngIf="!isLoginFormVisible" [formGroup]="signupForm" (ngSubmit)="submitSignupForm()">
-      <p class="text-center lg:text-xl">Welcome to Chat IJLK</p>
-      <h1 class="text-center mt-5">Sign Up</h1>
-      <div class="flex justify-center flex-col items-center space-y-2">
-        <div class="lg:mb-5  space-y-5">
-          <div class="lg:space-x-4">
-            <label for="signupFullname" class="px-4">Full Name</label>
-            <input formControlName="signupFullname" id="signupFullname" class="input w-full" type="text" placeholder="Fullname">
-            <div *ngIf="signupForm.get('signupFullname')?.invalid && signupForm.get('signupFullname')?.touched">
-              <div *ngIf="signupForm.get('signupFullname')?.errors?.['required']" class="alert">
-                Fullname is required
-              </div>
-            </div>
-          </div>
-          <div class="lg:space-x-4">
-            <label for="signupEmail" class="px-4">Email</label>
-            <input formControlName="signupEmail" id="signupEmail" class="input w-full" type="email" placeholder="Email">
-            <div *ngIf="signupForm.get('signupEmail')?.invalid && signupForm.get('signupEmail')?.touched">
-              <div *ngIf="signupForm.get('signupEmail')?.errors?.['required']" class="alert">
-                Email is required
-              </div>
-              <div *ngIf="signupForm.get('signupEmail')?.errors?.['email']" class="alert">
-                Please enter a valid email address
-              </div>
-            </div>
-          </div>
-          <div class="lg:space-x-4">
-            <label for="signupPassword" class="px-4">Password</label>
-            <input formControlName="signupPassword" id="signupPassword" class="input w-full" type="password" placeholder="Password">
-            <div *ngIf="signupForm.get('signupPassword')?.invalid && signupForm.get('signupPassword')?.touched">
-              <div *ngIf="signupForm.get('signupPassword')?.errors?.['required']" class="alert">
-                Password is required
-              </div>
-              <div *ngIf="signupForm.get('signupPassword')?.errors?.['minlength']" class="alert">
-                Should be at least 5 characters
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="text-center space-y-5">
-          <p class="mt-10">Already have an account? <span class="font-bold cursor-pointer hover:scale-110"><a (click)="changeLogin()">Login</a> </span></p>
-        </div>
-        <button type="submit" class="btn w-full mb-10">Sign Up</button>
-      </div>
-    </form>
+    </div>
   </div>
