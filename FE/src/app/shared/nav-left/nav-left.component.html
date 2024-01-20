@@ -27,7 +27,12 @@
       <form (submit)="onSubmit()" #uploadForm enctype="multipart/form-data" class="flex">
         <input type="file" name="file" (change)="onFileSelected($event)" accept=".docx, .txt, .pdf">
         <!-- <input type="text" name="title" [(ngModel)]="fileTitle" placeholder="Enter title"> -->
-        <button type="submit"  [disabled]="!selectedFile" class="upload">Upload</button>
+        <button type="submit"  [disabled]="!selectedFile" class="upload" (click)="uploadFile()">Upload</button>
+        <div *ngIf="uploadProgress > 0" class="progress-bar">
+          <div class="progress" [style.width.%]="uploadProgress">
+            {{ uploadProgress }}%
+          </div>
+        </div>
       </form>
 
       </div>
