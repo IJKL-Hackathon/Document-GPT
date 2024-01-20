@@ -63,9 +63,13 @@ export class NavLeftComponent {
     } else if (this.UserProfile && this.selectedFile) {
       // console.log(this.UserProfile, this.selectedFile);
       this.res_file_upload = this.fileService.uploadFile(this.UserProfile.id, this.selectedFile);
-      this.fileService.getFile(this.UserProfile.id).subscribe((res) => {
-        this.res_file = res;
+      this.res_file_upload.subscribe(() => {
+        this.fileService.getFile(this.UserProfile.id).subscribe((res) => {
+          this.res_file = res;
+        });
       });
+    
+      // this.res_file=this.fileService.getFile(this.UserProfile.id);
     }
 
   }
