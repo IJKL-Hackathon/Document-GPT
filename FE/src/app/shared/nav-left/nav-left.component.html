@@ -22,12 +22,17 @@
   </div>  -->
     </div>
    
+
+      <!-- <mat-spinner color="accent" diameter="50"></mat-spinner> -->
+
+
     <div class=" absolute bottom-2">
   
       <form (submit)="onSubmit()" #uploadForm enctype="multipart/form-data" class="flex">
         <input type="file" name="file" (change)="onFileSelected($event)" accept=".docx, .txt, .pdf">
         <!-- <input type="text" name="title" [(ngModel)]="fileTitle" placeholder="Enter title"> -->
-        <button type="submit"  [disabled]="!selectedFile" class="upload">Upload</button>
+        <button type="submit"  [disabled]="!selectedFile" class="upload ">Upload</button>
+
       </form>
 
       </div>

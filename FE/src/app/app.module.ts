@@ -24,7 +24,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserReducer } from './state/user/user.reducer';
 import { FileReducer } from './state/file/file.reducer';
 import { FeaturService } from './service/feature.service';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { HistoryComponent } from './history/history.component';
+import { QuizzComponent } from './history/quizz/quizz.component';
+import { DialogShareComponent } from './shared/dialog-share/dialog-share.component';
+import { ClipboardModule } from 'ngx-clipboard';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +40,9 @@ import { FeaturService } from './service/feature.service';
     SharedComponent,
     QuizizzComponent,
     QaComponent,
+    HistoryComponent,
+    QuizzComponent,
+    DialogShareComponent,
     
  
   ],
@@ -49,7 +56,11 @@ import { FeaturService } from './service/feature.service';
     RouterModule,
     MatDialogModule,
     StoreModule.forRoot({auth:AuthReducer,user:UserReducer,file:FileReducer},{}),
-    HttpClientModule
+    HttpClientModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    DialogModule,
+    ClipboardModule
     
   ],
   providers: [FeaturService],

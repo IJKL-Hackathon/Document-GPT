@@ -1,7 +1,14 @@
+python-dotenv
+pyvi
+pymongo
 langchain==0.0.335
 openai==1.7.2
 azure-search-documents==11.4.0b8
-uvicorn
+azure-identity
 langchain_openai
+langchain_community
 flask
+flask-cors
 tiktoken
+docx2txt
+PyMuPDF
