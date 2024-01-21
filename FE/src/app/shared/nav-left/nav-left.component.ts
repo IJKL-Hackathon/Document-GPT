@@ -27,7 +27,7 @@ export class NavLeftComponent {
   }
   ngOnInit() {
     // this.res_file = res;
-    
+
     if (localStorage.getItem("jwt")) {
       this.userService.getUserProfile();
     }
@@ -38,7 +38,7 @@ export class NavLeftComponent {
       });
       console.log(this.res_file);
       // console.log("user-nav",user);
-      
+
       if (this.UserProfile) {
         this.diaolog.closeAll();
       }
@@ -101,7 +101,7 @@ export class NavLeftComponent {
       console.log('Checkbox unchecked with id:', id);
     }
   }
-  
+
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
@@ -114,26 +114,7 @@ export class NavLeftComponent {
     return this.fileService.getFileId();
   }
 
-  // selectAll() {
-    
-  //   this.selectAllChecked = !this.selectAllChecked;
-  //   if(this.selectAllChecked){
-  //     this.selectedFileIds = this.res_file.map((data:any) => data.id);
-  //     this.res_file.forEach((data:any) => {
-  //       data.isSelected = true;
-  //     });
-  //     this.fileService.saveFileId(this.selectedFileIds)
-  //   }else{
-  //     this.selectedFileIds = [];
-  //     this.res_file.forEach((data:any) => {
-  //       data.isSelected = false;
-  //     });
-  //     this.fileService.saveFileId(this.selectedFileIds)
-  //   }
-  //   console.log(this.selectedFileIds);
-    
-  // }
 
 
-  
+
 }

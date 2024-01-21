@@ -19,7 +19,7 @@ export class FeatureComponent {
   query:any;
   @Output() answer = new EventEmitter<any>();
 
-  constructor(private diaolog:MatDialog, private userService:UserService, 
+  constructor(private diaolog:MatDialog, private userService:UserService,
     private store:Store<AppState>, private router:Router,
     private fileService:FileService,private featureService:FeaturService
     ) {
@@ -32,7 +32,7 @@ export class FeatureComponent {
     }
     this.store.pipe(select((store)=>store.user)).subscribe((user)=>{
       this.UserProfile=user.userProfile;
-    
+
     });
   }
 
@@ -41,7 +41,7 @@ export class FeatureComponent {
     {
       // console.log("id:",this.fileService.getFileId());
       this.diaolog.open(AuthComponent,{
-   
+
       })
     }
     else{
@@ -56,11 +56,11 @@ export class FeatureComponent {
               this.answerData = response["answer"];
               this.featureService.setStoreSumData(response["answer"]);
             console.log(this.featureService.getData());
-            
+
                 this.featureService.setData(response["answer"]);
 
               // console.log("data:",this.featureService.getStoredSumData());
-              
+
               // this.sendAnswer(response["answer"]);
               console.log('Summary Response:', response["answer"]);
             },
@@ -71,13 +71,13 @@ export class FeatureComponent {
           );
           break;
         case 'qa':
-    
+
           break;
         case 'quizizz':
           this.featureService.getQuizizz(fileId,this.UserProfile.id).subscribe(
             (response) => {
               console.log(this.featureService.getData());
-            
+
               this.featureService.setData(response["questions"]);
               // this.answerData = response["questions"];
               // this.sendAnswer(response["questions"]);
@@ -100,7 +100,7 @@ export class FeatureComponent {
 
   sendAnswer(answerData:any){
     // console.log(answerData);
-    
+
     this.answer.emit(answerData);
   }
 }

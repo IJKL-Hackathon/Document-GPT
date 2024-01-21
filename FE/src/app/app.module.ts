@@ -36,8 +36,8 @@ import { FeaturService } from './service/feature.service';
     SharedComponent,
     QuizizzComponent,
     QaComponent,
-    
- 
+
+
   ],
   imports: [
     BrowserModule,
@@ -50,7 +50,7 @@ import { FeaturService } from './service/feature.service';
     MatDialogModule,
     StoreModule.forRoot({auth:AuthReducer,user:UserReducer,file:FileReducer},{}),
     HttpClientModule
-    
+
   ],
   providers: [FeaturService],
   bootstrap: [AppComponent],
