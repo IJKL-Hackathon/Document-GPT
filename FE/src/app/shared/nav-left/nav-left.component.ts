@@ -21,6 +21,7 @@ export class NavLeftComponent {
   searchQuery: string = '';
   selectedFileIds: string[] = [];
   selectAllChecked: boolean = false;
+  uploadProgress: number = 0;
 
   constructor(private diaolog: MatDialog, private userService: UserService, private store: Store<AppState>,
     private fileService: FileService,private elRef: ElementRef,private router: Router) {

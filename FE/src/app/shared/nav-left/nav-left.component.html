@@ -29,7 +29,11 @@
         <!-- <input type="text" name="title" [(ngModel)]="fileTitle" placeholder="Enter title"> -->
         <button type="submit"  [disabled]="!selectedFile" class="upload">Upload</button>
       </form>
-
+      
+       <div *ngIf="uploadProgress !== undefined" class="mt-2">
+      <progress max="100" [value]="uploadProgress"></progress>
+      <span>{{ uploadProgress }}%</span>
+    </div>
     </div>
 </div>
 
