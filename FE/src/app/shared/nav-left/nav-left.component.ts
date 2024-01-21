@@ -1,5 +1,4 @@
 import { Component, ElementRef, EventEmitter, HostListener, Output } from '@angular/core';
-
 import { MatDialog } from '@angular/material/dialog'
 import { AuthComponent } from 'src/app/auth/auth.component';
 import { UserService } from 'src/app/state/user/user.service';

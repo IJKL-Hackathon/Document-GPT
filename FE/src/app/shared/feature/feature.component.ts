@@ -55,9 +55,9 @@ export class FeatureComponent {
             (response) => {
               this.answerData = response["answer"];
               this.featureService.setStoreSumData(response["answer"]);
-            console.log(this.featureService.getData());
+              console.log(this.featureService.getData());
             
-                this.featureService.setData(response["answer"]);
+                // this.featureService.setData(response["answer"]);
 
               // console.log("data:",this.featureService.getStoredSumData());
               

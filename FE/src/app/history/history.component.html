@@ -1,0 +1,26 @@
+<div class="chat-container relative items-start">
+    <!-- <p>Chat IJKL: </p> -->
+    <p class="message received">Quizz History</p>
+    <ng-container *ngIf="history">
+        <div class=" grid grid-cols-8 title font-bold text-sm">
+
+            <div class="col-span-5">Name</div>
+            <div class=" col-span-2 justify-start flex">Time</div>
+            <div class=" col-span-1 justify-end flex">Check</div>
+        </div>
+        <ng-container *ngFor="let data of history">
+        <div class="grid grid-cols-8 space-y-4">
+            <div class="col-span-5"><span class="font-bold">{{data.quizzId}}.</span> {{data.title}}</div>
+            <div class=" col-span-2">{{data.time}}</div>
+            <span class="col-span-1 justify-end flex"><input  type="checkbox" name="{{data.title}}" [value]="data.quizzId" (change)="onCheckboxChange($event, data.quizzId)"></span>
+        </div>
+        </ng-container>
+        <div class="flex justify-end gap-5 ">
+            <button class="mt-2" (click)="Share()">Share</button>
+            <button class="mt-2" (click)="testAgain()">Test again</button>
+        </div>
+    </ng-container>
+  </div>
+  
+    
+<app-feature ></app-feature>

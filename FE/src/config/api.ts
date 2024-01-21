@@ -1,1 +1,1 @@
-export const BASR_URL_API='/api';
+export const BASR_URL_API='http://localhost:5000/api';

@@ -46,14 +46,13 @@ export class FeaturService {
 
     return this.http.post<any>(`${this.apiUrl}/quizz`, params);
   }
-  private storedData: any;
-
+  private storedData= new BehaviorSubject<any>(null);
   getStoredSumData(): any {
-    return this.storedData;
+    return this.storedData.asObservable();;
   }
 
   setStoreSumData(data: any): void {
-    this.storedData = data;
+    this.storedData.next(data);
   }
 
   private sumDataSubject = new BehaviorSubject<any>(null);

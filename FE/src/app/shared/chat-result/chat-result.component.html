@@ -3,13 +3,28 @@
 
     <div  class="message received">
       <span class="sender">Chat IJKL:</span>
-      <ng-container *ngIf="answers; else sumDataSection">
+      <!-- <ng-container *ngIf="answers; else sumDataSection">
         <p>{{answers}}</p>
       </ng-container>
       <ng-template #sumDataSection>
+        <ng-container  *ngIf="!sumData">
+          <div class="flex justify-center items-center w-full h-full flex-col space-y-2">
+
+            <mat-spinner  color="accent" diameter="40"></mat-spinner>
+            <span>Loading...</span>
+          </div>
+        </ng-container>
         <p>{{sumData}}</p>
+      </ng-template> -->
+      <ng-container *ngIf="sumData; else sumDataSection">
+        <p>{{sumData}}</p>
+      </ng-container>
+      <ng-template #sumDataSection>
+          <div class="flex justify-center items-center w-full h-full flex-col space-y-2">
+            <mat-spinner  color="accent" diameter="40"></mat-spinner>
+            <span>Loading...</span>
+          </div>
       </ng-template>
-    
     </div>
   </ng-container>
   <ng-container *ngIf=" param=='qa'">
@@ -36,31 +51,57 @@
 
   <ng-container *ngIf=" param=='quizizz'">
     <div class="quiz-container">
-      <!-- Trong file .html của component -->
-<div *ngFor="let question of answers; let questionIndex = index">
-  <p>{{questionIndex + 1}}. {{ question.query }}</p>
-  <ul>
-    <li *ngFor="let choice of question.choices; let i = index">
-      <label>
-        <input type="radio" name="answer{{ questionIndex }}" [value]="i" (change)="updateSelectedAnswer(questionIndex, i)">
-        {{ i + 1 }}. {{ choice }}
-      </label>
-    </li>
-  </ul>
-  <p *ngIf="questionResults[questionIndex] === 'Correct'" class="text-success">Correct!
-     <span>answer : {{question.answer}}. </span>
-     <span>{{question.explanation}}</span>
-    </p>
-  <p *ngIf="questionResults[questionIndex] === 'Incorrect'" class="text-danger">Incorrect!
-    <span>answer:{{question.answer}}. </span> 
-    <span>{{question.explanation}}</span> <br>
-  </p>
-  <hr>
-</div>
+ 
+      <ng-container  *ngIf="answers; else answersIsNull">
+        <span class="sender">Chat IJKL:</span>
+          
+      <div *ngFor="let question of answers; let questionIndex = index">
+        <p>{{questionIndex + 1}}. {{ question.query }}</p>
+        <ul>
+          <li *ngFor="let choice of question.choices; let i = index">
+            <label>
+              <input type="radio" name="answer{{ questionIndex }}" [value]="i" (change)="updateSelectedAnswer(questionIndex, i)">
+              {{ i + 1 }}. {{ choice }}
+            </label>
+          </li>
+        </ul>
+        <p *ngIf="questionResults[questionIndex] === 'Correct'" class="text-success">Correct!
+          <span>answer : {{question.answer+1}}. </span>
+          <span>{{question.explanation}}</span>
+          </p>
+        <p *ngIf="questionResults[questionIndex] === 'Incorrect'" class="text-danger">Incorrect!
+          <span>answer:{{question.answer+1}}. </span> 
+          <span>{{question.explanation}}</span> <br>
+        </p>
+        <hr>
+      </div>
+      <div class="flex justify-center items-center w-full h-full flex-col space-y-2">
 
-<button class="mt-2" (click)="checkAnswers()">Check</button>
+        <ng-container *ngIf="loadAddQuestion==true">
+          <mat-spinner  color="accent" diameter="30"></mat-spinner>
+          <span>Loading...</span>
+        </ng-container>
+      </div>
+      <div class="flex justify-around items-center h-full w-full">
 
+        
+          <button class="mt-2" (click)="routerHistory()">History</button>
+          <button class="mt-2" (click)="addQuestion()">add 10 question</button>
+          <button class="mt-2" (click)="checkAnswers()">Check</button>
+      
+      </div>
+</ng-container> 
+  <ng-template #answersIsNull>
+    <div class="space-y-0">
+      
+      <span class="sender ">Chat IJKL:</span>
+      <div class="flex justify-center items-center w-full h-full flex-col space-y-2">
 
+        <mat-spinner  color="accent" diameter="40"></mat-spinner>
+        <span>Loading...</span>
+      </div>
+    </div>
+  </ng-template>
 
     </div>
   </ng-container>
