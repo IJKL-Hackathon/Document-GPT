@@ -25,13 +25,13 @@ export class AuthComponent {
   }
   constructor(private diaolog: MatDialog, private router:Router, private fb:FormBuilder, private userService: UserService, private authService:AuthService, private store: Store<AppState>,) {
     this.loginForm = fb.group({
-      email:['',[Validators.required, Validators.email]],
-      password:['',[Validators.required,  Validators.minLength(5)]],
+      loginEmail:['',[Validators.required, Validators.email]],
+      loginPassword:['',[Validators.required,  Validators.minLength(5)]],
     })
     this.signupForm = fb.group({
-      fullname:['', Validators.required],
-      email:['',[Validators.required, Validators.email]],
-      password:['',[Validators.required,  Validators.minLength(5)]],
+      signupFullname:['', Validators.required],
+      signupEmail:['',[Validators.required, Validators.email]],
+      signupPassword:['',[Validators.required,  Validators.minLength(5)]],
     })
   }
   navigateToHome(){
