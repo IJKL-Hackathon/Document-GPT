@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserService } from './state/user/user.service';
 import { AppState } from './models/AppState';
 import { Store, select } from '@ngrx/store';
+import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
+import { getLocaleMonthNames } from '@angular/common';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,8 +12,19 @@ import { Store, select } from '@ngrx/store';
 })
 export class AppComponent {
   title = 'Arzue_Hackathon';
-  constructor(private diaolog:MatDialog, private userService:UserService, private store:Store<AppState>){
-
+  routePath: string = '';
+  showExtraContent: boolean= true;
+  constructor(private diaolog:MatDialog, private userService:UserService, private store:Store<AppState>,
+    private activatedRoute: ActivatedRoute, private router:Router
+    ){
+      this.router.events.subscribe(event => {
+        if (event instanceof NavigationEnd) {
+          const path = this.activatedRoute.firstChild?.snapshot.routeConfig?.path;
+          this.showExtraContent = !path?.includes('share') ?? true;
+        }
+        // console.log(this.showExtraContent);
+        
+      });
   }
   ngOnInit() {
 
@@ -26,5 +39,10 @@ export class AppComponent {
       console.log("log user appmodule:" ,user);
       console.log("userprofile appmodule:" ,user.userProfile);
     });
+
+
+      
+      
+
 }
 }

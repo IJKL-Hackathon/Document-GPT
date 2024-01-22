@@ -7,6 +7,7 @@ import { Store, select } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { FileService } from 'src/app/state/file/file.service';
 import { FeaturService } from 'src/app/service/feature.service';
+import { DialogNotSelectedFileComponent } from '../dialog-not-selected-file/dialog-not-selected-file.component';
 
 @Component({
   selector: 'app-feature',
@@ -34,6 +35,8 @@ export class FeatureComponent {
       this.UserProfile=user.userProfile;
     
     });
+
+   
   }
 
   navigateTo(option:string){
@@ -41,6 +44,10 @@ export class FeatureComponent {
     {
       // console.log("id:",this.fileService.getFileId());
       this.diaolog.open(AuthComponent,{
+   
+      })
+    }else if(!this.fileService.getFileId()){
+      this.diaolog.open(DialogNotSelectedFileComponent,{
    
       })
     }

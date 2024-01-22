@@ -65,7 +65,7 @@ export class HistoryComponent {
       })
   }
   Share(){
-    this.historyService.share(this.UserProfile.id,this.checkedId).subscribe((response)=>{
+    this.historyService.getLinkShare(this.UserProfile.id,this.checkedId).subscribe((response)=>{
       console.log(response["id"]);
       this.diaolog.open(DialogShareComponent,{
         // data: {id:1}

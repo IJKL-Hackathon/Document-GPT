@@ -29,6 +29,8 @@ import { HistoryComponent } from './history/history.component';
 import { QuizzComponent } from './history/quizz/quizz.component';
 import { DialogShareComponent } from './shared/dialog-share/dialog-share.component';
 import { ClipboardModule } from 'ngx-clipboard';
+import { DialogNotSelectedFileComponent } from './shared/dialog-not-selected-file/dialog-not-selected-file.component';
+import { QuizzShareComponent } from './shared/quizz-share/quizz-share.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +45,8 @@ import { ClipboardModule } from 'ngx-clipboard';
     HistoryComponent,
     QuizzComponent,
     DialogShareComponent,
+    DialogNotSelectedFileComponent,
+    QuizzShareComponent,
     
  
   ],

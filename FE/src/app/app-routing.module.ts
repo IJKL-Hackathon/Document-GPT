@@ -6,6 +6,7 @@ import { QuizizzComponent } from './quizizz/quizizz.component';
 import { QaComponent } from './qa/qa.component';
 import { HistoryComponent } from './history/history.component';
 import { QuizzComponent } from './history/quizz/quizz.component';
+import { QuizzShareComponent } from './shared/quizz-share/quizz-share.component';
 
 const routes: Routes = [
   {path: '', component:HomeComponent },
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path: 'quizizz', component:QuizizzComponent},
   {path: 'qa', component:QaComponent},
    {path: 'history', component:HistoryComponent},
-   {path: 'history/quizz', component:QuizzComponent}
+   {path: 'history/quizz', component:QuizzComponent},
+   {path: 'share', component:QuizzShareComponent},
 ];
 
 @NgModule({
