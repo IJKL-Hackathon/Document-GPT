@@ -1,67 +1,75 @@
 .container{
   border: 1px solid #ccc;
+  overflow-y: auto;
 }
+
+.container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.container::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+  background-color: #999;
+}
+
 .search {
-  padding: 8px;
-  width: 94%;
-  
-  border: 1px solid #ccc;
-  outline: none;
-  border-radius: 5px;
-}
-.upload {
-  padding: 5px 10px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-}
-.login-container {
-  background-color: #4CAF50;
-  border-radius: 3px;
+    padding: 8px;
+    width: 94%;
+    
+    border: 1px solid #ccc;
+    outline: none;
+    border-radius: 5px;
+  }
+  .upload {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  .login-container {
+    background-color: #4CAF50;
+    border-radius: 3px;
 }
 
 .menu-container {
-  position: relative;
-}
-
-.menu {
-  display: none;
-  position: absolute;
-  top: 10px;
-  left: 0;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.menu.show {
-  display: block;
-}
-
-.menu-item {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  border: none;
-  background-color: transparent;
-  text-align: left;
-  cursor: pointer;
-}
-
-.menu-item:hover {
-  background-color: #f0f0f0;
-}
-.login-button:hover{
-background-color: #065d0a;
-}
-
-.upload:hover{
-background-color: #065d0a;
-}
-
-
-
-
+    position: relative;
+  }
+  
+  .menu {
+    display: none;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .menu.show {
+    display: block;
+  }
+  
+  .menu-item {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: transparent;
+    text-align: left;
+    cursor: pointer;
+  }
+  
+  .menu-item:hover {
+    background-color: #f0f0f0;
+  }
