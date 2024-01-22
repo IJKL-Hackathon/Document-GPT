@@ -23,7 +23,7 @@ export class AuthComponent {
   changeLogin() {
     this.isLoginFormVisible = !this.isLoginFormVisible;
   }
-  constructor(private diaolog: MatDialog, private router:Router, private fb:FormBuilder, private userService: UserService, private authService:AuthService, private store: Store<AppState>,) {
+  constructor(private dialog: MatDialog, private router:Router, private fb:FormBuilder, private userService: UserService, private authService:AuthService, private store: Store<AppState>,) {
     this.loginForm = fb.group({
       loginEmail:['',[Validators.required, Validators.email]],
       loginPassword:['',[Validators.required,  Validators.minLength(5)]],
@@ -41,7 +41,6 @@ export class AuthComponent {
     if(this.loginForm.valid){
       this.authService.login(this.loginForm.value);
       console.log(this.loginForm.value);
-
     }
   }
 
@@ -54,7 +53,7 @@ export class AuthComponent {
   }
 
   HandleLogin() {
-    this.diaolog.open(AuthComponent, {
+    this.dialog.open(AuthComponent, {
 
     })
 

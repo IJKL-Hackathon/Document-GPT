@@ -4,7 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { SumComponent } from './sum/sum.component';
 import { QuizizzComponent } from './quizizz/quizizz.component';
 import { QaComponent } from './qa/qa.component';
-import {AuthComponent} from "./auth/auth.component";
+import { AuthComponent } from "./auth/auth.component";
 
 
 

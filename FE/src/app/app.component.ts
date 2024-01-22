@@ -10,21 +10,19 @@ import { Store, select } from '@ngrx/store';
 })
 export class AppComponent {
   title = 'Arzue_Hackathon';
-  constructor(private diaolog:MatDialog, private userService:UserService, private store:Store<AppState>){
+  constructor(private dialog:MatDialog, private userService:UserService, private store:Store<AppState>){
 
   }
-  ngOnInit() {
-
-
-    if(localStorage.getItem("jwt"))
-    {
-      this.userService.getUserProfile();
-    }
-    this.store.pipe(select((store)=>store.auth)).subscribe((user)=>{
-      this.userService.getUserProfile();
-  
-      console.log("log user appmodule:" ,user);
-      console.log("userprofile appmodule:" ,user.userProfile);
-    });
-}
+//   ngOnInit() {
+//     if(localStorage.getItem("jwt"))
+//     {
+//       this.userService.getUserProfile();
+//     }
+//     this.store.pipe(select((store)=>store.auth)).subscribe((user)=>{
+//       this.userService.getUserProfile();
+//
+//       console.log("log user module:" ,user);
+//       console.log("userprofile module:" ,user.userProfile);
+//     });
+// }
 }
