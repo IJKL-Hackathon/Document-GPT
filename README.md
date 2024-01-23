@@ -30,9 +30,9 @@ The idea merges different functions to meet students' academic needs uniquely. U
 
 ## Technical Solution
 - Langchain: GPT API, Prompt, Chatbot.
-+ Summary.
-+ Question & Answer
-+ Quizzes.
+  + Summary.
+  + Question & Answer
+  + Quizzes.
 
 - Azure CosmosDB - MongoDB: Upload.
 - Azure Static Wep App: Hosting Frontend
