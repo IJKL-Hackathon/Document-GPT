@@ -25,10 +25,9 @@
   <div class=" absolute bottom-2">
 
     <form (submit)="onSubmit()" #uploadForm enctype="multipart/form-data" class="flex">
-      <input type="file" name="file" (change)="onFileSelected($event)" accept=".docx, .txt, .pdf">
-      <!-- <input type="text" name="title" [(ngModel)]="fileTitle" placeholder="Enter title"> -->
-      <button type="submit"  [disabled]="!selectedFile" class="upload">Upload</button>
-    </form>
+    <input type="file" name="file" (change)="onFileSelected($event)" accept=".docx, .txt, .pdf">
+    <button type="submit" [disabled]="!selectedFile" class="upload" [class.clicked]="submitClicked">Upload</button>
+  </form>
     <div *ngIf="uploadProgress > 0" class="progress-container">
       <progress value="{{uploadProgress}}" max="100"></progress>
       <span>{{uploadProgress}}%</span>
@@ -38,12 +37,12 @@
 
 
 <div class="login-container mt-5 ">
-  <button *ngIf="!UserProfile" style="color: white;" class="login-button w-full white py-2" (click)="HandleLogin()">Login</button>
+  <button *ngIf="!UserProfile" style="color: white;" class="login-button w-full white py-2" (click)="HandleLogin()" [class.clicked]="loginClicked">Login</button>
 </div>
 
 
           
-<button *ngIf="UserProfile" class="flex  text-lg mt-5" (click)="toggleMenu()">
+<button *ngIf="UserProfile" class="flex text-lg mt-5" (click)="toggleMenu()" [class.clicked]="menuClicked">
   <img class="w-7 h-7" src="https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916_640.png" alt="">
   <span class="px-5">{{UserProfile.email}}</span>
     </button>

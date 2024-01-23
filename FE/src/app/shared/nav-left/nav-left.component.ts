@@ -22,6 +22,9 @@ export class NavLeftComponent {
   selectedFileIds: string[] = [];
   selectAllChecked: boolean = false;
   uploadProgress: number = 0;
+  submitClicked: boolean = false;
+  loginClicked: boolean = false;
+  menuClicked: boolean = false;
 
   constructor(private diaolog: MatDialog, private userService: UserService, private store: Store<AppState>,
     private fileService: FileService,private elRef: ElementRef,private router: Router) {
@@ -115,6 +118,12 @@ export class NavLeftComponent {
     return this.fileService.getFileId();
   }
 
+  resetButtonStates() {
+    this.submitClicked = false;
+    this.loginClicked = false;
+    this.menuClicked = false;
+  }
+  
   // selectAll() {
     
   //   this.selectAllChecked = !this.selectAllChecked;

@@ -1,14 +1,20 @@
-.container{
+.container {
   border: 1px solid #ccc;
+
+  .clicked {
+    background-color: #ffeeba; /* Adjust the background color as needed */
+    color: #856404; /* Adjust the text color as needed */
+  }
 }
+
 .search {
   padding: 8px;
   width: 94%;
-  
   border: 1px solid #ccc;
   outline: none;
   border-radius: 5px;
 }
+
 .upload {
   padding: 5px 10px;
   background-color: #4CAF50;
@@ -16,10 +22,29 @@
   border: none;
   border-radius: 3px;
   cursor: pointer;
+
+  &:hover {
+    background-color: #ffeeba; /* Adjust the background color as needed */
+    color: #856404; /* Adjust the text color as needed */  }
+
+  &.clicked {
+    background-color: #ffeeba; /* Adjust the background color as needed */
+    color: #856404; /* Adjust the text color as needed */  }
 }
+
 .login-container {
   background-color: #4CAF50;
   border-radius: 3px;
+
+  &:hover {
+    background-color: #ffeeba !important; /* Add !important to override any conflicting styles */
+    color: #856404 !important; /* Add !important to override any conflicting styles */
+  }
+
+  &.clicked {
+    background-color: #ffeeba;
+    color: #856404;
+  }
 }
 
 .menu-container {
@@ -35,10 +60,10 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
 
-.menu.show {
-  display: block;
+  &.show {
+    display: block;
+  }
 }
 
 .menu-item {
@@ -49,10 +74,6 @@
   background-color: transparent;
   text-align: left;
   cursor: pointer;
-}
-
-.menu-item:hover {
-  background-color: #f0f0f0;
 }
 
 .progress-container {
@@ -69,4 +90,4 @@
     font-size: 14px;
     font-weight: bold;
   }
-}  
+}
