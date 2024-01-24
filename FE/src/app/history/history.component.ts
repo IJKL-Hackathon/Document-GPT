@@ -35,11 +35,11 @@ export class HistoryComponent {
       this.UserProfile=user.userProfile;
     
     });
-    this.history=history;
-  //  this.historyService.getHistory(this.UserProfile.id).subscribe((res)=>
-  //   {
-  //     this.history=res;
-  //   });
+    // this.history=history;
+   this.historyService.getHistory(this.UserProfile.id).subscribe((res)=>
+    {
+      this.history=res;
+    });
     
   }
   onCheckboxChange(event: any, id: any) {
