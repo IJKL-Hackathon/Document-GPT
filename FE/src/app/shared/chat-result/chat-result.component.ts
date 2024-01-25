@@ -109,8 +109,10 @@ export class ChatResultComponent {
     this.loadAddQuestion = true;
     let fileId = this.fileService.getFileId();
 
+    // chỗ này nếu có api mới để gọi quizz khác thì sửa hàm getQuizz lại
     this.featurService.getQuizizz(fileId, this.UserProfile.id).subscribe(
       (response) => {
+
         this.answers = this.answers.concat(response['questions']);
         this.cdr.detectChanges();
         console.log(this.answers);

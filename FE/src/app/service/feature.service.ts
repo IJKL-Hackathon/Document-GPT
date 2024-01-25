@@ -63,4 +63,6 @@ export class FeaturService {
   getData() {
     return this.sumDataSubject.asObservable();
   }
+
+
 }
