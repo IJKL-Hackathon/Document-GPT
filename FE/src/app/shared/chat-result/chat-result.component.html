@@ -1,72 +1,75 @@
-<div class="chat-container relative">
-  <ng-container *ngIf=" param=='sum'">
+<div class="mx-8 py-8">
 
-    <div  class="message received">
-      <span class="sender">Chat IJKL:</span>
-      <ng-container *ngIf="answers; else sumDataSection">
-        <p>{{answers}}</p>
-      </ng-container>
-      <ng-template #sumDataSection>
-        <p>{{sumData}}</p>
-      </ng-template>
-    
+  <div class="grid grid-cols-4 gap-5">
+    <div class="col-span-1 mt-0 ">
+      <app-nav-left></app-nav-left>
     </div>
-  </ng-container>
-  <ng-container *ngIf=" param=='qa'">
-    <div *ngFor="let message of messages" [class]="message.className">
-      <span class="sender">{{ message.sender }}:</span>
-      <p>{{ message.content }}</p>
+
+    <div class="col-span-3">
+      <div class="chat-container relative">
+        <ng-container *ngIf=" param=='sum'">
+
+          <div  class="message received">
+            <span class="sender">Chat IJKL:</span>
+            <ng-container *ngIf="answers; else sumDataSection">
+              <p>{{answers}}</p>
+            </ng-container>
+            <ng-template #sumDataSection>
+              <p>{{sumData}}</p>
+            </ng-template>
+
+          </div>
+        </ng-container>
+        <ng-container *ngIf=" param=='qa'">
+          <div *ngFor="let message of messages" [class]="message.className">
+            <span class="sender">{{ message.sender }}:</span>
+            <p>{{ message.content }}</p>
+          </div>
+
+          <div class="new-message bottom-32 flex w-full">
+            <input class="searched-message" type="text" placeholder="Type your message..." [(ngModel)]="userInput" (keyup.enter)="sendMessage()">
+            <button (click)="sendMessage()">Send</button>
+          </div>
+
+        </ng-container>
+
+
+        <ng-container *ngIf=" param=='quizizz'">
+          <div class="quiz-container">
+            <!-- Trong file .html của component -->
+            <div *ngFor="let question of answers; let questionIndex = index">
+              <p>{{questionIndex + 1}}. {{ question.query }}</p>
+              <ul>
+                <li *ngFor="let choice of question.choices; let i = index">
+                  <label>
+                    <input type="radio" name="answer{{ questionIndex }}" [value]="i" (change)="updateSelectedAnswer(questionIndex, i)">
+                    {{ i + 1 }}. {{ choice }}
+                  </label>
+                </li>
+              </ul>
+              <p *ngIf="questionResults[questionIndex] === 'Correct'" class="text-success">Correct!
+                <span>answer : {{question.answer}}. </span>
+                <span>{{question.explanation}}</span>
+              </p>
+              <p *ngIf="questionResults[questionIndex] === 'Incorrect'" class="text-danger">Incorrect!
+                <span>answer:{{question.answer}}. </span>
+                <span>{{question.explanation}}</span> <br>
+              </p>
+              <hr>
+            </div>
+
+            <button class="mt-2" (click)="checkAnswers()">Check</button>
+
+
+
+          </div>
+        </ng-container>
+        <ng-container *ngIf=" param==''">
+          <p class="flex items-center justify-center h-full text-xl">Login and select the file to use</p>
+        </ng-container>
+      </div>
+
+      <app-feature (answer)="receiveDataFromFeature($event)"></app-feature>
     </div>
-    
-    <div class="new-message bottom-32 flex w-full">
-      <input class="searched-message" type="text" placeholder="Type your message..." [(ngModel)]="userInput" (keyup.enter)="sendMessage()">
-      <button (click)="sendMessage()">Send</button>
-    </div>
-    
-    <!-- Add more messages as needed -->
-
-    
-    <!-- Add an input box for typing a new message -->
-    <!-- <div class="new-message  bottom-32 flex w-full  ">
-      <input class="searched-message " [(ngModel)]="userInput" type="text" placeholder="Type your message...">
-      <button>Send</button>
-    </div> -->
-  </ng-container>
-    
-
-  <ng-container *ngIf=" param=='quizizz'">
-    <div class="quiz-container">
-      <!-- Trong file .html của component -->
-<div *ngFor="let question of answers; let questionIndex = index">
-  <p>{{questionIndex + 1}}. {{ question.query }}</p>
-  <ul>
-    <li *ngFor="let choice of question.choices; let i = index">
-      <label>
-        <input type="radio" name="answer{{ questionIndex }}" [value]="i" (change)="updateSelectedAnswer(questionIndex, i)">
-        {{ i + 1 }}. {{ choice }}
-      </label>
-    </li>
-  </ul>
-  <p *ngIf="questionResults[questionIndex] === 'Correct'" class="text-success">Correct!
-     <span>answer : {{question.answer}}. </span>
-     <span>{{question.explanation}}</span>
-    </p>
-  <p *ngIf="questionResults[questionIndex] === 'Incorrect'" class="text-danger">Incorrect!
-    <span>answer:{{question.answer}}. </span> 
-    <span>{{question.explanation}}</span> <br>
-  </p>
-  <hr>
-</div>
-
-<button class="mt-2" (click)="checkAnswers()">Check</button>
-
-
-
-    </div>
-  </ng-container>
-  <ng-container *ngIf=" param==''">
-    <p class="flex items-center justify-center h-full text-xl">Login and select the file to use</p>
-  </ng-container>
   </div>
-  
-  <app-feature (answer)="receiveDataFromFeature($event)"></app-feature>
+</div>

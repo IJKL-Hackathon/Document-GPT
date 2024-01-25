@@ -1,36 +1,36 @@
 .chat-container {
-   height: 80vh; 
+   height: 80vh;
    max-height: 80vh;
    overflow-y: auto;
     border: 2px solid #ccc;
     padding: 20px;
     border-radius: 5px;
   }
-  
+
   .message {
     margin-bottom: 15px;
     padding: 10px;
     border-radius: 5px;
   }
-  
+
   .received {
     background-color: #f0f0f0;
   }
-  
+
   .sent {
     background-color: #85a686;
     color: white;
   }
-  
+
   .sender {
     font-weight: bold;
     margin-right: 5px;
   }
-  
+
   .new-message {
     margin-top: 20px;
   }
-  
+
   .searched-message {
     padding: 8px;
     width: 94%;
@@ -39,7 +39,7 @@
     border: 1px solid #ccc;
     border-radius: 5px;
   }
-  
+
   button {
     padding: 8px 15px;
     background-color: #4CAF50;
@@ -48,12 +48,12 @@
     border-radius: 3px;
     cursor: pointer;
   }
-  
+
   button:hover {
     background-color: #45a049;
   }
 
-  
+
   .quiz-container {
     background-color: #fff;
     padding: 20px;
@@ -69,7 +69,7 @@
   }
 
 
-  
+
   button:hover {
     background-color: #45a049;
   }
@@ -85,4 +85,3 @@
     border-radius: 5px;
     padding: 5px 10px;
   }
-  

@@ -22,3 +22,8 @@ def upload():
 def getFile():
     result = module.getFile(request.args)
     return jsonify(result)
+
+@router.route("/deleteFile", methods=['DELETE'])
+def delete_file(file_id):
+    module.delete_file(file_id)
+    return jsonify({"message": "File deleted successfully"}), 200

@@ -24,6 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserReducer } from './state/user/user.reducer';
 import { FileReducer } from './state/file/file.reducer';
 import { FeaturService } from './service/feature.service';
+import {NgOptimizedImage} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -39,19 +40,20 @@ import { FeaturService } from './service/feature.service';
 
 
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    AuthModule,
-    FormsModule,
-    MatMenuModule,
-    MatButtonModule,
-    RouterModule,
-    MatDialogModule,
-    StoreModule.forRoot({auth:AuthReducer,user:UserReducer,file:FileReducer},{}),
-    HttpClientModule
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        AuthModule,
+        FormsModule,
+        MatMenuModule,
+        MatButtonModule,
+        RouterModule,
+        MatDialogModule,
+        StoreModule.forRoot({auth: AuthReducer, user: UserReducer, file: FileReducer}, {}),
+        HttpClientModule,
+        NgOptimizedImage
 
-  ],
+    ],
   providers: [FeaturService],
   bootstrap: [AppComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]

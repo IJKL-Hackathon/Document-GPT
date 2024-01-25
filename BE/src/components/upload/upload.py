@@ -8,6 +8,8 @@ class UPLOAD:
         self.mongo.insert_file(
             user_id, {"content": file_content, "title": title}
         )
+    def delete_file(self, file_id):
+        self.mongo.delete_file_by_id(file_id)
 
     def getFile(self, req):
         userId = req["userId"]

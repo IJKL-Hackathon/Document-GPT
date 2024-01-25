@@ -1,5 +1,7 @@
-<div class="mt-5 flex justify-around items-center">
-    <a (click)="navigateTo('sum')" class="box w-40 text-center">Summary</a>
-    <a (click)="navigateTo('qa')" class="box w-40 text-center">Q&A</a>
-    <a (click)="navigateTo('quizizz')" class="box w-40 text-center">Quizizz</a>
+<div class="mt-5 flex justify-end items-center">
+  <div class="flex space-x-4">
+    <a (mouseover)="highlightButton('sum')" (click)="navigateTo('sum')" class="box w-40 text-center" [ngClass]="{'highlight': select === 'sum'}">Summary</a>
+    <a (mouseover)="highlightButton('qa')" (click)="navigateTo('qa')" class="box w-40 text-center" [ngClass]="{'highlight': select === 'qa'}">Q&A</a>
+    <a (mouseover)="highlightButton('quizizz')" (click)="navigateTo('quizizz')" class="box w-40 text-center" [ngClass]="{'highlight': select === 'quizizz'}">Quizizz</a>
+  </div>
 </div>

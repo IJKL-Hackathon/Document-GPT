@@ -17,6 +17,7 @@ export class FeatureComponent {
   UserProfile: any;
   answerData: any;
   query:any;
+  select: string = 'sum'; // Initialize select property with a default value
   @Output() answer = new EventEmitter<any>();
 
   constructor(private diaolog:MatDialog, private userService:UserService,
@@ -102,5 +103,10 @@ export class FeatureComponent {
     // console.log(answerData);
 
     this.answer.emit(answerData);
+  }
+
+
+  highlightButton(destination: string): void {
+    this.select = destination;
   }
 }

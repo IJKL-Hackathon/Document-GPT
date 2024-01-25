@@ -129,5 +129,12 @@ export class FileService {
       this.selectedFileIds = this.selectedFileIds.filter((fileId) => fileId !== id);
     }
   }
-  
+
+
+  deleteFile(fileId: string): Observable<any> {
+    let params = new HttpParams().set('fileId', fileId);
+
+    return this.http
+      .delete(`${this.apiUrl}/delete`, { params });
+  }
 }

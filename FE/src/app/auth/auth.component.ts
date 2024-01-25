@@ -40,7 +40,9 @@ export class AuthComponent {
   submitLoginForm(){
     if(this.loginForm.valid){
       this.authService.login(this.loginForm.value);
-      console.log(this.loginForm.value);
+      const data = localStorage.getItem("jwt");
+      console.log(data)
+      if (data !== "") this.router.navigateByUrl("/home");
     }
   }
 

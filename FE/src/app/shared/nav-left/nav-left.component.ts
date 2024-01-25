@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, Output } from '@angular/core';
+import {Component, ElementRef, EventEmitter, HostListener, Output, signal} from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog'
 import { AuthComponent } from 'src/app/auth/auth.component';
@@ -7,6 +7,7 @@ import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/models/AppState';
 import { FileService } from 'src/app/state/file/file.service';
 import { Router } from '@angular/router';
+import {data} from "autoprefixer";
 @Component({
   selector: 'app-nav-left',
   templateUrl: './nav-left.component.html',
@@ -16,7 +17,12 @@ export class NavLeftComponent {
   res_file: any;
   res_file_upload: any;
   selectedFile: File | null = null;
+  param: string | undefined;
+  loginClicked: boolean = false;
+  menuClicked: boolean = false;
   UserProfile: any;
+  submitClicked: boolean = false;
+  uploadProgress: number = 0;
   fileTitle: string = '';
   searchQuery: string = '';
   selectedFileIds: string[] = [];
@@ -52,6 +58,24 @@ export class NavLeftComponent {
 
   }
   onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0] as File;
+  }
+
+  DeleteFile() {
+    let fileId = this.fileService.getFileId();
+
+    // Call the API to delete the file
+    this.fileService.deleteFile(fileId).subscribe(
+      (response) => {
+        console.log('File deleted successfully:', response);
+      },
+      (error) => {
+        console.error('Error deleting file:', error);
+      }
+    );
+  }
+
+  onDeleteFile(event: any) {
     this.selectedFile = event.target.files[0] as File;
   }
   onSubmit() {
@@ -115,6 +139,6 @@ export class NavLeftComponent {
   }
 
 
-
+  protected readonly data = data;
 
 }
