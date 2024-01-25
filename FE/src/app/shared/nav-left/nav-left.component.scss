@@ -1,10 +1,8 @@
 .container {
-  border: 1px solid #ccc;
-
-  .clicked {
-    background-color: #ffeeba; /* Adjust the background color as needed */
-    color: #856404; /* Adjust the text color as needed */
-  }
+  overflow-y: scroll;
+  border: 2px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
 }
 
 .search {
@@ -24,12 +22,14 @@
   cursor: pointer;
 
   &:hover {
-    background-color: #ffeeba; /* Adjust the background color as needed */
-    color: #856404; /* Adjust the text color as needed */  }
+    background-color: #ffeeba;
+    color: #856404;
+  }
 
   &.clicked {
-    background-color: #ffeeba; /* Adjust the background color as needed */
-    color: #856404; /* Adjust the text color as needed */  }
+    background-color: #ffeeba;
+    color: #856404;
+  }
 }
 
 .login-container {
@@ -38,8 +38,8 @@
   border-radius: 3px;
 
   &:hover {
-    background-color: #ffeeba !important; /* Add !important to override any conflicting styles */
-    color: #856404 !important; /* Add !important to override any conflicting styles */
+    background-color: #ffeeba !important;
+    color: #856404 !important;
   }
 
   &.clicked {
@@ -92,3 +92,4 @@
     font-weight: bold;
   }
 }
+
