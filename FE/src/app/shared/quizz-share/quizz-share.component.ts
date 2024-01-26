@@ -31,9 +31,9 @@ export class QuizzShareComponent {
     this.historyService.getQuizzShare(this.idQuizz).subscribe(
       (response) => {
         console.log(this.idQuizz);
+        
+        this.answers=response["questions"];
         console.log(this.featureService.getData());
-      
-        this.answers=this.featureService.setData(response["questions"]);
         // console.log('Quizizz Response:', response);
       },
       (error) => {

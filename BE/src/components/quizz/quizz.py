@@ -78,7 +78,7 @@ class QUIZZ:
         for quizz in results:
             quizzes["history"].append(
                 {
-                    "questions": quizz["questions"],
+                    "quizzId": str(quizz["_id"]),
                     "timestamp": quizz["_id"].generation_time,
                     "name": quizz["file_name"]
                 }

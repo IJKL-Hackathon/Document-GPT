@@ -14,7 +14,7 @@ export class DialogShareComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private clipboardService: ClipboardService
   ) {
-    this.clipboardContent = `url.com?id=${data.id}`;
+    this.clipboardContent = `http://localhost:54344/share?id=${data.id}`;
   }
  
   copyToClipboard() {

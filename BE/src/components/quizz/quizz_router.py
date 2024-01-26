@@ -29,7 +29,7 @@ def link():
     
     data[id] = request.json["quizzIds"]
     
-    return id
+    return jsonify({'id':id})
 
 @router.route("/quizz/share", methods = ["GET"])
 def share():

@@ -38,7 +38,7 @@ export class HistoryComponent {
     // this.history=history;
    this.historyService.getHistory(this.UserProfile.id).subscribe((res)=>
     {
-      this.history=res;
+      this.history=res["history"];
     });
     
   }

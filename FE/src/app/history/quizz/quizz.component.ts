@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Route } from '@angular/router';
 import { HistoryService } from 'src/app/service/history.service';
 
 @Component({
@@ -8,11 +9,16 @@ import { HistoryService } from 'src/app/service/history.service';
 })
 export class QuizzComponent {
 quizzHistory:any;
-
-  constructor(private historyService:HistoryService){}
+id:any;
+  constructor(private historyService:HistoryService,  private activatedRoute: ActivatedRoute){}
   ngOnInit() {
-    this.historyService.getQuizzTestAgain().subscribe((res)=>{
-      this.quizzHistory = res;
+    this.id = this.activatedRoute.snapshot.queryParamMap.get('id');
+    console.log(this.id);
+    
+    this.historyService.getQuizzShare(this.id).subscribe((res)=>{
+      this.quizzHistory = res["questions"];
+      console.log(this.quizzHistory);
+      
     })
   }
   selectedAnswers: number[] = [];
