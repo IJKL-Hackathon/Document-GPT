@@ -19,21 +19,17 @@
     </ng-container>
   </div>
 
-  <div class=" file-choose absolute bottom-2">
-    <form (submit)="onSubmit()" #uploadForm enctype="multipart/form-data" class="flex">
+  <div class=" file_choose absolute bottom-2">
+    <form (submit)="onSubmit()"  enctype="multipart/form-data" class="flex">
       <input type="file" name="file" (change)="onFileSelected($event)" accept=".docx, .txt">
       <button type="submit" [disabled]="!selectedFile" class="upload" [class.clicked]="submitClicked">Upload</button>
       <button (click)="DeleteFile(); refreshPage()" class="delete">Delete</button>
-
     </form>
     <br>
-<!--    <button (click)="DeleteFile()" [disabled]="!selectedFile" class="delete">Delete</button>-->
-
-
-<!--    <div *ngIf="uploadProgress > 0" class="progress-container">-->
-<!--      <progress value="{{uploadProgress}}" max="100"></progress>-->
-<!--      <span>{{uploadProgress}}%</span>-->
-<!--    </div>-->
+    <div class="progress-bar" *ngIf="uploadProgress > 0 && uploadProgress < 100">
+      <div class="progress" [style.width.%]="uploadProgress"></div>
+      <div class="progress-text">{{ uploadProgress }}%</div>
+    </div>-0
   </div>
 </div>
 
