@@ -22,14 +22,14 @@ def test():
 @router.route("/quizz/link", methods = ["POST"])
 def link():
     
-    uuid = uuid.uuid4().hex
+    id = uuid.uuid4().hex
     
-    while uuid not in data:
-        uuid = uuid.uuid4().hex
+    while id in data:
+        id = uuid.uuid4().hex
     
-    data[uuid] = request.json["quizzIds"]
+    data[id] = request.json["quizzIds"]
     
-    return uuid
+    return id
 
 @router.route("/quizz/share", methods = ["GET"])
 def share():
