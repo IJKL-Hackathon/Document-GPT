@@ -8,6 +8,7 @@ import { AppState } from 'src/app/models/AppState';
 import { FileService } from 'src/app/state/file/file.service';
 import { Router } from '@angular/router';
 import {data} from "autoprefixer";
+import {HttpEvent, HttpEventType} from "@angular/common/http";
 @Component({
   selector: 'app-nav-left',
   templateUrl: './nav-left.component.html',
@@ -22,11 +23,11 @@ export class NavLeftComponent {
   menuClicked: boolean = false;
   UserProfile: any;
   submitClicked: boolean = false;
-  uploadProgress: number = 0;
   fileTitle: string = '';
   searchQuery: string = '';
   selectedFileIds: string[] = [];
   selectAllChecked: boolean = false;
+  public uploadProgress: number = 0;
 
   constructor(private diaolog: MatDialog, private userService: UserService, private store: Store<AppState>,
               private fileService: FileService, private elRef: ElementRef, private router: Router) {
@@ -82,23 +83,28 @@ export class NavLeftComponent {
   }
 
   onSubmit() {
-
     if (!this.UserProfile) {
       this.HandleLogin();
-      // console.log('File selected:', this.selectedFile);
-
     } else if (this.UserProfile && this.selectedFile) {
-      // console.log(this.UserProfile, this.selectedFile);
-      this.res_file_upload = this.fileService.uploadFile(this.UserProfile.id, this.selectedFile);
-      this.res_file_upload.subscribe(() => {
-        this.fileService.getFile(this.UserProfile.id).subscribe((res) => {
-          this.res_file = res;
-        });
-      });
+      // Simulate the upload process
+      this.uploadProgress = 0;
+      const interval = setInterval(() => {
+        this.uploadProgress += 10;
+        if (this.uploadProgress >= 100) {
+          clearInterval(interval);
 
-      // this.res_file=this.fileService.getFile(this.UserProfile.id);
+          // Actual file upload logic (replace this with your actual upload logic)
+          this.res_file_upload = this.fileService.uploadFile(this.UserProfile.id, this.selectedFile);
+          this.res_file_upload.subscribe(() => {
+            this.fileService.getFile(this.UserProfile.id).subscribe((res) => {
+              this.res_file = res;
+            });
+          });
+
+          this.uploadProgress = 0;
+        }
+      }, 500);
     }
-
   }
 
   HandleLogin() {
