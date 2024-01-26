@@ -98,7 +98,8 @@ class MONGO_DB:
         self.db = self.get_db(os.getenv("MONGO_DB"))
         self.collection = {
             "user": self.get_collection("user"),
-            "file": self.get_collection("file")
+            "file": self.get_collection("file"),
+            "quizz": self.get_collection("quizz"),
         }
         self.vs = MONGGO_VECTOR_DB()
         
@@ -129,6 +130,9 @@ class MONGO_DB:
     def get_file_by_userID(self, user_id):
         return self.collection["file"].find({"user_id": user_id})
     
+    def get_quizz_by_userID(self, user_id):
+        return self.collection["quizz"].find({"user_id": user_id})
+    
     def get_file(self, *file_ids):
         obj_ids = [ObjectId(ids) for ids in file_ids]
 
@@ -136,6 +140,19 @@ class MONGO_DB:
         files = list(cursor)
         return files
 
+    def get_quizz(self, *quizz_ids):
+        obj_ids = [ObjectId(ids) for ids in quizz_ids]
+
+        cursor = self.collection["quizz"].find({"_id": {"$in": obj_ids}})
+        quizzes = list(cursor)
+        return quizzes
+
+    def insert_quizz(self, user_id, file_name, quizz):
+        
+        quizz["user_id"] = user_id
+        quizz["file_name"] = file_name
+        self.collection["quizz"].insert_one(quizz)
+    
     def insert_file(self, user_id, file):
         
         file["user_id"] = user_id

@@ -24,14 +24,14 @@ export class HistoryService {
     // let params = {
     //   userId: userId
     // }
-    return this.http.get<any>(`${this.apiUrl}/history`, {params });
+    return this.http.get<any>(`${this.apiUrl}/quizz/history`, {params });
   }
   testAgain(userId:string, quizzId:string[]): Observable<any> {
     let params = {
         userId: userId,
         quizzIds: quizzId
       }
-    return this.http.post<any>(`${this.apiUrl}/quizz/history`, params);
+    return this.http.post<any>(`${this.apiUrl}/quizz/test`, params);
   }
   getLinkShare(userId:string, quizzId:string[]): Observable<any> {
     let params = {
