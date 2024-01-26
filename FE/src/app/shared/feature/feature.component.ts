@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, NgZone, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthComponent } from 'src/app/auth/auth.component';
 import { AppState } from 'src/app/models/AppState';
@@ -18,6 +18,7 @@ export class FeatureComponent {
   UserProfile: any;
   answerData: any;
   query:any;
+  selectedButton: string = '';
   clickedSum:boolean=false;
   clickedQa:boolean=false;
   clickedQuizz:boolean=false;
@@ -26,11 +27,25 @@ export class FeatureComponent {
 
   constructor(private diaolog:MatDialog, private userService:UserService,
     private store:Store<AppState>, private router:Router,
-    private fileService:FileService,private featureService:FeaturService
+    private fileService:FileService,private featureService:FeaturService,
+    private ngZone: NgZone,private cdr: ChangeDetectorRef
     ) {
 
   }
   ngOnInit() {
+    if (this.router.isActive('/sum', false)) {
+      this.clickedSum = true;
+      this.clickedQa = false;
+      this.clickedQuizz = false;
+    } else if (this.router.isActive('/qa', false)) {
+      this.clickedSum = false;
+      this.clickedQa = true;
+      this.clickedQuizz = false;
+    } else if (this.router.isActive('/quizizz', false)) {
+      this.clickedSum = false;
+      this.clickedQa = false;
+      this.clickedQuizz = true;
+    }
     if(localStorage.getItem("jwt"))
     {
       this.userService.getUserProfile();
@@ -43,7 +58,7 @@ export class FeatureComponent {
    
   }
 
-  navigateTo(option:string){
+  navigateTo(option:string): void{
     if(!this.fileService.getFileId()){
       this.diaolog.open(DialogNotSelectedFileComponent,{
    
@@ -56,8 +71,25 @@ export class FeatureComponent {
       // console.log("option:",router);
       switch (option) {
         case 'sum':
-          this.isClickedSum();
-          console.log(this.clickedSum);
+          this.fileService.saveStatusClick("sum");
+          this.fileService.getStatusClick().subscribe((res) => {
+            console.log("res",res);
+            
+            if(res="sum")
+            {
+              console.log("ok");
+              
+              this.clickedSum=true;
+              
+              
+            }
+            // console.log(res);
+      
+          })
+          this.clickedSum = true;
+          this.clickedQa = false;
+          this.clickedQuizz = false;
+          console.log("A",this.clickedSum);
           
           this.featureService.getSummary(fileId,this.UserProfile.id).subscribe(
             (response) => {
@@ -79,11 +111,17 @@ export class FeatureComponent {
           );
           break;
         case 'qa':
-          this.isClickedQa();
+        
+          this.clickedSum = false;
+          this.clickedQa = true;
+          this.clickedQuizz = false;
           break;
         case 'quizizz':
 
-        this.isClickedQizz();
+        this.clickedSum = false;
+        this.clickedQa = false;
+        this.clickedQuizz = true;
+        console.log(this.selectedButton);
           this.featureService.getQuizizz(fileId,this.UserProfile.id).subscribe(
             (response) => {
               console.log(this.featureService.getData());
@@ -115,25 +153,18 @@ export class FeatureComponent {
   }
 
 
-  highlightButton(destination: string): void {
-    this.select = destination;
-  }
+
   isClickedSum(): boolean {
-    this.clickedSum=true;
-    this.clickedQa=false;
-    this.clickedQuizz=false;
+    console.log(this.clickedSum);
+    console.log(this.clickedQa);
     return this.clickedSum;
   }
+
   isClickedQa(): boolean {
-    this.clickedSum=false;
-    this.clickedQa=true;
-    this.clickedQuizz=false;
     return this.clickedQa;
   }
+
   isClickedQizz(): boolean {
-    this.clickedSum=false;
-    this.clickedQa=false;
-    this.clickedQuizz=true;
     return this.clickedQuizz;
   }
 }

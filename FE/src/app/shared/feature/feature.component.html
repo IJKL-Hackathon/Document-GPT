@@ -1,8 +1,6 @@
 <div class="mt-5 flex justify-around items-center">
+    <button (click)="navigateTo('sum')" class="box w-40 text-center" [ngClass]="{'highlight': isClickedSum()}">Summary</button>
+    <button (click)="navigateTo('qa')" class="box w-40 text-center" [ngClass]="{'highlight': isClickedQa()}">Q&A</button>
+    <button (click)="navigateTo('quizizz')" class="box w-40 text-center" [ngClass]="{'highlight': isClickedQizz()}">Quizizz</button>
+  </div>
   
-
-        <button (click)="navigateTo('sum')" class="box w-40 text-center" [ngClass]="{'clicked-button': clickedSum}">Summary</button>
-        <button (click)="navigateTo('qa')" class="box w-40 text-center" [ngClass]="{'clicked-button': clickedQa}">Q&A</button>
-        <button (click)="navigateTo('quizizz')" class="box w-40 text-center" [ngClass]="{'clicked-button': clickedQuizz}">Quizizz</button>
-    
-</div>

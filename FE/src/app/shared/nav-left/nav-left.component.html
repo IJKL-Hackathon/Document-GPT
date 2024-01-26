@@ -27,9 +27,9 @@
     <form (submit)="onSubmit()" #uploadForm enctype="multipart/form-data" class="flex">
       <input type="file" name="file" (change)="onFileSelected($event)" accept=".docx, .txt">
       <button type="submit" [disabled]="!selectedFile" class="upload" [class.clicked]="submitClicked">Upload</button>
+      <button (click)="DeleteFile()" [disabled]="!selectedFile" class="delete">Delete</button>
     </form>
     <br>
-    <button (click)="DeleteFile()" [disabled]="!selectedFile" class="delete">Delete</button>
 
 
     <div *ngIf="uploadProgress > 0" class="progress-container">

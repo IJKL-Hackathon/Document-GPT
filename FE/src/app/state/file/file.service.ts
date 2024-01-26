@@ -1,7 +1,7 @@
 // upload.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import * as FormData from 'form-data';
@@ -136,5 +136,14 @@ export class FileService {
 
     return this.http
       .delete(`${this.apiUrl}/delete`, { params });
+  }
+ 
+  private StatusClick = new BehaviorSubject<any>(null);
+  saveStatusClick(data: any) {
+    this.StatusClick.next(data);
+  }
+
+  getStatusClick() {
+    return this.StatusClick.asObservable();
   }
 }
