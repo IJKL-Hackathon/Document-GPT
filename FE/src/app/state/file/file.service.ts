@@ -135,6 +135,6 @@ export class FileService {
     let params = new HttpParams().set('fileId', fileId);
 
     return this.http
-      .delete(`${this.apiUrl}/delete`, { params });
+      .post(`${this.apiUrl}/deleteFile`, { params });
   }
 }
