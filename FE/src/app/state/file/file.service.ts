@@ -132,10 +132,10 @@ export class FileService {
 
 
   deleteFile(fileId: string): Observable<any> {
-    let params = new HttpParams().set('fileId', fileId);
+    let params = {fileId: fileId};
 
     return this.http
-      .delete(`${this.apiUrl}/delete`, { params });
+      .post(`${this.apiUrl}/deleteFile`, params);
   }
  
   private StatusClick = new BehaviorSubject<any>(null);

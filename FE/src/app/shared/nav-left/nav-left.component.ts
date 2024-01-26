@@ -29,8 +29,9 @@ export class NavLeftComponent {
   selectAllChecked: boolean = false;
 
   constructor(private diaolog: MatDialog, private userService: UserService, private store: Store<AppState>,
-    private fileService: FileService,private elRef: ElementRef,private router: Router) {
+              private fileService: FileService, private elRef: ElementRef, private router: Router) {
   }
+
   ngOnInit() {
     // this.res_file = res;
 
@@ -52,18 +53,19 @@ export class NavLeftComponent {
       // console.log("userprofile:" ,user.userProfile);
     });
 
-    this.res_file.forEach((data:any) => {
+    this.res_file.forEach((data: any) => {
       data.isSelected = false;
     });
 
   }
+
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0] as File;
   }
 
   DeleteFile() {
     let fileId = this.fileService.getFileId();
-
+    console.log(fileId);
     // Call the API to delete the file
     this.fileService.deleteFile(fileId).subscribe(
       (response) => {
@@ -78,6 +80,7 @@ export class NavLeftComponent {
   onDeleteFile(event: any) {
     this.selectedFile = event.target.files[0] as File;
   }
+
   onSubmit() {
 
     if (!this.UserProfile) {
@@ -92,16 +95,14 @@ export class NavLeftComponent {
           this.res_file = res;
         });
       });
-    
+
       // this.res_file=this.fileService.getFile(this.UserProfile.id);
     }
 
   }
 
   HandleLogin() {
-    this.diaolog.open(AuthComponent, {
-
-    })
+    this.diaolog.open(AuthComponent, {})
 
   }
 
@@ -113,10 +114,11 @@ export class NavLeftComponent {
 
   logout() {
     this.userService.logout();
-    this.isMenuOpen=false
-    this.res_file=[];
+    this.isMenuOpen = false
+    this.res_file = [];
     this.router.navigate(['/']);
   }
+
   onCheckboxChange(event: any, id: any) {
     if (event.target.checked) {
       // this.fileIdSelected=id;
@@ -143,4 +145,7 @@ export class NavLeftComponent {
 
   protected readonly data = data;
 
+  refreshPage() {
+    window.location.reload();
+  }
 }
