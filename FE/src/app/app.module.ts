@@ -63,28 +63,12 @@ import {NgOptimizedImage} from "@angular/common";
     MatDialogModule,
     StoreModule.forRoot({auth:AuthReducer,user:UserReducer,file:FileReducer},{}),
     HttpClientModule,
+    NgOptimizedImage,
     MatProgressSpinnerModule,
     MatDialogModule,
     DialogModule,
     ClipboardModule
-    
-
-
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        AuthModule,
-        FormsModule,
-        MatMenuModule,
-        MatButtonModule,
-        RouterModule,
-        MatDialogModule,
-        StoreModule.forRoot({auth: AuthReducer, user: UserReducer, file: FileReducer}, {}),
-        HttpClientModule,
-        NgOptimizedImage
-
-    ],
   providers: [FeaturService],
   bootstrap: [AppComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
