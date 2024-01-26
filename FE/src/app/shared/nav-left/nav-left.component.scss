@@ -15,7 +15,7 @@
 
 .upload {
   padding: 5px 5px;
-
+  max-width: 20%;
   background-color: #4CAF50;
   color: white;
   border: none;
@@ -37,12 +37,13 @@
 
 .delete {
   padding: 5px 10px;
+  max-width: 20%;
   background-color: #4CAF50;
   color: white;
   border: none;
   border-radius: 3px;
   cursor: pointer;
-
+  margin-left: 10px;
   &:hover {
     background-color: #ffeeba;
     color: #856404;
@@ -111,7 +112,7 @@
 .login-button:hover{
   background-color: #065d0a;
 }
-  
+
 .upload:hover{
   background-color: #065d0a;
 }
@@ -131,7 +132,8 @@
 }
 
 
-
-
+.file-choose {
+  max-width: 100%;
+}
 
 
