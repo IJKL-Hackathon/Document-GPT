@@ -11,7 +11,11 @@
 }
 
 /* Highlight effect for the selected button */
-.box.highlight {
+// .box.highlight {
+//   background-color: #ffeeba; /* Adjust the background color as needed */
+//   color: #856404; /* Adjust the text color as needed */
+// }
+.clicked-button {
   background-color: #ffeeba; /* Adjust the background color as needed */
   color: #856404; /* Adjust the text color as needed */
 }

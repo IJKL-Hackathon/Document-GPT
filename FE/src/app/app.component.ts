@@ -14,13 +14,22 @@ export class AppComponent {
   title = 'Arzue_Hackathon';
   routePath: string = '';
   showExtraContent: boolean= true;
+  showAuth: boolean= true;
   constructor(private diaolog:MatDialog, private userService:UserService, private store:Store<AppState>,
     private activatedRoute: ActivatedRoute, private router:Router
     ){
       this.router.events.subscribe(event => {
         if (event instanceof NavigationEnd) {
           const path = this.activatedRoute.firstChild?.snapshot.routeConfig?.path;
-          this.showExtraContent = !path?.includes('share') ?? true;
+          if (path === '') {
+            this.showAuth = false;
+          } else {
+            // Kiểm tra nếu path không chứa 'share'
+            this.showExtraContent = !path?.includes('share') ?? true;
+    
+            // Mặc định showAuth là true nếu không phải trang mặc định
+            this.showAuth = true;
+          }
         }
         // console.log(this.showExtraContent);
         

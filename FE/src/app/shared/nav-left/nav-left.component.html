@@ -25,7 +25,7 @@
 
   <div class=" absolute bottom-2">
     <form (submit)="onSubmit()" #uploadForm enctype="multipart/form-data" class="flex">
-      <input type="file" name="file" (change)="onFileSelected($event)" accept=".docx, .txt, .pdf">
+      <input type="file" name="file" (change)="onFileSelected($event)" accept=".docx, .txt">
       <button type="submit" [disabled]="!selectedFile" class="upload" [class.clicked]="submitClicked">Upload</button>
     </form>
     <br>

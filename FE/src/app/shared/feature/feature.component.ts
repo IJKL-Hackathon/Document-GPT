@@ -18,6 +18,9 @@ export class FeatureComponent {
   UserProfile: any;
   answerData: any;
   query:any;
+  clickedSum:boolean=false;
+  clickedQa:boolean=false;
+  clickedQuizz:boolean=false;
   select: string = 'sum'; // Initialize select property with a default value
   @Output() answer = new EventEmitter<any>();
 
@@ -41,13 +44,7 @@ export class FeatureComponent {
   }
 
   navigateTo(option:string){
-    if(!this.UserProfile)
-    {
-      // console.log("id:",this.fileService.getFileId());
-      this.diaolog.open(AuthComponent,{
-
-      })
-    }else if(!this.fileService.getFileId()){
+    if(!this.fileService.getFileId()){
       this.diaolog.open(DialogNotSelectedFileComponent,{
    
       })
@@ -59,6 +56,9 @@ export class FeatureComponent {
       // console.log("option:",router);
       switch (option) {
         case 'sum':
+          this.isClickedSum();
+          console.log(this.clickedSum);
+          
           this.featureService.getSummary(fileId,this.UserProfile.id).subscribe(
             (response) => {
               this.answerData = response["answer"];
@@ -79,9 +79,11 @@ export class FeatureComponent {
           );
           break;
         case 'qa':
-
+          this.isClickedQa();
           break;
         case 'quizizz':
+
+        this.isClickedQizz();
           this.featureService.getQuizizz(fileId,this.UserProfile.id).subscribe(
             (response) => {
               console.log(this.featureService.getData());
@@ -115,5 +117,23 @@ export class FeatureComponent {
 
   highlightButton(destination: string): void {
     this.select = destination;
+  }
+  isClickedSum(): boolean {
+    this.clickedSum=true;
+    this.clickedQa=false;
+    this.clickedQuizz=false;
+    return this.clickedSum;
+  }
+  isClickedQa(): boolean {
+    this.clickedSum=false;
+    this.clickedQa=true;
+    this.clickedQuizz=false;
+    return this.clickedQa;
+  }
+  isClickedQizz(): boolean {
+    this.clickedSum=false;
+    this.clickedQa=false;
+    this.clickedQuizz=true;
+    return this.clickedQuizz;
   }
 }
