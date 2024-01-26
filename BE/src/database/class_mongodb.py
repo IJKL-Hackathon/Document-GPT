@@ -1,12 +1,12 @@
 import os
-from langchain_community.vectorstores.azuresearch import AzureSearch
-from models import embeddings, chat_model
+import pymongo
+from bson.objectid import ObjectId
+# Create database if it doesn't exist
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.docstore.document import Document
-from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnablePassthrough
-from langchain_core.prompts import PromptTemplate
-from bson.objectid import ObjectId
+from langchain_community.vectorstores.azuresearch import AzureSearch
+from models import embeddings
+
 from azure.search.documents.indexes.models import (
     ScoringProfile,
     SearchableField,
@@ -59,18 +59,7 @@ fields = [
     ),
 ]
 
-template = """Use the following pieces of context to answer the question at the end.
-If you don't know the answer, just say that you don't know, don't try to make up an answer.
-Use three sentences maximum and keep the answer as concise as possible.
-Always say answer in Vietnamese.
-
-{content}
-
-Question: {question}
-
-Helpful Answer:"""
-
-class VECTOR_DB:
+class MONGGO_VECTOR_DB:
     def __init__(self):
         self.text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(chunk_size=1000, chunk_overlap=200)
         self.vs = AzureSearch(
@@ -80,7 +69,6 @@ class VECTOR_DB:
             embedding_function=embeddings.embed_query,
             fields=fields,
         )
-        self.prompt = PromptTemplate.from_template(template)
     
     def create_documents(self, user_id, files, file_ids):
         documents = []
@@ -103,55 +91,69 @@ class VECTOR_DB:
     def add_file(self, user_id, file, file_id):
         docs = self.create_documents(user_id, [file], [file_id])
         self.vs.add_documents(documents=docs)
-    
-    def create_filter(self, user_id, file_ids = []):
-        filter_condition = "source eq '" + user_id + "'"
 
-        if not isinstance(file_ids, list):
-            file_ids = [file_ids]
+class MONGO_DB:
+    def __init__(self):
+        self.client = pymongo.MongoClient(os.getenv("MONGO_STRING"))
+        self.db = self.get_db(os.getenv("MONGO_DB"))
+        self.collection = {
+            "user": self.get_collection("user"),
+            "file": self.get_collection("file")
+        }
+        self.vs = MONGGO_VECTOR_DB()
         
-        if file_ids:
-            # If file_ids is not empty, add the condition for _id in file_ids
-            file_id_condition = " or ".join(["mongo_id eq '" + file_id + "'" for file_id in file_ids])
-            filter_condition += " and (" + file_id_condition + ")"
         
-        print(filter_condition)
-        
-        return filter_condition
-    
-    def search(self, user_id, query, file_ids = []):
-        return self.vs.similarity_search_with_relevance_scores(
-            query=query,
-            filters = self.create_filter(user_id, file_ids),
-            score_threshold=0.80,
-        )
-    
-    def get_retriever(self, user_id, file_ids = []):
-        return self.vs.as_retriever(
-            search_type="similarity_score_threshold",
-            search_kwargs={
-                'score_threshold': 0.80,
-                'filters': self.create_filter(user_id, file_ids),
-            }
+        print("Connected MongoDB successful")
+
+    def get_db(self, db_name):
+        db = self.client[db_name]
+        if db_name not in self.client.list_database_names():
+            # Create a database with 400 RU throughput that can be shared across
+            # the DB's collections
+            db.command({"customAction": "CreateDatabase", "offerThroughput": 400})
+            print("Created db '{}' with shared throughput.\n".format(db_name))
             
-        )
+        return db
     
-    def format_docs(self, docs):
-        result = "\n\n".join(doc.page_content for doc in docs)
-        return result
-    
-    def create_rag_chain(self, user_id, file_ids):
-        return (
-            {"content": self.get_retriever(user_id, file_ids) | self.format_docs, "question": RunnablePassthrough()}
-            | self.prompt
-            | chat_model
-            | StrOutputParser()
-        )
+    def get_collection(self, collection_name):
+        collection = self.db[collection_name]
+        if collection_name not in self.db.list_collection_names():
+            # Creates a unsharded collection that uses the DBs shared throughput
+            self.db.command(
+                {"customAction": "CreateCollection", "collection": collection_name}
+            )
+            print("Created collection '{}'.\n".format(collection_name))
         
-    def question(self, user_id, query, file_ids = []):
-        result =  self.create_rag_chain(user_id, file_ids).invoke(query)
-        return result
+        return collection
+    
+    def get_file_by_userID(self, user_id):
+        return self.collection["file"].find({"user_id": user_id})
+    
+    def get_file(self, *file_ids):
+        obj_ids = [ObjectId(ids) for ids in file_ids]
 
-vectordb = VECTOR_DB()
+        cursor = self.collection["file"].find({"_id": {"$in": obj_ids}})
+        files = list(cursor)
+        return files
 
-print("Connected VectorDB successful");
+    def insert_file(self, user_id, file):
+        
+        file["user_id"] = user_id
+        inserted_id = self.collection["file"].insert_one(file).inserted_id
+
+        print(inserted_id)
+        
+        self.vs.add_file(user_id, file, inserted_id)
+        
+    def insert_user(self, user):
+        self.collection["user"].insert_one(user)
+    
+    def delete_file(self, file_id):
+        self.collection["file"].delete_one({"_id": file_id})
+    
+    def delete_user(self, user_id):
+        self.collection["user"].delete_one({"_id": user_id})
+        
+    def get_user(self, jwt):
+        return self.collection["user"].find_one({"jwt": jwt})
+
