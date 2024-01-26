@@ -12,7 +12,7 @@ export class FeaturService {
   constructor(private http: HttpClient) {}
 
   private getHeaders(): HttpHeaders {
-    const jwtToken = localStorage.getItem('jwt'); 
+    const jwtToken = localStorage.getItem('jwt');
     return new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${jwtToken}`,
@@ -24,7 +24,7 @@ export class FeaturService {
       fileId: fileId,
       userId: userId
     }
-      
+
     return this.http.post<any>(`${this.apiUrl}/summarize`, params);
   }
 
@@ -34,7 +34,7 @@ export class FeaturService {
       userId: userId,
       query: query
     }
-    
+
     return this.http.post<any>(`${this.apiUrl}/qa`, params);
   }
 

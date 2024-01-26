@@ -69,7 +69,7 @@
               "browserTarget": "Arzue_Hackathon:build:production"
             },
             "development": {
-              "browserTarget": "Arzue_Hackathon:build:development"
+              "browserTarget": "Arzue_Hackathon:build:development",
             }
           },
           "defaultConfiguration": "development"

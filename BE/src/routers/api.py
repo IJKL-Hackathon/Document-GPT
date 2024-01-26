@@ -29,9 +29,9 @@ def register():
     
     form = request.get_json()
     
-    fullname = form["fullname"]
-    email = form["email"]
-    password = form["password"]
+    fullname = form["signupFullname"]
+    email = form["signupEmail"]
+    password = form["signupPassword"]
     
     key = "secret"
     encoded = jwt.encode({
@@ -66,8 +66,8 @@ def login():
     
     form = request.get_json()
     
-    email = form["email"]
-    password = form["password"]
+    email = form["loginEmail"]
+    password = form["loginPassword"]
     
     key = "secret"
     encoded = jwt.encode({

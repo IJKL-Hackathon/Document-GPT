@@ -1,10 +1,10 @@
 import { createReducer, on } from "@ngrx/store";
-import { getUserProfile, getUserProfileFailure, getUserProfileSuccess, logoutSucess } from "./user.action";
+import { getUserProfile, getUserProfileFailure, getUserProfileSuccess, logoutSuccess } from "./user.action";
 
 const initialState = {
     userProfile:null,
     loading:false,
-    error:null    
+    error:null
 }
 export const UserReducer = createReducer(
     initialState,
@@ -12,9 +12,9 @@ export const UserReducer = createReducer(
     on(getUserProfileSuccess,(state,{userProfile})=>({...state, loading:true, error:null,userProfile})),
     on(getUserProfileFailure,(state,{error})=>({...state, loading:false, error:error})),
 
-    on(logoutSucess,()=>initialState)
+    on(logoutSuccess,()=>initialState)
 
 
-   
+
 
 )

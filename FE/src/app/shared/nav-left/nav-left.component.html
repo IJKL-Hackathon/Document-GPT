@@ -1,58 +1,58 @@
 <div class="container p-3 h-[80vh] relative">
-    <div class="new-message  relative pb-4">
-        <input type="text" class="search" placeholder="Search file..." [(ngModel)]="searchQuery">
-        <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search absolute top-3 right-10" viewBox="0 0 16 16">
-            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-          </svg>
-      </div>
-    <div class="file_container space-y-4 px-3">
-        <ng-container *ngIf="!res_file ">
-        <p>Upload File To Use App</p>
-        </ng-container>
-        <ng-container *ngFor="let data of res_file,let i = index">
-          <ng-container *ngIf="i<=12">
-            <p >{{data.title}}
-            <span><input [checked]="getFileId.includes(data.id)" type="checkbox" name="{{data.title}}" [value]="data.id" (change)="onCheckboxChange($event, data.id)"></span>
-          </p>
-        </ng-container>
+  <div class="new-message  relative pb-4">
+    <input type="text" class="search" placeholder="Search file..." [(ngModel)]="searchQuery">
+    <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search absolute top-3 right-10" viewBox="0 0 16 16">
+      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+    </svg>
+  </div>
+  <div class="file_container space-y-4 px-3">
+
+    <ng-container *ngIf="!res_file ">
+      <p>Upload File To Use App</p>
+    </ng-container>
+    <ng-container *ngFor="let data of res_file,let i = index">
+      <ng-container *ngIf="i<=12">
+        <p >{{data.title}}
+          <span class="checkbox"><input [checked]="getFileId.includes(data.id)" type="checkbox" name="{{data.title}}" [value]="data.id" (change)="onCheckboxChange($event, data.id)"></span>
+        </p>
       </ng-container>
-      <!-- <div class="flex gap-5 mb-3 button-container">
-        <button class="upload"  >Select All</button>
-        <button  (click)="deselectAll()">Deselect All</button>
-  </div>  -->
+    </ng-container>
+    <!-- <div class="flex gap-5 mb-3 button-container">
+      <button class="upload"  >Select All</button>
+      <button  (click)="deselectAll()">Deselect All</button>
+</div>  -->
+  </div>
+
+  <div class=" absolute bottom-2">
+    <form (submit)="onSubmit()" #uploadForm enctype="multipart/form-data" class="flex">
+      <input type="file" name="file" (change)="onFileSelected($event)" accept=".docx, .txt, .pdf">
+      <button type="submit" [disabled]="!selectedFile" class="upload" [class.clicked]="submitClicked">Upload</button>
+    </form>
+    <br>
+    <button (click)="DeleteFile()" [disabled]="!selectedFile" class="delete">Delete</button>
+
+
+    <div *ngIf="uploadProgress > 0" class="progress-container">
+      <progress value="{{uploadProgress}}" max="100"></progress>
+      <span>{{uploadProgress}}%</span>
     </div>
-   
-
-      <!-- <mat-spinner color="accent" diameter="50"></mat-spinner> -->
-
-
-    <div class=" absolute bottom-2">
-  
-      <form (submit)="onSubmit()" #uploadForm enctype="multipart/form-data" class="flex">
-        <input type="file" name="file" (change)="onFileSelected($event)" accept=".docx, .txt, .pdf">
-        <!-- <input type="text" name="title" [(ngModel)]="fileTitle" placeholder="Enter title"> -->
-        <button type="submit"  [disabled]="!selectedFile" class="upload ">Upload</button>
-
-      </form>
-
-      </div>
+  </div>
 </div>
 
 
-  <div class="login-container mt-5 ">
-    <button *ngIf="!UserProfile" style="color: white;" class="login-button w-full white py-2" (click)="HandleLogin()">Login</button>
+<!--<div class="login-container mt-5 ">-->
+<!--  <button *ngIf="!UserProfile" class="login-button w-full white py-2" (click)="HandleLogin()" [class.clicked]="loginClicked">Login</button>-->
+<!--</div>-->
+
+
+
+<button *ngIf="UserProfile" class="flex text-lg mt-5" (click)="toggleMenu()" [class.clicked]="menuClicked">
+  <img class="w-7 h-7" src="https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916_640.png" alt="">
+  <span class="px-5">{{UserProfile.email}}</span>
+</button>
+<div class="menu-container" >
+
+  <div class="menu" [class.show]="isMenuOpen" >
+    <button (click)="logout()" class="menu-item">Logout</button>
   </div>
-  
-  
-            
-  <button *ngIf="UserProfile" class="flex  text-lg mt-5" (click)="toggleMenu()">
-    <img class="w-7 h-7" src="https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916_640.png" alt="">
-    <span class="px-5">{{UserProfile.email}}</span>
-      </button>
-      <div class="menu-container" >
-        <div class="menu" [class.show]="isMenuOpen" >
-          <!-- <button class="menu-item">Tài Khoản</button> -->
-          <button (click)="logout()" class="menu-item">Logout</button>
-        </div>
-      </div>
-      
+</div>

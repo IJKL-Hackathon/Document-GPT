@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, Output } from '@angular/core';
+import {Component, ElementRef, EventEmitter, HostListener, Output, signal} from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog'
 import { AuthComponent } from 'src/app/auth/auth.component';
@@ -7,6 +7,7 @@ import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/models/AppState';
 import { FileService } from 'src/app/state/file/file.service';
 import { Router } from '@angular/router';
+import {data} from "autoprefixer";
 @Component({
   selector: 'app-nav-left',
   templateUrl: './nav-left.component.html',
@@ -16,7 +17,12 @@ export class NavLeftComponent {
   res_file: any;
   res_file_upload: any;
   selectedFile: File | null = null;
+  param: string | undefined;
+  loginClicked: boolean = false;
+  menuClicked: boolean = false;
   UserProfile: any;
+  submitClicked: boolean = false;
+  uploadProgress: number = 0;
   fileTitle: string = '';
   searchQuery: string = '';
   selectedFileIds: string[] = [];
@@ -27,7 +33,7 @@ export class NavLeftComponent {
   }
   ngOnInit() {
     // this.res_file = res;
-    
+
     if (localStorage.getItem("jwt")) {
       this.userService.getUserProfile();
     }
@@ -38,7 +44,7 @@ export class NavLeftComponent {
       });
       console.log(this.res_file);
       // console.log("user-nav",user);
-      
+
       if (this.UserProfile) {
         this.diaolog.closeAll();
       }
@@ -52,6 +58,24 @@ export class NavLeftComponent {
 
   }
   onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0] as File;
+  }
+
+  DeleteFile() {
+    let fileId = this.fileService.getFileId();
+
+    // Call the API to delete the file
+    this.fileService.deleteFile(fileId).subscribe(
+      (response) => {
+        console.log('File deleted successfully:', response);
+      },
+      (error) => {
+        console.error('Error deleting file:', error);
+      }
+    );
+  }
+
+  onDeleteFile(event: any) {
     this.selectedFile = event.target.files[0] as File;
   }
   onSubmit() {
@@ -103,7 +127,7 @@ export class NavLeftComponent {
       console.log('Checkbox unchecked with id:', id);
     }
   }
-  
+
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
@@ -116,26 +140,7 @@ export class NavLeftComponent {
     return this.fileService.getFileId();
   }
 
-  // selectAll() {
-    
-  //   this.selectAllChecked = !this.selectAllChecked;
-  //   if(this.selectAllChecked){
-  //     this.selectedFileIds = this.res_file.map((data:any) => data.id);
-  //     this.res_file.forEach((data:any) => {
-  //       data.isSelected = true;
-  //     });
-  //     this.fileService.saveFileId(this.selectedFileIds)
-  //   }else{
-  //     this.selectedFileIds = [];
-  //     this.res_file.forEach((data:any) => {
-  //       data.isSelected = false;
-  //     });
-  //     this.fileService.saveFileId(this.selectedFileIds)
-  //   }
-  //   console.log(this.selectedFileIds);
-    
-  // }
 
+  protected readonly data = data;
 
-  
 }

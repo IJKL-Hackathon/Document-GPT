@@ -3,7 +3,7 @@ import { BASR_URL_API } from "src/config/api";
 import {HttpClient, HttpHeaders } from "@angular/common/http";
 import { Store } from "@ngrx/store";
 import { catchError, map, of } from "rxjs";
-import { getUserProfileFailure, getUserProfileSuccess, logoutSucess } from "./user.action";
+import { getUserProfileFailure, getUserProfileSuccess, logoutSuccess } from "./user.action";
 
 @Injectable({
     providedIn: 'root',
@@ -12,11 +12,11 @@ import { getUserProfileFailure, getUserProfileSuccess, logoutSucess } from "./us
 export class UserService {
     private apiUrl = BASR_URL_API + '/users/profile';
     // private header: HttpHeaders;
-  
+
     constructor(private http: HttpClient, private store: Store) {
       // this.header = new HttpHeaders().set("Authorization", `Bearer ${localStorage.getItem("jwt")}`);
     }
-  
+
     getUserProfile() {
       const headers = new HttpHeaders().set("Authorization", `Bearer ${localStorage.getItem("jwt")}`);
       return this.http.get(`${this.apiUrl}`, { headers }).pipe(
@@ -33,9 +33,9 @@ export class UserService {
         })
       ).subscribe((action) => this.store.dispatch(action));
     }
-  
+
     logout() {
       localStorage.removeItem("jwt");
-      this.store.dispatch(logoutSucess());
+      this.store.dispatch(logoutSuccess());
     }
   }

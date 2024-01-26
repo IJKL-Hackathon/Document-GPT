@@ -7,9 +7,13 @@ import { QaComponent } from './qa/qa.component';
 import { HistoryComponent } from './history/history.component';
 import { QuizzComponent } from './history/quizz/quizz.component';
 import { QuizzShareComponent } from './shared/quizz-share/quizz-share.component';
+import { AuthComponent } from "./auth/auth.component";
+
+
 
 const routes: Routes = [
-  {path: '', component:HomeComponent },
+  {path: '', component:AuthComponent },
+  {path: 'home', component:HomeComponent },
   {path: 'sum', component:SumComponent},
   {path: 'quizizz', component:QuizizzComponent},
   {path: 'qa', component:QaComponent},
@@ -25,3 +29,5 @@ const routes: Routes = [
 
 
 export class AppRoutingModule { }
+
+

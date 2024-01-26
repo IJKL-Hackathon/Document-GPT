@@ -6,4 +6,4 @@ export const getUserProfileSuccess = createAction('[User] getUserSuccess', props
 
 export const getUserProfileFailure = createAction('[User] getUserFailure', props<{error:any}>());
 
-export const logoutSucess = createAction('[User] LogoutSucess')
+export const logoutSuccess = createAction('[User] LogoutSuccess')

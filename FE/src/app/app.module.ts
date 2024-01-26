@@ -31,6 +31,8 @@ import { DialogShareComponent } from './shared/dialog-share/dialog-share.compone
 import { ClipboardModule } from 'ngx-clipboard';
 import { DialogNotSelectedFileComponent } from './shared/dialog-not-selected-file/dialog-not-selected-file.component';
 import { QuizzShareComponent } from './shared/quizz-share/quizz-share.component';
+import {NgOptimizedImage} from "@angular/common";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,7 +68,23 @@ import { QuizzShareComponent } from './shared/quizz-share/quizz-share.component'
     DialogModule,
     ClipboardModule
     
+
+
   ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        AuthModule,
+        FormsModule,
+        MatMenuModule,
+        MatButtonModule,
+        RouterModule,
+        MatDialogModule,
+        StoreModule.forRoot({auth: AuthReducer, user: UserReducer, file: FileReducer}, {}),
+        HttpClientModule,
+        NgOptimizedImage
+
+    ],
   providers: [FeaturService],
   bootstrap: [AppComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
