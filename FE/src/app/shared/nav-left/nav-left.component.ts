@@ -100,10 +100,9 @@ export class NavLeftComponent {
               this.res_file = res;
             });
           });
-
           this.uploadProgress = 0;
         }
-      }, 500);
+      }, 1500);
     }
   }
 
