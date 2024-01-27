@@ -22,7 +22,9 @@ export class FeatureComponent {
   clickedSum:boolean=false;
   clickedQa:boolean=false;
   clickedQuizz:boolean=false;
+  clickedHistory:boolean=false;
   select: string = 'sum'; // Initialize select property with a default value
+  currentIdSelected:any;
   @Output() answer = new EventEmitter<any>();
 
   constructor(private diaolog:MatDialog, private userService:UserService,
@@ -37,14 +39,22 @@ export class FeatureComponent {
       this.clickedSum = true;
       this.clickedQa = false;
       this.clickedQuizz = false;
+      this.clickedHistory=false;
     } else if (this.router.isActive('/qa', false)) {
       this.clickedSum = false;
       this.clickedQa = true;
       this.clickedQuizz = false;
+      this.clickedHistory=false;
     } else if (this.router.isActive('/quizizz', false)) {
       this.clickedSum = false;
       this.clickedQa = false;
       this.clickedQuizz = true;
+      this.clickedHistory=false;
+    }else if (this.router.isActive('/history', false)) {
+      this.clickedSum = false;
+      this.clickedQa = false;
+      this.clickedQuizz = false;
+      this.clickedHistory=true
     }
     if(localStorage.getItem("jwt"))
     {
@@ -58,8 +68,14 @@ export class FeatureComponent {
    
   }
 
-  navigateTo(option:string): void{
-    if(!this.fileService.getFileId()){
+  navigateTo(option:string){
+    if(!this.UserProfile)
+    {
+      // console.log("id:",this.fileService.getFileId());
+      this.diaolog.open(AuthComponent,{
+   
+      })
+    }else if(!this.fileService.getFileId()){
       this.diaolog.open(DialogNotSelectedFileComponent,{
    
       })
@@ -71,36 +87,16 @@ export class FeatureComponent {
       // console.log("option:",router);
       switch (option) {
         case 'sum':
-          this.fileService.saveStatusClick("sum");
-          this.fileService.getStatusClick().subscribe((res) => {
-            // console.log("res",res);
-            
-            if(res="sum")
-            {
-              // console.log("ok");
-              
-              this.clickedSum=true;
-              
-              
-            }
-            // console.log(res);
-      
-          })
-          this.clickedSum = true;
-          this.clickedQa = false;
-          this.clickedQuizz = false;
-          // console.log("A",this.clickedSum);
-          
           this.featureService.getSummary(fileId,this.UserProfile.id).subscribe(
             (response) => {
               this.answerData = response["answer"];
               this.featureService.setStoreSumData(response["answer"]);
               console.log(this.featureService.getData());
-
-              this.featureService.setData(response["answer"]);
+            
+                // this.featureService.setData(response["answer"]);
 
               // console.log("data:",this.featureService.getStoredSumData());
-
+              
               // this.sendAnswer(response["answer"]);
               console.log('Summary Response:', response["answer"]);
             },
@@ -111,21 +107,13 @@ export class FeatureComponent {
           );
           break;
         case 'qa':
-        
-          this.clickedSum = false;
-          this.clickedQa = true;
-          this.clickedQuizz = false;
+    
           break;
         case 'quizizz':
-
-        this.clickedSum = false;
-        this.clickedQa = false;
-        this.clickedQuizz = true;
-        console.log(this.selectedButton);
           this.featureService.getQuizizz(fileId,this.UserProfile.id).subscribe(
             (response) => {
               console.log(this.featureService.getData());
-
+            
               this.featureService.setData(response["questions"]);
               // this.answerData = response["questions"];
               // this.sendAnswer(response["questions"]);
@@ -165,5 +153,11 @@ export class FeatureComponent {
 
   isClickedQizz(): boolean {
     return this.clickedQuizz;
+  }
+  isClickedHistory(): boolean {
+    return this.clickedHistory;
+  }
+  routerHistory(option: string){
+    this.router.navigate(["/"+option]);
   }
 }
