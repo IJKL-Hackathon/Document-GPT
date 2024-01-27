@@ -10,7 +10,7 @@ from flask_cors import CORS
 import routers
 
 app = Flask(__name__)
-CORS(app, origin=["http://localhost:5000","http://localhost:5000"])
+CORS(app)
 
 app.register_blueprint(routers.api)
 
