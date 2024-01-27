@@ -170,7 +170,6 @@ export class NavLeftComponent {
     this.searchSubject
       .pipe(
         debounceTime(1000), // Wait for 1000ms pause in events
-        distinctUntilChanged(), // Ignore if the new value is the same as the previous one
         switchMap(query => this.fileService.searchFiles(query, this.UserProfile.id))
       )
       .subscribe(

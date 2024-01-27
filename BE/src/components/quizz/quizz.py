@@ -92,9 +92,24 @@ class QUIZZ:
         
         return quizzes
 
-    def test_quizz(self, id):
+    def test_quizz_id(self, id):
+        print(id)
         history = self.mongo.get_share_by_ID(id)
+        
+        print(history["quizz_ids"])
+        
         quizzes = self.mongo.get_quizz(*history["quizz_ids"])
+        quizz = {
+            "questions": []
+        }
+        
+        for q in quizzes:
+            quizz["questions"].extend(q["questions"])
+        
+        return quizz
+
+    def test_quizz(self, quizz_ids):        
+        quizzes = self.mongo.get_quizz(*quizz_ids)
         quizz = {
             "questions": []
         }

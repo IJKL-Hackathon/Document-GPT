@@ -33,4 +33,4 @@ def link():
 @router.route("/quizz/share", methods = ["GET"])
 def share():
     id = request.args["id"]
-    return jsonify(module.test_quizz(id))
+    return jsonify(module.test_quizz_id(id))
