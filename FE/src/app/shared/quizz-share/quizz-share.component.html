@@ -5,9 +5,9 @@
         <span class="sender">Chat IJKL:</span>
           <br>
           <br>
-      <div *ngFor="let question of answers; let questionIndex = index">
+      <div  *ngFor="let question of answers; let questionIndex = index">
         <p>{{questionIndex + 1}}. {{ question.query }}</p>
-        <ul>
+        <ul class="mx-4">
           <li *ngFor="let choice of question.choices; let i = index">
             <label>
               <input type="radio" name="answer{{ questionIndex }}" [value]="i" (change)="updateSelectedAnswer(questionIndex, i)">
@@ -15,6 +15,7 @@
             </label>
           </li>
         </ul>
+        <br>
         <p *ngIf="questionResults[questionIndex] === 'Correct'" class="text-success">Correct!
           <span>answer : {{question.answer+1}}. </span>
           <span>{{question.explanation}}</span>

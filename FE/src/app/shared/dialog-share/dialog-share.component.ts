@@ -9,12 +9,21 @@ import { ClipboardService } from 'ngx-clipboard';
 })
 export class DialogShareComponent {
   clipboardContent: string; 
+  baseUrl: any;
   constructor(
+    
     public dialogRef: MatDialogRef<HistoryComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private clipboardService: ClipboardService
   ) {
-    this.clipboardContent = `http://localhost:54344/share?id=${data.id}`;
+    this.baseUrl = window.location.origin;
+    this.clipboardContent = this.baseUrl + `/share?id=${data.id}`;
+  }
+
+  ngOninit() {
+    // this.baseUrl = window.location.origin;
+    // console.log(this.baseUrl);
+    
   }
  
   copyToClipboard() {

@@ -1,13 +1,14 @@
 .box{
     padding: 8px 15px;
-    background-color: #4CAF50;
+    background-color: #226FA7;
     color: white;
     border: none;
     border-radius: 3px;
     cursor: pointer;
+   font-weight: bold;
 }
 .box:hover{
-    background-color: #065d0a;
+    background-color: #79A8D5;
 }
 
 /* Highlight effect for the selected button */
@@ -16,7 +17,6 @@
 //   color: #856404; /* Adjust the text color as needed */
 // }
 .highlight{
-  background-color: #FFB534;
- 
-  color: #FFF; /* Adjust the text color as needed */
+  background-color: #F9F7C9;
+  color: #856404; /* Adjust the text color as needed */
 }
