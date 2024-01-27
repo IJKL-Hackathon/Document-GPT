@@ -16,21 +16,21 @@
 .upload {
   padding: 5px 5px;
   max-width: 20%;
-  background-color: #4CAF50;
+  background-color: #226FA7;
   color: white;
   border: none;
   border-radius: 3px;
   cursor: pointer;
 
   &:hover {
-    background-color: #ffeeba;
+    background-color: #F9F7C9;
     color: #856404;
   }
 
 
 
   &.clicked {
-    background-color: #ffeeba;
+    background-color: #F9F7C9;
     color: #856404;
   }
 }
@@ -38,7 +38,7 @@
 .delete {
   padding: 5px 10px;
   max-width: 20%;
-  background-color: #4CAF50;
+  background-color: #226FA7;
   color: white;
   border: none;
   border-radius: 3px;
@@ -56,17 +56,17 @@
 }
 
 .login-container {
-  background-color: #4CAF50;
+  background-color: #226FA7;
   color: white;
   border-radius: 3px;
 
   &:hover {
-    background-color: #ffeeba !important;
+    background-color: #F9F7C9 !important;
     color: #856404 !important;
   }
 
   &.clicked {
-    background-color: #ffeeba;
+    background-color: #F9F7C9;
     color: #856404;
   }
 }
@@ -124,7 +124,7 @@
   .progress {
     height: 100%;
     width: 0;
-    background-color: #4caf50;
+    background-color: #226FA7;
     border-radius: 4px;
     transition: width 0.3s ease-in-out;
   }
