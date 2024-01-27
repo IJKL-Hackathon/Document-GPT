@@ -27,7 +27,8 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/routes.json"
             ],
             "styles": [
               "@angular/material/prebuilt-themes/purple-green.css",
