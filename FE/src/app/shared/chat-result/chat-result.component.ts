@@ -19,7 +19,7 @@ export class ChatResultComponent {
   sum: any;
   UserProfile: any;
   sumData: any;
-
+  selectedId:any;
   selectedAnswers: number[] = [];
 
   constructor(private activatedRoute: ActivatedRoute, private featurService: FeaturService,
@@ -35,7 +35,7 @@ export class ChatResultComponent {
     // });
     // another-component.ts
 
-
+    
     this.featurService.getStoredSumData().subscribe((sum: any) => {
       this.sumData = sum;
     });
@@ -50,6 +50,8 @@ export class ChatResultComponent {
       // console.log(res);
 
     });
+
+
 
   };
   receiveDataFromFeature(data: any) {

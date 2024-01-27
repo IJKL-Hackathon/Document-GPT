@@ -89,25 +89,8 @@ export class FileService {
     };
 
     return this.http
-      .post(`${this.apiUrl}/searchFile`, params)
-      .pipe(
-        map((response) => {
-          // Dispatch success action
-          console.log('file successfully search', response);
-
-          return searchFilesSuccess({ searchResults: response });
-        }),
-        catchError((error) => {
-          return of(
-            searchFilesFailure(
-              error.response && error.respone.data.message
-                ? error.respone.data.message
-                : error.message
-            )
-          );
-        })
-      )
-      .subscribe((action) => this.store.dispatch(action));
+      .post(`${this.apiUrl}/searchFile`, params);
+     
   }
 
   private fileId: string = '';

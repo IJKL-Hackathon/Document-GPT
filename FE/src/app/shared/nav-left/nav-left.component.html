@@ -1,6 +1,6 @@
 <div class="container p-3 h-[80vh] relative">
   <div class="new-message  relative pb-4">
-    <input type="text" class="search" placeholder="Search file..." [(ngModel)]="searchQuery">
+    <input type="text" class="search" placeholder="Search file..." [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange()">
     <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search absolute top-3 right-10" viewBox="0 0 16 16">
       <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
     </svg>
@@ -10,13 +10,26 @@
     <ng-container *ngIf="!res_file ">
       <p>Upload File To Use App</p>
     </ng-container>
-    <ng-container *ngFor="let data of res_file,let i = index">
-      <ng-container *ngIf="i<=12">
-        <p >{{data.title}}
-          <span class="checkbox"><input [checked]="getFileId.includes(data.id)" type="checkbox" name="{{data.title}}" [value]="data.id" (change)="onCheckboxChange($event, data.id)"></span>
-        </p>
+    <ng-container *ngIf="res_file.length>0 ; else noResFile">
+
+      <ng-container *ngFor="let data of res_file;let i = index">
+        <ng-container *ngIf="searchBollean==true">
+          <p >{{data.title}}
+            <span class="checkbox"><input [checked]="getFileId.includes(data.id)" type="checkbox" name="{{data.title}}" [value]="data.id" (change)="onCheckboxChange($event, data.id)"></span>
+          </p>
+        </ng-container>
       </ng-container>
     </ng-container>
+    <ng-template #noResFile>
+        <p>{{haveFile}}</p>
+    </ng-template>
+    <div class="flex justify-center items-center w-full h-full flex-col space-y-2 ">
+
+      <ng-container *ngIf="searchBollean==false">
+        <mat-spinner  color="accent" diameter="30"></mat-spinner>
+        <span>Loading...</span>
+      </ng-container>
+    </div>
   </div>
 
   <div class=" file_choose absolute bottom-2">

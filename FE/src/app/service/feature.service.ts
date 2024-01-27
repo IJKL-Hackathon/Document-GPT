@@ -64,5 +64,15 @@ export class FeaturService {
     return this.sumDataSubject.asObservable();
   }
 
+private previousFileId: any;
+
+getPreviousFileId(): string {
+  return this.previousFileId;
+}
+
+setPreviousFileId(newFileId: string): void {
+  this.previousFileId = newFileId;
+}
+
 
 }

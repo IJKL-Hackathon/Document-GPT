@@ -9,6 +9,7 @@ import { FileService } from 'src/app/state/file/file.service';
 import { Router } from '@angular/router';
 import {data} from "autoprefixer";
 import {HttpEvent, HttpEventType} from "@angular/common/http";
+import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 @Component({
   selector: 'app-nav-left',
   templateUrl: './nav-left.component.html',
@@ -155,4 +156,36 @@ export class NavLeftComponent {
   refreshPage() {
     window.location.reload();
   }
+  
+  haveFile:any;
+  searchBollean: boolean = true;
+  private searchSubject = new Subject<string>();
+  onSearchChange() {
+    this.searchBollean = false;
+  
+    // Push the search query to the Subject with a debounce time of 1000ms
+    this.searchSubject.next(this.searchQuery);
+  
+    // Subscribe to the searchSubject
+    this.searchSubject
+      .pipe(
+        debounceTime(1000), // Wait for 1000ms pause in events
+        distinctUntilChanged(), // Ignore if the new value is the same as the previous one
+        switchMap(query => this.fileService.searchFiles(query, this.UserProfile.id))
+      )
+      .subscribe(
+        (result) => {
+          console.log(result);
+          this.searchBollean = true;
+          this.res_file = result;
+          if (this.res_file.length === 0) {
+            this.haveFile = "No file found";
+          }
+          console.log(this.haveFile);
+        },
+        (error) => {
+          console.error('Error in search:', error);
+        }
+      );
+}
 }
