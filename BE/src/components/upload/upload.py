@@ -1,8 +1,9 @@
-from database import mongodb
+from database import mongodb, vectordb
 
 class UPLOAD:
     def __init__(self):
         self.mongo = mongodb
+        self.vs = vectordb
 
     def upload(self, user_id, file_content, title):
         self.mongo.insert_file(
@@ -19,6 +20,30 @@ class UPLOAD:
         for file in files:
             file["id"] = str(file["_id"])
             del file["_id"]
+            del file["content"]
+            del file["user_id"]
+            
+        return files
+
+    def searchFile(self, req):
+        
+        user_id = req["userId"]
+        query = req["query"]
+        
+        if not query:
+            return self.getFile(req)
+            
+        results = self.vs.search(user_id, query)
+        
+        results = [i[0].metadata['mongo_id'] for i in results]
+        
+        files = self.mongo.get_file(*results)
+        
+        for file in files:
+            file["id"] = str(file["_id"])
+            del file["_id"]
+            del file["content"]
+            del file["user_id"]
             
         return files
 
