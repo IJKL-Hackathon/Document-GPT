@@ -34,11 +34,7 @@ export class ChatResultComponent {
     //   // Thực hiện các hành động khác khi fileSelected thay đổi
     // });
     // another-component.ts
-    this.featurService.getData().subscribe((res) => {
-      this.answers = res;
-      // console.log(res);
 
-    });
 
     this.featurService.getStoredSumData().subscribe((sum: any) => {
       this.sumData = sum;
@@ -47,6 +43,11 @@ export class ChatResultComponent {
     console.log(this.param);
     this.store.pipe(select((store) => store.user)).subscribe((user) => {
       this.UserProfile = user.userProfile;
+
+    });
+    this.featurService.getData().subscribe((res) => {
+      this.answers = res;
+      // console.log(res);
 
     });
 

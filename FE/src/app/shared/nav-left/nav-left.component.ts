@@ -44,7 +44,7 @@ export class NavLeftComponent {
       this.fileService.getFile(this.UserProfile.id).subscribe((res) => {
         this.res_file = res;
       });
-      console.log(this.res_file);
+      // console.log(this.res_file);
       // console.log("user-nav",user);
 
       if (this.UserProfile) {
@@ -70,6 +70,8 @@ export class NavLeftComponent {
     // Call the API to delete the file
     this.fileService.deleteFile(fileId).subscribe(
       (response) => {
+        this.refreshPage();
+        // this.fileService.getFile(this.UserProfile.id);
         console.log('File deleted successfully:', response);
       },
       (error) => {
@@ -89,7 +91,7 @@ export class NavLeftComponent {
       // Simulate the upload process
       this.uploadProgress = 0;
       const interval = setInterval(() => {
-        this.uploadProgress += 10;
+        this.uploadProgress += 5;
         if (this.uploadProgress >= 100) {
           clearInterval(interval);
 

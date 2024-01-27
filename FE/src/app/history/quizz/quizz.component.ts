@@ -12,13 +12,11 @@ quizzHistory:any;
 id:any;
   constructor(private historyService:HistoryService,  private activatedRoute: ActivatedRoute){}
   ngOnInit() {
-    this.id = this.activatedRoute.snapshot.queryParamMap.get('id');
-    console.log(this.id);
+    // this.id = this.activatedRoute.snapshot.queryParamMap.get('id');
+    // console.log(this.id);
     
-    this.historyService.getQuizzShare(this.id).subscribe((res)=>{
-      this.quizzHistory = res["questions"];
-      console.log(this.quizzHistory);
-      
+    this.historyService.getQuizzTestAgain().subscribe((res)=>{
+      this.quizzHistory = res;
     })
   }
   selectedAnswers: number[] = [];

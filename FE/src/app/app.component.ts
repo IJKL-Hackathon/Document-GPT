@@ -45,8 +45,8 @@ export class AppComponent {
     this.store.pipe(select((store)=>store.auth)).subscribe((user)=>{
       this.userService.getUserProfile();
   
-      console.log("log user appmodule:" ,user);
-      console.log("userprofile appmodule:" ,user.userProfile);
+      // console.log("log user appmodule:" ,user);
+      // console.log("userprofile appmodule:" ,user.userProfile);
     });
 
 

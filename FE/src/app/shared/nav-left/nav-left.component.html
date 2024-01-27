@@ -23,13 +23,13 @@
     <form (submit)="onSubmit()"  enctype="multipart/form-data" class="flex">
       <input type="file" name="file" (change)="onFileSelected($event)" accept=".docx, .txt">
       <button type="submit" [disabled]="!selectedFile" class="upload" [class.clicked]="submitClicked">Upload</button>
-      <button (click)="DeleteFile(); refreshPage()" class="delete">Delete</button>
+      <button (click)="DeleteFile(); " class="delete">Delete</button>
     </form>
     <br>
     <div class="progress-bar" *ngIf="uploadProgress > 0 && uploadProgress < 100">
       <div class="progress" [style.width.%]="uploadProgress"></div>
       <div class="progress-text">{{ uploadProgress }}%</div>
-    </div>-0
+    </div>
   </div>
 </div>
 

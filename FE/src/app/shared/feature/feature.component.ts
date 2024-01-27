@@ -73,11 +73,11 @@ export class FeatureComponent {
         case 'sum':
           this.fileService.saveStatusClick("sum");
           this.fileService.getStatusClick().subscribe((res) => {
-            console.log("res",res);
+            // console.log("res",res);
             
             if(res="sum")
             {
-              console.log("ok");
+              // console.log("ok");
               
               this.clickedSum=true;
               
@@ -89,7 +89,7 @@ export class FeatureComponent {
           this.clickedSum = true;
           this.clickedQa = false;
           this.clickedQuizz = false;
-          console.log("A",this.clickedSum);
+          // console.log("A",this.clickedSum);
           
           this.featureService.getSummary(fileId,this.UserProfile.id).subscribe(
             (response) => {
@@ -155,8 +155,7 @@ export class FeatureComponent {
 
 
   isClickedSum(): boolean {
-    console.log(this.clickedSum);
-    console.log(this.clickedQa);
+   
     return this.clickedSum;
   }
 

@@ -19,6 +19,7 @@ export class QuizzShareComponent {
 
   }
   ngOnInit() {
+    
     const routeSnapshot = this.activatedRoute.snapshot;
     this.routePath = routeSnapshot.url[0].path;
     console.log(this.routePath);
