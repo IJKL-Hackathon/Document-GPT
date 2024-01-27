@@ -6,13 +6,13 @@
         <form *ngIf="isLoginFormVisible" [formGroup]="loginForm" (ngSubmit)="submitLoginForm()">
           <p class="text-header text-center lg:text-xl">Welcome to Chat IJLK</p>
           <h1 class="text-center mt-10">Login</h1>
-          <div class="flex justify-center flex-col items-center space-y-2">
+          <div class="flex justify-center flex-col items-center space-y-2 ml-0.5">
             <div class="lg:mb-5  space-y-5">
-              <div class="lg:space-x-4 lg:block hidden">
-                <label for="loginEmail" class="px-4">Email</label>
+              <div class="lg:block hidden">
+                <label for="loginEmail" class="login px-4">Email</label>
                 <input formControlName="loginEmail" id="loginEmail" class="input w-full" type="email" placeholder="Email">
                 <div *ngIf="loginForm.get('loginEmail')?.invalid && loginForm.get('loginEmail')?.touched">
-                  <div *ngIf="loginForm.get('loginEmail')?.errors?.['required']" class="alert">
+                  <div *ngIf="loginForm.get('loginEmail')?.errors?.['required']" class=" alert w-full">
                     Email is required
                   </div>
                   <div *ngIf="loginForm.get('loginEmail')?.errors?.['email']" class="alert">
@@ -20,7 +20,7 @@
                   </div>
                 </div>
               </div>
-              <div class="lg:space-x-4">
+              <div class="">
                 <label for="loginPassword" class="px-4">Password</label>
                 <input formControlName="loginPassword" id="loginPassword" class="input w-full" type="password" placeholder="Password">
                 <div *ngIf="loginForm.get('loginPassword')?.invalid && loginForm.get('loginPassword')?.touched">
@@ -45,7 +45,7 @@
           <h1 class="text-center mt-5">Sign Up</h1>
           <div class="flex justify-center flex-col items-center space-y-2">
             <div class="lg:mb-5  space-y-5">
-              <div class="lg:space-x-4">
+              <div class="">
                 <label for="signupFullname" class="px-4">Full Name</label>
                 <input formControlName="signupFullname" id="signupFullname" class="input w-full" type="text" placeholder="Fullname">
                 <div *ngIf="signupForm.get('signupFullname')?.invalid && signupForm.get('signupFullname')?.touched">
@@ -54,7 +54,7 @@
                   </div>
                 </div>
               </div>
-              <div class="lg:space-x-4">
+              <div class="">
                 <label for="signupEmail" class="px-4">Email</label>
                 <input formControlName="signupEmail" id="signupEmail" class="input w-full" type="email" placeholder="Email">
                 <div *ngIf="signupForm.get('signupEmail')?.invalid && signupForm.get('signupEmail')?.touched">
@@ -66,7 +66,7 @@
                   </div>
                 </div>
               </div>
-              <div class="lg:space-x-4">
+              <div class="">
                 <label for="signupPassword" class="px-4">Password</label>
                 <input formControlName="signupPassword" id="signupPassword" class="input w-full" type="password" placeholder="Password">
                 <div *ngIf="signupForm.get('signupPassword')?.invalid && signupForm.get('signupPassword')?.touched">
@@ -80,9 +80,9 @@
               </div>
             </div>
             <div class="text-center space-y-5">
-              <p class="mt-10">Already have an account? <span class="font-bold cursor-pointer hover:scale-110"><a (click)="changeLogin()">Login</a> </span></p>
+              <p class="mt-1.5">Already have an account? <span class="font-bold cursor-pointer hover:scale-110"><a (click)="changeLogin()">Login</a> </span></p>
             </div>
-            <button type="submit" class="btn w-full mb-10">Sign Up</button>
+            <button type="submit" class="btn w-full">Sign Up</button>
           </div>
         </form>
       </div>
