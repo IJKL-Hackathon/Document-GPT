@@ -63,15 +63,14 @@ fields = [
     ),
 ]
 
-template = """Use the following pieces of context to answer the question at the end.
+template = """Use the following pieces of Information to answer the question at the end.
 If you don't know the answer, just say that you don't know, don't try to make up an answer.
-Use three sentences maximum and keep the answer as concise as possible.
-Always say answer in Vietnamese.
+### Information
 ---------
 {content}
 ---------
-Question: {question}
-
+### Question: {question}
+Use three sentences maximum and always say answer in Vietnamese.
 Helpful Answer:"""
 
 class VECTOR_DB:
@@ -136,9 +135,9 @@ class VECTOR_DB:
     
     def get_retriever(self, user_id, file_ids = []):
         return self.vs.as_retriever(
-            search_type="similarity_score_threshold",
+            search_type="similarity",
             search_kwargs={
-                'score_threshold': 0.80,
+                'k': 6,
                 'filters': self.create_filter(user_id, file_ids),
             }
             
@@ -148,9 +147,9 @@ class VECTOR_DB:
         result = "\n\n".join(doc.page_content for doc in docs)
         return result
     
-    def create_rag_chain(self):
+    def create_rag_chain(self, user_id, file_ids):
         return (
-            {"content": RunnablePassthrough(), "question": RunnablePassthrough()}
+            {"content": self.get_retriever(user_id, file_ids) | self.format_docs,  "question": RunnablePassthrough()}
             | self.prompt
             | chat_model
             | StrOutputParser()
@@ -160,10 +159,5 @@ class VECTOR_DB:
         if not isinstance(file_ids, list):
             file_ids = [file_ids]
         
-        result = self.mongo.get_file(*file_ids)[0]
-        
-        result =  self.create_rag_chain().invoke(
-            {"question": query,
-            "content": result['content'],}
-        )
+        result =  self.create_rag_chain(user_id, file_ids).invoke(query)
         return result
