@@ -83,13 +83,13 @@ export class FileService {
       // .subscribe((action) => this.store.dispatch(action));
   }
   searchFiles(query: string, userId: string) {
-    const headers = new HttpHeaders().set(
-      'Authorization',
-      `Bearer ${localStorage.getItem('jwt')}`
-    );
-    let params = new HttpParams().set('query', query).set('userId', userId);
+    let params = {
+      query: query,
+      userId: userId
+    };
+
     return this.http
-      .get(`${this.apiUrl}/searchfile`, { headers, params })
+      .post(`${this.apiUrl}/searchFile`, params)
       .pipe(
         map((response) => {
           // Dispatch success action

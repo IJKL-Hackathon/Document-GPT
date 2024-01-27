@@ -126,10 +126,10 @@ class VECTOR_DB:
         
         return filter_condition
     
-    def search(self, user_id, query, file_ids = []):
+    def search(self, user_id, query):
         return self.vs.similarity_search_with_relevance_scores(
             query=query,
-            filters = self.create_filter(user_id, file_ids),
+            filters = self.create_filter(user_id),
             score_threshold=0.80,
         )
     
