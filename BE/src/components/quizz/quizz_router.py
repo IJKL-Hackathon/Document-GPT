@@ -2,8 +2,7 @@ from flask import Blueprint, request, jsonify
 from .quizz import module
 import json
 import uuid
-
-data = {}
+from database import mongodb
 
 router = Blueprint("quizz", __name__)
 
@@ -24,14 +23,14 @@ def link():
     
     id = uuid.uuid4().hex
     
-    while id in data:
+    while not mongodb.check_share_id_valid(id):
         id = uuid.uuid4().hex
     
-    data[id] = request.json["quizzIds"]
+    mongodb.insert_share(id, request.json["quizzIds"])
     
     return jsonify({'id':id})
 
 @router.route("/quizz/share", methods = ["GET"])
 def share():
-    uuid = request.args["id"]
-    return jsonify(module.test_quizz(data[uuid]))
+    id = request.args["id"]
+    return jsonify(module.test_quizz(id))
