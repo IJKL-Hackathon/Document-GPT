@@ -10,8 +10,8 @@
         </div>
         <ng-container *ngFor="let data of history">
         <div class="grid grid-cols-8 space-y-4">
-            <div class="col-span-5"><span class="font-bold">{{data.quizzId}}.</span> {{data.title}}</div>
-            <div class=" col-span-2">{{data.time}}</div>
+            <div class="col-span-5">{{data.name}}</div>
+            <div class=" col-span-2">{{data.timestamp}}</div>
             <span class="col-span-1 justify-end flex"><input  type="checkbox" name="{{data.title}}" [value]="data.quizzId" (change)="onCheckboxChange($event, data.quizzId)"></span>
         </div>
         </ng-container>

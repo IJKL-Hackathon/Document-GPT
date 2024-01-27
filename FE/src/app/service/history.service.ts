@@ -41,10 +41,8 @@ export class HistoryService {
     return this.http.post<any>(`${this.apiUrl}/quizz/link`, params);
   }
   getQuizzShare(id:string){
-    let params = {
-      id:id
-    }
-    return this.http.post<any>(`${this.apiUrl}/quizz/share`, params);
+    const params = new HttpParams().set('id', id);
+    return this.http.get<any>(`${this.apiUrl}/quizz/share`, {params});
   }
   private quizzTestAgain = new BehaviorSubject<any>(null);
   setQuizzTestAgain(data: any) {
