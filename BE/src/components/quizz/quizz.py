@@ -6,20 +6,24 @@ from langchain.chains.llm import LLMChain
 from database import vectordb, mongodb
 
 import json
+import uuid
 
 
 # Map
 map_template = """The following is a set of documents
 {docs}
 Based on this list of docs, please identify the main themes
-Always say answer in Vietnamese
+Always return answer in Vietnamese
 Helpful Answer:"""
 
 reduce_template = """The following is set of summaries:
 {docs}
-Give me at least 5 multiple choice questions related to the topic above. The questions should be at an mid level. Return your answer entirely in the form of a JSON object. The JSON object should have a key named "questions" which is an array of the questions. Each quiz question should include the choices, the answer, and a brief explanation of why the answer is correct. Don't include anything other than the JSON. The JSON properties of each question should be "query" (which is the question), "choices", "answer", and "explanation". The choices shouldn't have any ordinal value like A, B, C, D or a number like 1, 2, 3, 4. The answer should be the 0-indexed number of the correct choice.
-Each questions, choices, answers must be unique and can not be duplicated in the quiz.
-Always say answer in Vietnamese
+Give me at least 5 multiple choice questions related to the topic above. The questions should be at an mid level. 
+Return your answer entirely in the form of a JSON object. The JSON object should have a key named "questions" which is an array of the questions. 
+Each quiz question should include the choices, the answer, and a brief explanation of why the answer is correct. 
+Don't include anything other than the JSON. The JSON properties of each question should be "query" (which is the question), "choices", "answer", and "explanation". 
+Remember the choices shouldn't have any ordinal value like A, B, C, D or a number like 1, 2, 3, 4. The answer should be the 0-indexed number of the correct choice.
+Always return answer in Vietnamese
 Helpful Answer:"""
 class QUIZZ:
     def __init__(self):
@@ -88,8 +92,9 @@ class QUIZZ:
         
         return quizzes
 
-    def test_quizz(self, quizzIds):
-        quizzes = self.mongo.get_quizz(*quizzIds)
+    def test_quizz(self, id):
+        history = self.mongo.get_share_by_ID(id)
+        quizzes = self.mongo.get_quizz(*history["quizz_ids"])
         quizz = {
             "questions": []
         }

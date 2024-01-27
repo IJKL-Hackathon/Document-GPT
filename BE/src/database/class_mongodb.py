@@ -100,6 +100,7 @@ class MONGO_DB:
             "user": self.get_collection("user"),
             "file": self.get_collection("file"),
             "quizz": self.get_collection("quizz"),
+            "share": self.get_collection("share"),
         }
         self.vs = MONGGO_VECTOR_DB()
         
@@ -151,7 +152,24 @@ class MONGO_DB:
         
         quizz["user_id"] = user_id
         quizz["file_name"] = file_name
-        self.collection["quizz"].insert_one(quizz)
+        return self.collection["quizz"].insert_one(quizz).inserted_id
+    
+    def insert_share(self, id, quizz_ids):
+        self.collection["share"].insert_one({
+            "id": id,
+            "quizz_ids": quizz_ids,
+        })
+    
+    def get_share_by_ID(self, id):
+        return self.collection["share"].find_one({"id": id})
+    
+    def check_share_id_valid(self, id):
+        result = self.get_share_by_ID(id)
+        
+        if result is None:
+            return True
+        else:
+            return False
     
     def insert_file(self, user_id, file):
         
@@ -173,4 +191,3 @@ class MONGO_DB:
         
     def get_user(self, jwt):
         return self.collection["user"].find_one({"jwt": jwt})
-
