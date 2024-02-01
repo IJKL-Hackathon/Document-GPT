@@ -1,7 +1,7 @@
 // upload.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import * as FormData from 'form-data';
@@ -83,31 +83,14 @@ export class FileService {
       // .subscribe((action) => this.store.dispatch(action));
   }
   searchFiles(query: string, userId: string) {
-    const headers = new HttpHeaders().set(
-      'Authorization',
-      `Bearer ${localStorage.getItem('jwt')}`
-    );
-    let params = new HttpParams().set('query', query).set('userId', userId);
-    return this.http
-      .get(`${this.apiUrl}/searchfile`, { headers, params })
-      .pipe(
-        map((response) => {
-          // Dispatch success action
-          console.log('file successfully search', response);
+    let params = {
+      query: query,
+      userId: userId
+    };
 
-          return searchFilesSuccess({ searchResults: response });
-        }),
-        catchError((error) => {
-          return of(
-            searchFilesFailure(
-              error.response && error.respone.data.message
-                ? error.respone.data.message
-                : error.message
-            )
-          );
-        })
-      )
-      .subscribe((action) => this.store.dispatch(action));
+    return this.http
+      .post(`${this.apiUrl}/searchFile`, params);
+     
   }
 
   private fileId: string = '';
@@ -129,5 +112,20 @@ export class FileService {
       this.selectedFileIds = this.selectedFileIds.filter((fileId) => fileId !== id);
     }
   }
-  
+
+
+  deleteFile(fileId: string): Observable<any> {
+    let params = {fileId: fileId};
+
+    return this.http.post<any>(`${this.apiUrl}/deleteFile`, params);
+  }
+ 
+  private StatusClick = new BehaviorSubject<any>(null);
+  saveStatusClick(data: any) {
+    this.StatusClick.next(data);
+  }
+
+  getStatusClick() {
+    return this.StatusClick.asObservable();
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, Output } from '@angular/core';
+import {Component, ElementRef, EventEmitter, HostListener, Output, signal} from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog'
 import { AuthComponent } from 'src/app/auth/auth.component';
@@ -7,6 +7,9 @@ import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/models/AppState';
 import { FileService } from 'src/app/state/file/file.service';
 import { Router } from '@angular/router';
+import {data} from "autoprefixer";
+import {HttpEvent, HttpEventType} from "@angular/common/http";
+import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 @Component({
   selector: 'app-nav-left',
   templateUrl: './nav-left.component.html',
@@ -16,22 +19,31 @@ export class NavLeftComponent {
   res_file: any;
   res_file_upload: any;
   selectedFile: File | null = null;
+  param: string | undefined;
+  loginClicked: boolean = false;
+  menuClicked: boolean = false;
   UserProfile: any;
+  submitClicked: boolean = false;
   fileTitle: string = '';
   searchQuery: string = '';
   selectedFileIds: string[] = [];
   selectAllChecked: boolean = false;
+<<<<<<< HEAD
   uploadProgress: number = 0;
   submitClicked: boolean = false;
   loginClicked: boolean = false;
   menuClicked: boolean = false;
+=======
+  public uploadProgress: number = 0;
+>>>>>>> 3314d1a0682b36c6e5e6547af5c010a99e736d64
 
   constructor(private diaolog: MatDialog, private userService: UserService, private store: Store<AppState>,
-    private fileService: FileService,private elRef: ElementRef,private router: Router) {
+              private fileService: FileService, private elRef: ElementRef, private router: Router) {
   }
+
   ngOnInit() {
     // this.res_file = res;
-    
+
     if (localStorage.getItem("jwt")) {
       this.userService.getUserProfile();
     }
@@ -40,9 +52,9 @@ export class NavLeftComponent {
       this.fileService.getFile(this.UserProfile.id).subscribe((res) => {
         this.res_file = res;
       });
-      console.log(this.res_file);
+      // console.log(this.res_file);
       // console.log("user-nav",user);
-      
+
       if (this.UserProfile) {
         this.diaolog.closeAll();
       }
@@ -50,36 +62,62 @@ export class NavLeftComponent {
       // console.log("userprofile:" ,user.userProfile);
     });
 
-    this.res_file.forEach((data:any) => {
+    this.res_file.forEach((data: any) => {
       data.isSelected = false;
     });
 
   }
+
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0] as File;
   }
-  onSubmit() {
 
+  DeleteFile() {
+    let fileId = this.fileService.getFileId();
+    console.log(fileId);
+    // Call the API to delete the file
+    this.fileService.deleteFile(fileId).subscribe(
+      (response) => {
+        this.refreshPage();
+        // this.fileService.getFile(this.UserProfile.id);
+        console.log('File deleted successfully:', response);
+      },
+      (error) => {
+        console.error('Error deleting file:', error);
+      }
+    );
+  }
+
+  onDeleteFile(event: any) {
+    this.selectedFile = event.target.files[0] as File;
+  }
+
+  onSubmit() {
     if (!this.UserProfile) {
       this.HandleLogin();
-      // console.log('File selected:', this.selectedFile);
-
     } else if (this.UserProfile && this.selectedFile) {
-      // console.log(this.UserProfile, this.selectedFile);
-      this.fileService.uploadFile(this.UserProfile.id, this.selectedFile).subscribe((res) => {
-        this.res_file_upload = res;
-        this.fileService.getFile(this.UserProfile.id).subscribe((res) => {
-          this.res_file = res;
-        });
-      });
-    }
+      // Simulate the upload process
+      this.uploadProgress = 0;
+      const interval = setInterval(() => {
+        this.uploadProgress += 5;
+        if (this.uploadProgress >= 100) {
+          clearInterval(interval);
 
+          // Actual file upload logic (replace this with your actual upload logic)
+          this.res_file_upload = this.fileService.uploadFile(this.UserProfile.id, this.selectedFile);
+          this.res_file_upload.subscribe(() => {
+            this.fileService.getFile(this.UserProfile.id).subscribe((res) => {
+              this.res_file = res;
+            });
+          });
+          this.uploadProgress = 0;
+        }
+      }, 1500);
+    }
   }
 
   HandleLogin() {
-    this.diaolog.open(AuthComponent, {
-
-    })
+    this.diaolog.open(AuthComponent, {})
 
   }
 
@@ -91,10 +129,11 @@ export class NavLeftComponent {
 
   logout() {
     this.userService.logout();
-    this.isMenuOpen=false
-    this.res_file=[];
+    this.isMenuOpen = false
+    this.res_file = [];
     this.router.navigate(['/']);
   }
+
   onCheckboxChange(event: any, id: any) {
     if (event.target.checked) {
       // this.fileIdSelected=id;
@@ -105,7 +144,7 @@ export class NavLeftComponent {
       console.log('Checkbox unchecked with id:', id);
     }
   }
-  
+
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
@@ -118,6 +157,7 @@ export class NavLeftComponent {
     return this.fileService.getFileId();
   }
 
+<<<<<<< HEAD
   resetButtonStates() {
     this.submitClicked = false;
     this.loginClicked = false;
@@ -143,7 +183,43 @@ export class NavLeftComponent {
   //   console.log(this.selectedFileIds);
     
   // }
+=======
+>>>>>>> 3314d1a0682b36c6e5e6547af5c010a99e736d64
 
+  protected readonly data = data;
 
+  refreshPage() {
+    window.location.reload();
+  }
   
+  haveFile:any;
+  searchBollean: boolean = true;
+  private searchSubject = new Subject<string>();
+  onSearchChange() {
+    this.searchBollean = false;
+  
+    // Push the search query to the Subject with a debounce time of 1000ms
+    this.searchSubject.next(this.searchQuery);
+  
+    // Subscribe to the searchSubject
+    this.searchSubject
+      .pipe(
+        debounceTime(1000), // Wait for 1000ms pause in events
+        switchMap(query => this.fileService.searchFiles(query, this.UserProfile.id))
+      )
+      .subscribe(
+        (result) => {
+          console.log(result);
+          this.searchBollean = true;
+          this.res_file = result;
+          if (this.res_file.length === 0) {
+            this.haveFile = "No file found";
+          }
+          console.log(this.haveFile);
+        },
+        (error) => {
+          console.error('Error in search:', error);
+        }
+      );
+}
 }

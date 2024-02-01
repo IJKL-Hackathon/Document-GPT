@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, NgZone, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthComponent } from 'src/app/auth/auth.component';
 import { AppState } from 'src/app/models/AppState';
@@ -7,6 +7,7 @@ import { Store, select } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { FileService } from 'src/app/state/file/file.service';
 import { FeaturService } from 'src/app/service/feature.service';
+import { DialogNotSelectedFileComponent } from '../dialog-not-selected-file/dialog-not-selected-file.component';
 
 @Component({
   selector: 'app-feature',
@@ -17,24 +18,58 @@ export class FeatureComponent {
   UserProfile: any;
   answerData: any;
   query:any;
+<<<<<<< HEAD
   select: string = 'sum'; // Initialize select property with a default value
+=======
+  selectedButton: string = '';
+  clickedSum:boolean=false;
+  clickedQa:boolean=false;
+  clickedQuizz:boolean=false;
+  clickedHistory:boolean=false;
+  select: string = 'sum'; // Initialize select property with a default value
+  currentIdSelected:any;
+>>>>>>> 3314d1a0682b36c6e5e6547af5c010a99e736d64
   @Output() answer = new EventEmitter<any>();
 
-  constructor(private diaolog:MatDialog, private userService:UserService, 
+  constructor(private diaolog:MatDialog, private userService:UserService,
     private store:Store<AppState>, private router:Router,
-    private fileService:FileService,private featureService:FeaturService
+    private fileService:FileService,private featureService:FeaturService,
+    private ngZone: NgZone,private cdr: ChangeDetectorRef
     ) {
 
   }
   ngOnInit() {
+    if (this.router.isActive('/sum', false)) {
+      this.clickedSum = true;
+      this.clickedQa = false;
+      this.clickedQuizz = false;
+      this.clickedHistory=false;
+    } else if (this.router.isActive('/qa', false)) {
+      this.clickedSum = false;
+      this.clickedQa = true;
+      this.clickedQuizz = false;
+      this.clickedHistory=false;
+    } else if (this.router.isActive('/quizizz', false)) {
+      this.clickedSum = false;
+      this.clickedQa = false;
+      this.clickedQuizz = true;
+      this.clickedHistory=false;
+    }else if (this.router.isActive('/history', false)) {
+      this.clickedSum = false;
+      this.clickedQa = false;
+      this.clickedQuizz = false;
+      this.clickedHistory=true
+    }
     if(localStorage.getItem("jwt"))
     {
       this.userService.getUserProfile();
     }
     this.store.pipe(select((store)=>store.user)).subscribe((user)=>{
       this.UserProfile=user.userProfile;
-    
+
     });
+
+   
   }
 
   navigateTo(option:string){
@@ -43,6 +78,10 @@ export class FeatureComponent {
     {
       // console.log("id:",this.fileService.getFileId());
       this.diaolog.open(AuthComponent,{
+   
+      })
+    }else if(!this.fileService.getFileId()){
+      this.diaolog.open(DialogNotSelectedFileComponent,{
    
       })
     }
@@ -57,9 +96,9 @@ export class FeatureComponent {
             (response) => {
               this.answerData = response["answer"];
               this.featureService.setStoreSumData(response["answer"]);
-            console.log(this.featureService.getData());
+              console.log(this.featureService.getData());
             
-                this.featureService.setData(response["answer"]);
+                // this.featureService.setData(response["answer"]);
 
               // console.log("data:",this.featureService.getStoredSumData());
               
@@ -102,11 +141,33 @@ export class FeatureComponent {
 
   sendAnswer(answerData:any){
     // console.log(answerData);
-    
+
     this.answer.emit(answerData);
   }
 
+<<<<<<< HEAD
   highlightButton(destination: string): void {
     this.select = destination;
+=======
+
+
+  isClickedSum(): boolean {
+   
+    return this.clickedSum;
+  }
+
+  isClickedQa(): boolean {
+    return this.clickedQa;
+  }
+
+  isClickedQizz(): boolean {
+    return this.clickedQuizz;
+  }
+  isClickedHistory(): boolean {
+    return this.clickedHistory;
+  }
+  routerHistory(option: string){
+    this.router.navigate(["/"+option]);
+>>>>>>> 3314d1a0682b36c6e5e6547af5c010a99e736d64
   }
 }

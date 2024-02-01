@@ -1,7 +1,11 @@
 .container {
   overflow-y: scroll;
   border: 2px solid #ccc;
+<<<<<<< HEAD
   padding: 20px;
+=======
+  padding: 10px;
+>>>>>>> 3314d1a0682b36c6e5e6547af5c010a99e736d64
   border-radius: 5px;
 }
 
@@ -14,18 +18,53 @@
 }
 
 .upload {
+<<<<<<< HEAD
   padding: 5px 10px;
   background-color: #4CAF50;
+=======
+  padding: 5px 5px;
+  max-width: 20%;
+  background-color: #226FA7;
+>>>>>>> 3314d1a0682b36c6e5e6547af5c010a99e736d64
   color: white;
   border: none;
   border-radius: 3px;
   cursor: pointer;
 
   &:hover {
+<<<<<<< HEAD
     background-color: #ffeeba;
     color: #856404;
   }
 
+=======
+    background-color: #F9F7C9;
+    color: #856404;
+  }
+
+
+
+  &.clicked {
+    background-color: #F9F7C9;
+    color: #856404;
+  }
+}
+
+.delete {
+  padding: 5px 10px;
+  max-width: 20%;
+  background-color: #226FA7;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-left: 10px;
+  &:hover {
+    background-color: #ffeeba;
+    color: #856404;
+  }
+
+>>>>>>> 3314d1a0682b36c6e5e6547af5c010a99e736d64
   &.clicked {
     background-color: #ffeeba;
     color: #856404;
@@ -33,17 +72,29 @@
 }
 
 .login-container {
+<<<<<<< HEAD
   background-color: #4CAF50;
+=======
+  background-color: #226FA7;
+>>>>>>> 3314d1a0682b36c6e5e6547af5c010a99e736d64
   color: white;
   border-radius: 3px;
 
   &:hover {
+<<<<<<< HEAD
     background-color: #ffeeba !important;
+=======
+    background-color: #F9F7C9 !important;
+>>>>>>> 3314d1a0682b36c6e5e6547af5c010a99e736d64
     color: #856404 !important;
   }
 
   &.clicked {
+<<<<<<< HEAD
     background-color: #ffeeba;
+=======
+    background-color: #F9F7C9;
+>>>>>>> 3314d1a0682b36c6e5e6547af5c010a99e736d64
     color: #856404;
   }
 }
@@ -77,6 +128,7 @@
   cursor: pointer;
 }
 
+<<<<<<< HEAD
 .progress-container {
   display: flex;
   align-items: center;
@@ -85,11 +137,53 @@
   progress {
     flex-grow: 1;
     margin-right: 10px;
+=======
+
+.checkbox {
+  position: absolute;
+  margin: 12px;
+  right: 0;
+  transform: translate(0, -50%);
+}
+
+
+.file_choose {
+  max-width: 100%;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 20px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  margin-top: 1rem;
+  position: relative;
+
+  .progress {
+    height: 100%;
+    width: 0;
+    background-color: #226FA7;
+    border-radius: 4px;
+    transition: width 0.3s ease-in-out;
   }
 
+  .progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #000;
+    font-weight: bold;
+>>>>>>> 3314d1a0682b36c6e5e6547af5c010a99e736d64
+  }
+}
+
+<<<<<<< HEAD
   span {
     font-size: 14px;
     font-weight: bold;
   }
 }
 
+=======
+>>>>>>> 3314d1a0682b36c6e5e6547af5c010a99e736d64

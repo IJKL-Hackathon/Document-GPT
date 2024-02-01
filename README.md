@@ -7,7 +7,6 @@ IJKL Team - Members/Student IDs (VNU-HCMUIT):
 - Ho Tan Anh - 21521818
 - Phan Ca Phat - 21520389
 - Au Truong Giang - 21522019 
-- Huynh Hai Bang - 21521846 
 
 ## Problem & Idea
 ### Problem

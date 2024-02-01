@@ -5,20 +5,25 @@ from langchain.chains.combine_documents.stuff import StuffDocumentsChain
 from langchain.chains.llm import LLMChain
 from database import vectordb, mongodb
 
+import json
+import uuid
+
 
 # Map
 map_template = """The following is a set of documents
 {docs}
 Based on this list of docs, please identify the main themes
-Always say answer in Vietnamese
+Always return answer in Vietnamese
 Helpful Answer:"""
 
 reduce_template = """The following is set of summaries:
 {docs}
-Give me at least 5 multiple choice questions related to the topic above. The questions should be at an mid level. Return your answer entirely in the form of a JSON object. The JSON object should have a key named "questions" which is an array of the questions. Each quiz question should include the choices, the answer, and a brief explanation of why the answer is correct. Don't include anything other than the JSON. The JSON properties of each question should be "query" (which is the question), "choices", "answer", and "explanation". The choices shouldn't have any ordinal value like A, B, C, D or a number like 1, 2, 3, 4. The answer should be the 0-indexed number of the correct choice.
-Each questions, choices, answers must be unique and can not be duplicated in the quiz.
-Make the choices in each question be diversity and less duplicated as posiable.
-Always say answer in Vietnamese
+Give me at least 5 multiple choice questions related to the topic above. The questions should be at an mid level. 
+Return your answer entirely in the form of a JSON object. The JSON object should have a key named "questions" which is an array of the questions. 
+Each quiz question should include the choices, the answer, and a brief explanation of why the answer is correct. 
+Don't include anything other than the JSON. The JSON properties of each question should be "query" (which is the question), "choices", "answer", and "explanation". 
+Remember the choices shouldn't have any ordinal value like A, B, C, D or a number like 1, 2, 3, 4. The answer should be the 0-indexed number of the correct choice.
+Always return answer in Vietnamese
 Helpful Answer:"""
 class QUIZZ:
     def __init__(self):
@@ -49,7 +54,7 @@ class QUIZZ:
             return_intermediate_steps=False,
         )
 
-    def quizz(self, req):
+    def create_quizz(self, req):
         
         user_id = req["userId"]
         file_ids = req["fileId"]
@@ -59,6 +64,59 @@ class QUIZZ:
     
         files = self.mongo.get_file(*file_ids)
         docs = self.vs.create_documents(user_id, files, file_ids)
-        return self.map_reduce_chain.run(docs)
+        result = self.map_reduce_chain.run(docs)
+        
+        self.mongo.insert_quizz(user_id, files[0]["title"], json.loads(result))
+        
+        return result
+
+    def get_quizz(self, userid):
+        results = self.mongo.get_quizz_by_userID(userid)
+        results = list(results)
+        
+        print(len(results))
+        
+        quizzes = {
+            "history": []
+        }
+        for quizz in results:
+            quizzes["history"].append(
+                {
+                    "quizzId": str(quizz["_id"]),
+                    "timestamp": quizz["_id"].generation_time,
+                    "name": quizz["file_name"]
+                }
+            )
+        
+        print(quizzes)
+        
+        return quizzes
+
+    def test_quizz_id(self, id):
+        print(id)
+        history = self.mongo.get_share_by_ID(id)
+        
+        print(history["quizz_ids"])
+        
+        quizzes = self.mongo.get_quizz(*history["quizz_ids"])
+        quizz = {
+            "questions": []
+        }
+        
+        for q in quizzes:
+            quizz["questions"].extend(q["questions"])
+        
+        return quizz
+
+    def test_quizz(self, quizz_ids):        
+        quizzes = self.mongo.get_quizz(*quizz_ids)
+        quizz = {
+            "questions": []
+        }
+        
+        for q in quizzes:
+            quizz["questions"].extend(q["questions"])
+        
+        return quizz
 
 module = QUIZZ()

@@ -1,5 +1,6 @@
 <div class="container p-3 h-[80vh] relative">
   <div class="new-message  relative pb-4">
+<<<<<<< HEAD
       <input type="text" class="search" placeholder="Search file..." [(ngModel)]="searchQuery">
       <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search absolute top-3 right-10" viewBox="0 0 16 16">
           <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
@@ -33,9 +34,61 @@
       <span>{{uploadProgress}}%</span>
     </div>
     </div>
+=======
+    <input type="text" class="search" placeholder="Search file..." [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange()">
+    <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search absolute top-3 right-10" viewBox="0 0 16 16">
+      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+    </svg>
+  </div>
+  <div class="file_container space-y-4 px-3">
+
+    <ng-container *ngIf="!res_file ">
+      <p>Upload File To Use App</p>
+    </ng-container>
+    <ng-container *ngIf="res_file.length>0 ; else noResFile">
+
+      <ng-container *ngFor="let data of res_file;let i = index">
+        <ng-container *ngIf="searchBollean==true">
+          <p >{{data.title}}
+            <span class="checkbox"><input [checked]="getFileId.includes(data.id)" type="checkbox" name="{{data.title}}" [value]="data.id" (change)="onCheckboxChange($event, data.id)"></span>
+          </p>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+    <ng-template #noResFile>
+        <p>{{haveFile}}</p>
+    </ng-template>
+    <div class="flex justify-center items-center w-full h-full flex-col space-y-2 ">
+
+      <ng-container *ngIf="searchBollean==false">
+        <mat-spinner  color="accent" diameter="30"></mat-spinner>
+        <span>Loading...</span>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class=" file_choose absolute bottom-2">
+    <form (submit)="onSubmit()"  enctype="multipart/form-data" class="flex">
+      <input type="file" name="file" (change)="onFileSelected($event)" accept=".docx, .txt">
+      <button type="submit" [disabled]="!selectedFile" class="upload" [class.clicked]="submitClicked">Upload</button>
+      <button (click)="DeleteFile(); " class="delete">Delete</button>
+    </form>
+    <br>
+    <div class="progress-bar" *ngIf="uploadProgress > 0 && uploadProgress < 100">
+      <div class="progress" [style.width.%]="uploadProgress"></div>
+      <div class="progress-text">{{ uploadProgress }}%</div>
+    </div>
+  </div>
+>>>>>>> 3314d1a0682b36c6e5e6547af5c010a99e736d64
 </div>
 
+<button *ngIf="UserProfile" class="flex text-lg mt-5" (click)="toggleMenu()" [class.clicked]="menuClicked">
+  <img class="w-7 h-7" src="https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916_640.png" alt="">
+  <span class="px-5">{{UserProfile.email}}</span>
+</button>
+<div class="menu-container" >
 
+<<<<<<< HEAD
 <div class="login-container mt-5 ">
   <button *ngIf="!UserProfile" class="login-button w-full white py-2" (click)="HandleLogin()" [class.clicked]="loginClicked">Login</button>
 </div>
@@ -52,3 +105,9 @@
         <button (click)="logout()" class="menu-item">Logout</button>
       </div>
     </div>
+=======
+  <div class="menu" [class.show]="isMenuOpen" >
+    <button (click)="logout()" class="menu-item">Logout</button>
+  </div>
+</div>
+>>>>>>> 3314d1a0682b36c6e5e6547af5c010a99e736d64

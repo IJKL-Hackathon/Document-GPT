@@ -27,7 +27,8 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/routes.json"
             ],
             "styles": [
               "@angular/material/prebuilt-themes/purple-green.css",
@@ -69,7 +70,7 @@
               "browserTarget": "Arzue_Hackathon:build:production"
             },
             "development": {
-              "browserTarget": "Arzue_Hackathon:build:development"
+              "browserTarget": "Arzue_Hackathon:build:development",
             }
           },
           "defaultConfiguration": "development"

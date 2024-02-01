@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="mt-5 flex justify-end items-center">
     <div class="flex space-x-4">
         <a (mouseover)="highlightButton('sum')" (click)="navigateTo('sum')" class="box w-40 text-center" [ngClass]="{'highlight': select === 'sum'}">Summary</a>
@@ -5,3 +6,12 @@
         <a (mouseover)="highlightButton('quizizz')" (click)="navigateTo('quizizz')" class="box w-40 text-center" [ngClass]="{'highlight': select === 'quizizz'}">Quizizz</a>
     </div>
 </div>
+=======
+<div class="mt-5 flex justify-around items-center">
+    <button (click)="navigateTo('sum')" class="box w-40 text-center" [ngClass]="{'highlight': isClickedSum()}">Summary</button>
+    <button (click)="navigateTo('qa')" class="box w-40 text-center" [ngClass]="{'highlight': isClickedQa()}">Q&A</button>
+    <button (click)="navigateTo('quizizz')" class="box w-40 text-center" [ngClass]="{'highlight': isClickedQizz()}">Quizizz</button>
+    <button  (click)="routerHistory('history')"  class="box w-40 text-center" [ngClass]="{'highlight': isClickedHistory()}">History</button>
+  </div>
+  
+>>>>>>> 3314d1a0682b36c6e5e6547af5c010a99e736d64

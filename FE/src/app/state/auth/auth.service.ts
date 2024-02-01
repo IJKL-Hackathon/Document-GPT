@@ -41,9 +41,9 @@ export class AuthService {
       .subscribe((action) => this.store.dispatch(action));
   }
 
-  register(Dataregister: any) {
+  register(DataRegister: any) {
     return this.http
-      .post(`${this.apiUrl}/register`, Dataregister)
+      .post(`${this.apiUrl}/register`, DataRegister)
       .pipe(
         map((user: any) => {
           console.log(user);

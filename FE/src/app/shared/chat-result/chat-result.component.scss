@@ -1,36 +1,36 @@
 .chat-container {
-   height: 80vh; 
+   height: 80vh;
    max-height: 80vh;
    overflow-y: auto;
     border: 2px solid #ccc;
     padding: 20px;
     border-radius: 5px;
   }
-  
+
   .message {
     margin-bottom: 15px;
     padding: 10px;
     border-radius: 5px;
   }
-  
+
   .received {
     background-color: #f0f0f0;
   }
-  
+
   .sent {
-    background-color: #85a686;
+    background-color: #79A8D5;;
     color: white;
   }
-  
+
   .sender {
     font-weight: bold;
     margin-right: 5px;
   }
-  
+
   .new-message {
     margin-top: 20px;
   }
-  
+
   .searched-message {
     padding: 8px;
     width: 94%;
@@ -39,23 +39,23 @@
     border: 1px solid #ccc;
     border-radius: 5px;
   }
-  
+
   button {
     padding: 8px 15px;
-    background-color: #4CAF50;
+    background-color: #226FA7;
     color: white;
     border: none;
     border-radius: 3px;
     cursor: pointer;
   }
-  
+
   button:hover {
-    background-color: #45a049;
+    background-color: #79A8D5;
   }
 
-  
+
   .quiz-container {
-    background-color: #fff;
+    background-color: #f0f0f0;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -69,12 +69,12 @@
   }
 
 
-  
+
   button:hover {
-    background-color: #45a049;
+    background-color: #79A8D5;;
   }
   .text-success{
-    background-color: #45a049;
+    background-color: #226FA7;
     color: white;
     border-radius: 5px;
     padding: 5px 10px;
@@ -85,4 +85,4 @@
     border-radius: 5px;
     padding: 5px 10px;
   }
-  
+

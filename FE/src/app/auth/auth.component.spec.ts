@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+// @ts-ignore
 import { AuthComponent } from './auth.component';
 
 describe('AuthComponent', () => {
@@ -19,3 +20,5 @@ describe('AuthComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+
