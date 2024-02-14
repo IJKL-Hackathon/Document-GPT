@@ -29,9 +29,9 @@ The idea merges different functions to meet students' academic needs uniquely. U
 
 ## Technical Solution
 - Langchain: GPT API, Prompt, Chatbot.
-+ Summary.
-+ Question & Answer
-+ Quizzes.
+  + Summary.
+  + Question & Answer
+  + Quizzes.
 
 - Azure CosmosDB - MongoDB: Upload.
 - Azure Static Wep App: Hosting Frontend
@@ -53,9 +53,9 @@ The idea merges different functions to meet students' academic needs uniquely. U
 - Integrate a dedicated classroom mode for educators and students, enhancing collaboration through document sharing, real-time interaction, and discussion
 
 ## Related Document
-- Tutorial — Flask Documentation (3.0.x) (https://flask.palletsprojects.com/en/3.0.x/tutorial/)
-- Azure AI services documentation | Microsoft Learn (https://learn.microsoft.com/en-us/azure/ai-services/)
-- API Reference - OpenAI API (https://platform.openai.com/docs/api-reference)
-- Azure Cosmos DB for MongoDB documentation | Microsoft Learn (https://learn.microsoft.com/en-us/azure/cosmos-db/mongodb/)
-️- 🔗 Langchain (https://python.langchain.com/docs/get_started/introduction)
-- Angular - Understanding communicating with backend services using HTTP (https://angular.io/guide/understanding-communicating-with-http)
+- Tutorial — Flask Documentation (3.0.x) (https://flask.palletsprojects.com/en/3.0.x/tutorial/).
+- Azure AI services documentation | Microsoft Learn (https://learn.microsoft.com/en-us/azure/ai-services/).
+- API Reference - OpenAI API (https://platform.openai.com/docs/api-reference).
+- Azure Cosmos DB for MongoDB documentation | Microsoft Learn (https://learn.microsoft.com/en-us/azure/cosmos-db/mongodb/).
+- Langchain (https://python.langchain.com/docs/get_started/introduction).
+- Angular - Understanding communicating with backend services using HTTP (https://angular.io/guide/understanding-communicating-with-http).
