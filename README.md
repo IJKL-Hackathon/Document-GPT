@@ -34,7 +34,7 @@ The idea merges different functions to meet students' academic needs uniquely. U
   + Quizzes.
 
 - Azure CosmosDB - MongoDB: Upload.
-- Azure Static Wep App: Hosting Frontend
+- Azure Static Web App: Hosting Frontend
 - Azure Container App: Hosting Backend
 
 ## Current Status Product
