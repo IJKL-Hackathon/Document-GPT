@@ -3,10 +3,12 @@ This project is intended to serve the Azure OpenAI Service - Hackathon for Stude
 
 # Introduction
 IJKL Team - Members/Student IDs (VNU-HCMUIT):
-- Nguyen Ba Dai - 21521914
-- Ho Tan Anh - 21521818
-- Phan Ca Phat - 21520389
-- Au Truong Giang - 21522019 
+| Student IDs | Full name |Role|
+| --- | ----------- |--------------------|
+| 21521914 | Nguyen Ba Dai|Leader
+| 21521818 | Ho Tan Anh|
+| 21520389 | Phan Ca Phat|
+| 21522019 | Au Truong Giang|
 
 ## Problem & Idea
 ### Problem
