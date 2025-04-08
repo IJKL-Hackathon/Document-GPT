@@ -2,13 +2,14 @@
 This project is intended to serve the Azure OpenAI Service - Hackathon for Students 2023 competition organized and sponsored by Sun*.
 
 # Introduction
-IJKL Team - Members/Student IDs (VNU-HCMUIT):
-| Student IDs | Full name |Role|
+IJKL Team - VNU-HCMUIT:
+| Student ID | Full name |Role|
 | --- | ----------- |--------------------|
-| 21521914 | Nguyen Ba Dai|Leader
-| 21521818 | Ho Tan Anh|
-| 21520389 | Phan Ca Phat|
-| 21522019 | Au Truong Giang|
+| 21521914 | Nguyen Ba Dai|Team Lead, BE Developer, AI Developer
+| 21521818 | Ho Tan Anh|FE Developer, UX/UI Designer
+| 21520389 | Phan Ca Phat|BE Developer, Tester
+| 21522019 | Au Truong Giang|FE Developer, Tester, BA
+| 21521846 | Huynh Hai Bang|BE Developer
 
 ## Problem & Idea
 ### Problem
