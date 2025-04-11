@@ -5,11 +5,11 @@ This project is intended to serve the Azure OpenAI Service - Hackathon for Stude
 IJKL Team - VNU-HCMUIT:
 | Student ID | Full name |Role|
 | --- | ----------- |--------------------|
-| 21521914 | Nguyen Ba Dai|Team Lead, BE Developer, AI Developer
-| 21521818 | Ho Tan Anh|FE Developer, UX/UI Designer
-| 21520389 | Phan Ca Phat|BE Developer, Tester
-| 21522019 | Au Truong Giang|FE Developer, Tester, BA
-| 21521846 | Huynh Hai Bang|BE Developer
+| 21521914 | Dai Nguyen Ba|Team Lead, BE Developer, AI Developer
+| 21521818 | Anh Ho Tan|FE Developer, UX/UI Designer
+| 21520389 | Phat Phan Ca|BE Developer, Tester
+| 21522019 | Giang Au Truong|FE Developer, Tester, BA
+| 21521846 | Bang Huynh Hai|BE Developer
 
 ## Problem & Idea
 ### Problem
