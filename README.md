@@ -1,7 +1,6 @@
 # Azure Hackathon Product
-This project is intended to serve the Azure OpenAI Service - Hackathon for Students 2023 competition organized and sponsored by Sun*.
 
-# Introduction
+## Introduction
 IJKL Team - VNU-HCMUIT:
 | Student ID | Full name |Role|
 | --- | ----------- |--------------------|
