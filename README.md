@@ -7,8 +7,8 @@
 | 21521914   | Dai Nguyen Ba    | Team Lead, Backend Developer, AI Developer |
 | 21521818   | Anh Ho Tan       | Frontend Developer, UX/UI Designer |
 | 21520389   | Phat Phan Ca     | Backend Developer, Tester         |
-| 21522019   | Au Truong Giang  | Frontend Developer, Tester, Business Analyst |
-| 21521846   | Huynh Hai Bang   | Backend Developer                 |
+| 21522019   | Giang Au Truong  | Frontend Developer, Tester, Business Analyst |
+| 21521846   | Bang Huynh Hai   | Backend Developer                 |
 
 ## Problem & Idea
 
